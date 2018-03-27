@@ -1,0 +1,65 @@
+<div class="zf-table-wrap  form-inline">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <?php if ($this->name): ?>
+                        <h3 class="box-title">
+                            <?= $this->name ?>
+                        </h3>
+                    <?php endif; ?>
+
+                    <div class="box-tools">
+                        <?=$this->DateFilters;?>
+                        <?=$this->QuickSearch; ?>
+                        <?=$this->valueStatus;?>
+                        <?=$this->ValuesOfItemPerPage;?>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive">
+                    <?=$this->table?>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-md-8 col-xs-12">
+                            <div class="dataTables_paginate paging_bootstrap pagination pull-left">
+                                <?=$this->paginator; ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4  col-xs-12">
+                                <?=$this->html('div')->setClass('btn-group pull-right')->setText(
+                                        $this->html('button')->setClass('btn btn-default btn-flat')->setText("De")
+                                )->appendText(
+                                        $this->html('button')->setClass('btn btn-default btn-flat')->setText($this->pages['firstItemNumber'])
+                                )->appendText(
+                                        $this->html('button')->setClass('btn btn-default btn-flat')->setText(" Até ")
+                                )->appendText(
+                                        $this->html('button')->setClass('btn btn-default btn-flat')->setText($this->pages['lastItemNumber'])
+                                )->appendText(
+                                        $this->html('button')->setClass('btn btn-default btn-flat')->setText(" De ")
+                                )->appendText(
+                                        $this->html('button')->setClass('btn btn-default btn-flat')->setText($this->pages['totalItemCount'])
+                                );?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+    <?php echo $this->paramsWrap; ?>
+</div>
+
+<?php
+if(!empty($this->ChartTemplate)){
+    echo $this->render($this->ChartTemplate,[
+        'sEcho'=>$this->sEcho
+    ]);
+}
+?>
+</section>
+<?=$this->partial(sprintf('layout/%s/partial/messages', LAYOUT));?>
+<?=""//$this->ICheck();?>

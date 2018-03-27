@@ -1,0 +1,47 @@
+<?=$this->partial(sprintf('layout/%s/partial/form-error', LAYOUT),['form'=>$this->form]);?>
+<?=$this->form()->openTag($this->form->setAttribute('action',$this->url(sprintf("%s/default", $this->route), [
+    'controller'=>$this->controller,
+    'action'=>'save'
+]))->setAttribute('name','AjaxForm')->setAttribute('class',''));?>
+<?=$this->html('div')->setClass('panel panel-default')->setText(
+    $this->html('div')->setClass('panel-body')->setText(
+        $this->html('div')->setClass('row')->setText(
+            $this->html('div')->setClass('col-md-8 col-xs-12')->setText(
+                $this->El()->hidden('id')->hidden('empresa')
+                    ->input('name')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->El()->setClass('col-md-4')
+                    ->timepicker('created_at')
+                    ->timepicker('updated_at')
+                    ->input('status')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->Tiny()->setField($this->form->get('description'))
+                    ->setRoute($this->route)
+                    ->setController($this->controller)
+                    ->render($this->html('div')->setClass('col-xs-12'))
+            )
+        )->appendText(
+        //ADD COLUNA A LINHA 01
+            $this->html('div')->setClass('col-md-4 col-xs-12')->setText(
+            //ABRE UMA LINHA 01
+                $this->html('div')->setClass('row')->setText(
+                    $this->El()->file()->render($this->html('div')->setClass('col-xs-12'))
+                )
+            )
+        )
+    )
+)->appendText(
+//ADD PANEL FOOTER
+    $this->html('div')->setClass('panel-footer')->setText(
+        $this->Actions()
+            ->submit()
+            ->save_copy()
+            ->save_close()
+            ->back()
+            ->render($this->html('div')->setClass('row'))
+    )
+);?>
+<?=$this->form()->closeTag();?>
+<?=$this->partial(sprintf('layout/%s/partial/messages', LAYOUT));?>

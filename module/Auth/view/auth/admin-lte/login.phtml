@@ -1,0 +1,29 @@
+<div class="login-box">
+    <div class="login-logo">
+        <a href="<?=$this->url('home')?>"><b>Gerencia.</b>Pet</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Faça o Login Para Iniciar A Sessão</p>
+        <div id="formContainer">
+            <?=$this->render("login-form",[
+                'form'=>$this->form,
+                'route'=>$this->route,
+                'controller'=>$this->controller,
+            ]);?>
+        </div>
+
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+        </div>
+        <!-- /.social-auth-links -->
+
+        <a href="<?=$this->url(sprintf('%s/default', $this->route), [
+			'controller'=>$this->controller,
+			'action'=>'recupera-senha'
+		])?>">Esqueci minha senha</a><br>
+        
+
+    </div>
+    <!-- /.login-box-body -->
+</div>

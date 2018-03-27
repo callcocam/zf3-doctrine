@@ -1,0 +1,142 @@
+<?= $this->partial(sprintf('layout/%s/partial/form-error', LAYOUT), ['form' => $this->form]); ?>
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url(sprintf("%s/default", $this->route), [
+    'controller' => $this->controller,
+    'action' => 'upload'
+]))->setAttribute('name', 'AjaxUploadForm')->setAttribute('class', 'modal fade in')->setAttribute('id', 'modal-default')); ?>
+<?php
+$this->form->get('parent')->setValue($this->parent);
+$this->form->get('assets')->setValue($this->assets);
+?>
+<?= $this->html('div')->setClass('modal-dialog')->setText(
+    $this->html('div')->setClass('modal-content')->setText(
+        $this->html('div')->setClass('modal-header')->setText(
+            $this->html('button')->setAttributes([
+                'class' => 'close',
+                'type' => "button",
+                'data-dismiss' => "modal",
+                'aria-label' => "Close"
+            ])->setText(
+                $this->html('span')->setAttributes([
+                    'aria-hidden' => "true"
+                ])->setText("×")
+            )
+        )->appendText($this->html('h4')->setClass('modal-title')
+            ->setText('Upload')
+        )
+    )->appendText($this->html('div')->setClass('modal-body')->setText(
+        $this->html('div')->setClass('box box-primary')
+            ->setText(
+                $this->html('div')->setClass('box-body box-profile')
+                    ->setText(
+                        $this->html('img')->setAttributes([
+                            'id' => 'file',
+                            'data-cover' => $this->basePath($this->form->get('cover')->getValue()),
+                            'class' => 'attachment img-responsive',
+                            'alt' => 'ser profile picture',
+                            'src' => $this->url(sprintf("%s/default", $this->route), ['controller' => $this->controller, 'action' => 'file'],
+                                ['query' => [
+                                    'name' => $this->basePath($this->form->get('cover')->getValue()),
+                                    'thumbnail' => true,
+                                    'w' => $this->form->get('cover_width')->getValue(),
+                                ]
+                                ]),
+                        ])
+                    )->appendText(
+                        $this->html('div')->setClass('form-group')->setText(
+                            $this->html('div')->setClass('btn btn-default btn-warning btn-file btn-block')->setText(
+                                $this->html('i')->setClass('fa fa-paperclip')
+                            )
+                                ->appendText($this->html('input')->setAttributes([
+                                    'name' => 'file',
+                                    'type' => 'file',
+                                ]))
+                                ->appendText('Selecione uma imagem')
+                        )
+                    )
+            )
+    )->appendText(
+        $this->html('div')->setAttributes([
+            'class' => 'panel-group',
+            'id' => 'accordion',
+            'role' => 'tablist',
+            'aria-multiselectable' => 'true',
+        ])->setText(
+            $this->html('div')->setClass('panel panel-default')->setText(
+                $this->html('div')->setAttributes([
+                    'class' => 'panel-heading',
+                    'id' => 'headingOne',
+                    'role' => 'tab'
+                ])->setText(
+                    $this->html('h4')->setClass('panel-title')->setText(
+                        $this->html('a')->setAttributes([
+                            'class' => 'btn btn-primary',
+                            'data-toggle' => 'collapse',
+                            'data-parent' => '#accordion',
+                            'href' => '#collapseOne',
+                            'aria-expanded' => 'false',
+                            'aria-controls' => 'collapseOne',
+                            'role' => 'button'
+                        ])->setText('Mais configurações')
+                    )
+                )->appendText(
+                    $this->html('div')->setAttributes([
+                        'id' => 'collapseOne',
+                        'class' => 'panel-collapse collapse',
+                        'aria-expanded' => 'false',
+                        'aria-labelledby' => 'headingOne',
+                        'role' => 'tabpanel'
+                    ])->setText(
+                        $this->html('div')->setClass('panel-body')->setText(
+                            $this->El()->hidden('id')->hidden('empresa')->hidden('assets')
+                                ->input('status')
+                                ->hidden('parent')
+                                ->hidden('created_at')
+                                ->hidden('updated_at')
+                                ->input('name')
+                                ->render($this->html('div')->setClass('row'))
+                        )->appendText(
+                            $this->El()
+                                ->setClass('col-md-4 col-xs-12')
+                                ->input('cover_width')
+                                ->input('cover_height')
+                                ->input('cover_quality')
+                                ->render($this->html('div')->setClass('row'))
+                        )->appendText(
+                            $this->El()->input('description')->render($this->html('div')->setClass('row'))
+                        )->appendText(
+                            $this->html('div')->setAttributes([
+                                'class' => 'progress',
+                            ])->setText(
+                                $this->html('div')->setAttributes([
+                                    'id' => 'upload-progress',
+                                    'class' => 'progress-bar progress-bar-primary progress-bar-striped',
+                                    'role' => 'progressbar',
+                                    'aria-valuenow' => '40',
+                                    'aria-valuemin' => '0',
+                                    'aria-valuemax' => '100',
+                                ])->setText($this->html('span')->setAttributes([
+                                    'class' => 'sr-only',
+                                    'style' => "min-width: 2em;"
+                                ])->setText(''))
+                            )
+
+                        )
+                    )
+                )
+
+            )
+        )
+    )
+
+    )->appendText(
+//ADD PANEL FOOTER
+        $this->html('div')->setClass('panel-footer')->setText(
+            $this->Actions()
+                ->dismiss(4)
+                ->upload(8)
+                ->render($this->html('div')->setClass('row'))
+        )
+    )
+); ?>
+    <script src="<?= $this->basePath('admin-lte/js/upload.init.js') ?>"></script>
+<?= $this->form()->closeTag(); ?>

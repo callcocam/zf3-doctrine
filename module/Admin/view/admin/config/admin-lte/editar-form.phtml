@@ -1,0 +1,41 @@
+<?=$this->partial(sprintf('layout/%s/partial/form-error', LAYOUT),['form'=>$this->form]);?>
+<?=$this->form()->openTag($this->form->setAttribute('action',$this->url(sprintf("%s/default", $this->route), [
+    'controller'=>$this->controller,
+    'action'=>'save'
+]))->setAttribute('name','AjaxForm')->setAttribute('class',''));?>
+
+<?=$this->html('div')->setClass('panel panel-default')->setText(
+    $this->html('div')->setClass('panel-body')->setText(
+        $this->html('div')->setClass('row')->setText(
+            $this->html('div')->setClass('col-xs-12')->setText(
+                $this->El()->hidden('id')->hidden('empresa')
+                    ->setClass('col-md-5 col-xs-12')
+                    ->input('conf_name')
+                    ->input('conf_value')
+                    ->setClass('col-md-2 col-xs-12')
+                    ->input('conf_type')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->El()->setClass('col-md-4')
+                    ->timepicker('created_at')
+                    ->timepicker('updated_at')
+                    ->input('status')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                ""//$this->El()->input('description')->render($this->html('div')->setClass('row'))
+            )
+        )
+    )
+)->appendText(
+//ADD PANEL FOOTER
+    $this->html('div')->setClass('panel-footer')->setText(
+        $this->Actions()
+            ->submit()
+            ->save_copy()
+            ->save_close()
+            ->back()
+            ->render($this->html('div')->setClass('row'))
+    )
+);?>
+<?=$this->form()->closeTag();?>
+<?=$this->partial(sprintf('layout/%s/partial/messages', LAYOUT));?>

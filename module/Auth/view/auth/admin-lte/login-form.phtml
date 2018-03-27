@@ -1,0 +1,26 @@
+<?= $this->partial(sprintf('layout/%s/partial/form-error', LAYOUT), ['form' => $this->form]); ?>
+<?=$this->form()->openTag($this->form->setAttribute('action',$this->url(sprintf("%s/default", $this->route), [
+    'controller'=>$this->controller,
+    'action'=>'login'
+]))->setAttribute('name','AjaxForm')->setAttribute('class',''));?>
+<?php
+$this->form->get('submit')->setValue('Iniciar Sessão')->setAttribute('class','btn btn-primary btn-flat btn-lg btn-block')
+?>
+<?=$this->html('div')->setClass('row')->setText(
+            $this->html('div')->setClass('col-xs-12')->setText(
+                $this->El()
+                    ->setPartialExtra('-icon')
+                    ->input('email')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->El()
+                    ->input('password')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->Actions()
+                    ->submit(12)
+                    ->render($this->html('div')->setClass('row'))
+            )
+);?>
+<?=$this->form()->closeTag();?>
+<?=$this->partial(sprintf('layout/%s/partial/messages', LAYOUT));?>

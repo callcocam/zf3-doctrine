@@ -1,0 +1,5 @@
+<?= $this->partial(sprintf("layout/%s/partial/top-navigation", LAYOUT),[
+    'a'=>"Admin",'b'=>$this->route,'c'=>$this->controller,'d'=>"Modulos", "e"=>'editar']); ?>
+<?=$this->Tab()->setInfoTitle("Gerar modulo ou controle")->tabPanel(
+    $this->html('div')->setClass('col-md-12')->setText($this->html('div'))->appendText($this->render("gerar-form"))
+)->nav("Geral")->render($this->html('section')->setClass('content'));

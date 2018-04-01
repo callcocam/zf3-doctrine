@@ -11,49 +11,25 @@ namespace Core\Table\Table;
 
 class ImgConfig
 {
-
-    protected $name;
-    protected $vars = ['id'];
-    //protected $attrs = ['class'=>'img-circle','style'=>'width: 100%; display: block;'];
-    protected $attrs = ['class'=>''];
-    protected $thumbnail = true;
-
-    protected $Img;
-
-    private $Route;
-
-    private $Controller;
+ protected $Img = [
+        'vars'=>['id'=>'id','name'=>'name','createdAt'=>'createdAt'],
+        'w'=>140,
+        'h'=>140,
+        'thumbnail'=>true,
+    ];
 
     /**
-     * ButtonsConfig constructor.
-     * @param $Route
-     * @param $Controller
-     */
-    public function __construct($Route, $Controller, $Params = [])
-    {
-        $this->Route = $Route;
-        $this->Controller = $Controller;
-        $this->Params = $Params;
-    }
-
-    /**
-     * @param $name
+     * @param array $value
      * @return ImgConfig
      */
-    public function add($name){
-        $this->Img = [
-            'atrrs' => $this->getAttrs(),
-            'status' => $this->getStatus(),
-            'vars' => $this->getVars()
-        ];
+    public function add(array $value){
+
+        $this->Img = array_merge($this->Img, $value);
         return $this;
     }
 
-    public function setLink($Url, $action ="file"){
-        $this->Img['base'] = $Url(sprintf('%s/default', $this->Route), [
-            'controller' => $this->Controller,
-            'action' => $action
-        ]);
-        return $this;
+    public function getConfig(){
+        return $this->Img;
     }
+
 }

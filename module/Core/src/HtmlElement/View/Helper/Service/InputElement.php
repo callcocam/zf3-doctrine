@@ -134,6 +134,27 @@ class InputElement extends AbstractHelper
         );
         return $this;
     }
+
+    /**
+     * @param $field
+     * @param $route
+     * @param $controller
+     * @param $id
+     * @param string $action
+     * @return $this
+     */
+    public function editor($field,$route, $controller, $id, $action='upload-mce'){
+        $this->html[] =  $this->view->html('div')->setClass($this->class)->appendClass('col-xs-12')->setText(
+            $this->view->partial(sprintf('layout/%s/partial/form/editor-%s%s', LAYOUT,$this->formLayouty, $this->partialExtra),[
+                'field'=>$this->view->form->get($field),
+                'route'=>$route,
+                'action'=>$action,
+                'controller'=>$controller,
+                'id'=>$id,
+            ])
+        );
+        return $this;
+    }
     /**
      * @param $field
      * @return $this

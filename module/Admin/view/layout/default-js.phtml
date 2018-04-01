@@ -1,0 +1,22 @@
+<!-- Scripts -->
+<?php $this->headScript()->appendFile(
+    'https://oss.maxcdn.com/respond/1.4.2/respond.min.js',
+    'text/javascript',
+    ['conditional' => 'lt IE 9']
+)->appendFile(
+    'https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js',
+    'text/javascript',
+    ['conditional' => 'lt IE 9']
+)
+    ->prependFile($this->basePath('assets-admin/js/zf-table.js'))
+    ->prependFile($this->basePath('assets-admin/js/toastr.min.js'))
+    ->prependFile($this->basePath('assets-admin/js/formatCurrency.js'))
+    ->prependFile($this->basePath('assets-admin/plugins/bootstrap-timerpicker/locales/bootstrap-datepicker.pt-BR.min.js'))
+    ->prependFile($this->basePath('assets-admin/plugins/bootstrap-timerpicker/js/bootstrap-datepicker.min.js'))
+    ->prependFile($this->basePath('assets-admin/plugins/bootstrap-daterangepicker/js/daterangepicker.js'))
+    ->prependFile($this->basePath('assets-admin/plugins/moment/locale/pt-br.js'))
+    ->prependFile($this->basePath('assets-admin/plugins/moment/moment.js'))
+    ->prependFile($this->basePath('assets-admin/js/jquery-confirm.min.js'))
+    ->prependFile($this->basePath('assets-admin/js/jquery.form.min.js'))
+    ->prependFile($this->basePath('assets-admin/plugins/iCheck/icheck.min.js'))
+?>

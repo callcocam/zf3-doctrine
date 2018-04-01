@@ -25,7 +25,7 @@ class ActionsElement extends AbstractHelper
         $this->html[] = $this->view->html('div')->setClass(sprintf("col-md-%s", $class))->appendClass('col-xs-12')->setText(
             $this->view->partial(sprintf('layout/%s/partial/form/submit', LAYOUT), [
                 'element' =>  $this->view->form->get('submit')->setValue('Iniciar Sessão'),
-                'ico' => 'fa fa-refresh',
+                'ico' => 'fa  fa-unlock',
                 'title' => 'Iniciar Sessão',
             ])
         );

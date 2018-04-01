@@ -1,0 +1,141 @@
+<?= $this->doctype() ?>
+<?php // Within your view
+date_default_timezone_set('America/Sao_Paulo');
+$this->plugin('dateFormat')
+    ->setTimezone('America/Sao_Paulo')
+    ->setLocale('pt_BR');
+$acl = $this->Acl()->getAcl()
+?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?= $this->headTitle(getenv('ADMIN_NAME'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?= $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+    <!-- Le styles -->
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+        ->prependStylesheet($this->basePath('assets-admin/css/zf-table.css'))
+        ->prependStylesheet($this->basePath('assets-admin/css/toastr.min.css'))
+        ->prependStylesheet($this->basePath('assets-admin/plugins/bootstrap-timerpicker/css/bootstrap-datepicker.min.css'))
+        ->prependStylesheet($this->basePath('assets-admin/plugins/bootstrap-daterangepicker/css/daterangepicker.css'))
+        ->prependStylesheet($this->basePath('assets-admin/css/jquery-confirm.min.css'))
+        ->prependStylesheet($this->basePath('assets-admin/plugins/iCheck/square/_all.css'))
+        ->prependStylesheet($this->basePath('assets-admin/css/ionicons.css'))
+        ->prependStylesheet($this->basePath('assets-admin/css/font-awesome.css'))
+        ->prependStylesheet($this->basePath('green-vertical/css/style.css'))
+        ->prependStylesheet($this->basePath('green-vertical/plugins/fullcalendar/css/fullcalendar.min.css'))
+        ->prependStylesheet($this->basePath('green-vertical/css/icons.css'))
+        ->prependStylesheet($this->basePath('green-vertical/css/bootstrap.min.css'))
+        ->prependStylesheet($this->basePath('green-vertical/plugins/jquery-circliful/css/jquery.circliful.css'))
+        ->prependStylesheet($this->basePath('green-vertical/plugins/switchery/switchery.min.css'))
+    ?>
+
+
+    <?= $this->headScript()->appendFile(
+        'https://oss.maxcdn.com/respond/1.4.2/respond.min.js',
+        'text/javascript',
+        ['conditional' => 'lt IE 9']
+    )->appendFile(
+        'https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js',
+        'text/javascript',
+        ['conditional' => 'lt IE 9']
+    )
+        ->appendFile($this->basePath('assets-admin/js/form.init.js'))
+        ->prependFile($this->basePath('assets-admin/js/zf-alert.js'))
+        ->prependFile($this->basePath('assets-admin/js/zf-table.js'))
+        ->prependFile($this->basePath('assets-admin/js/toastr.min.js'))
+        ->prependFile($this->basePath('assets-admin/js/formatCurrency.js'))
+        ->prependFile($this->basePath('assets-admin/plugins/bootstrap-timerpicker/locales/bootstrap-datepicker.pt-BR.min.js'))
+        ->prependFile($this->basePath('assets-admin/plugins/bootstrap-timerpicker/js/bootstrap-datepicker.min.js'))
+        ->prependFile($this->basePath('assets-admin/plugins/bootstrap-daterangepicker/js/daterangepicker.js'))
+        ->prependFile($this->basePath('assets-admin/plugins/moment/locale/pt-br.js'))
+        ->prependFile($this->basePath('assets-admin/plugins/moment/moment.min.js'))
+        ->prependFile($this->basePath('assets-admin/js/jquery-confirm.min.js'))
+        ->prependFile($this->basePath('assets-admin/js/upload.init.js'))
+        ->prependFile($this->basePath('assets-admin/js/jquery.form.min.js'))
+        ->prependFile($this->basePath('assets-admin/plugins/iCheck/icheck.min.js'))
+        ->prependFile($this->basePath('green-vertical/js/bootstrap.js'))
+        ->prependFile($this->basePath('green-vertical/js/popper.min.js'))
+        ->prependFile($this->basePath('green-vertical/js/jquery.min.js'))
+        ->prependFile($this->basePath('green-vertical/js/modernizr.min.js'))
+    ?>
+
+    <!-- Scripts -->
+
+
+</head>
+<body class="fixed-left">
+<div id="wrapper" class="wrapper">
+    <?= $this->partial(sprintf("layout/%s/partial/header", LAYOUT)); ?>
+    <!-- Left side column. contains the logo and sidebar -->
+    <?= $this->navigation('Navigation')->menu()->setAcl($acl)->setRole((string)$this->identity()->getAccess())->setPartial(sprintf("layout/%s/partial/sidebar", LAYOUT)); ?>
+    <!-- Content Wrapper. Contains page content -->
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container-fluid">
+                <?= $this->partial(sprintf("layout/%s/partial/top-navigation", LAYOUT),[
+                    'a'=>"Admin",'b'=>$this->Route()->getRoute(),'c'=>$this->Route()->getController(),'d'=>"Privilege", "e"=>'editar']); ?>
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <?= $this->content ?>
+                        </div>
+                    </div> <!-- end col -->
+                </div>
+                <!--end row/ WEATHER -->
+
+
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end content -->
+
+        <footer class="footer">
+            2016 - 2018 © Minton <span class="hide-phone">- Coderthemes.com</span>
+        </footer>
+
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <?= $this->partial(sprintf("layout/%s/partial/config", LAYOUT)); ?>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+    immediately after the control sidebar -->
+    <script>
+        var resizefunc = [];
+    </script>
+
+</div><?= $this->inlineScript()
+    ->prependFile($this->basePath('green-vertical/js/jquery.app.js'))
+    ->prependFile($this->basePath('green-vertical/js/jquery.core.js'))
+    ->prependFile($this->basePath('green-vertical/pages/jquery.dashboard.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/jquery-ui/jquery-ui.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/switchery/switchery.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/skyicons/skycons.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/jquery-sparkline/jquery.sparkline.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/jquery-circliful/js/jquery.circliful.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/counterup/jquery.counterup.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/waypoints/lib/jquery.waypoints.min.js'))
+    ->prependFile($this->basePath('green-vertical/plugins/switchery/switchery.min.js'))
+    ->prependFile($this->basePath('green-vertical/js/jquery.scrollTo.min.js'))
+    ->prependFile($this->basePath('green-vertical/js/jquery.nicescroll.js'))
+    ->prependFile($this->basePath('green-vertical/js/wow.min.js'))
+    ->prependFile($this->basePath('green-vertical/js/waves.js'))
+    ->prependFile($this->basePath('green-vertical/js/jquery.blockUI.js'))
+    ->prependFile($this->basePath('green-vertical/js/jquery.slimscroll.js'))
+    ->prependFile($this->basePath('green-vertical/js/fastclick.js'))
+    ->prependFile($this->basePath('green-vertical/js/detect.js'))
+?>
+
+</body>
+</html>

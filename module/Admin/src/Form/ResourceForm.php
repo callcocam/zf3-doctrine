@@ -25,19 +25,7 @@ class ResourceForm extends AbstractForm
         $this->util = new Utils();
 
         ################# name #################
-        $this->add([
-            'type'=>Text::class,
-            'name'=>'name',
-            'options'=>[
-                'label'=>'Nome\Descrição'
-            ],
-            'attributes'=>[
-                'id'=>'name',
-                'class'=>'form-control',
-                'placeholder'=>'Nome\Descrição',
-                'required'=>true,
-            ]
-        ]);
+        $this->addText('name', 'Nome\Descrição');
         $invokables = $this->getResources('invokables');
         $factories = $this->getResources('factories');
         $resources=[];
@@ -69,19 +57,7 @@ class ResourceForm extends AbstractForm
 
 
         ################# route  #################
-        $this->add([
-            'type'=>Text::class,
-            'name'=>'route',
-            'options'=>[
-                'label'=>'Rota'
-            ],
-            'attributes'=>[
-                'id'=>'route',
-                'class'=>'form-control',
-                'placeholder'=>'route',
-                'required'=>true,
-            ]
-        ]);
+        $this->addText('route','Rota');
 
     }
 

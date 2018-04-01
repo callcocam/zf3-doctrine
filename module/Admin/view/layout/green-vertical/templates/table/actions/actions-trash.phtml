@@ -1,0 +1,9 @@
+<th><a href="<?= $this->url($this->Route()->getRoute(), [
+        'controller' => $this->Route()->getController(),
+        'action' => "state",
+        'id' => "3"
+    ]); ?>" class="actions btn btn-dark waves-light btn-lg btn-block" id ="trash">
+    <i class="fa fa-trash"></i>
+            <?= $this->translate("Enviar p/ Lixeira"); ?>
+        </a>
+</th>

@@ -54,6 +54,7 @@ abstract class AbstractTable extends AbstractElement implements TableInterface
      */
     private $dateFiltersObjects;
 
+
     protected $buttonConfig;
     /**
      * List of headers with title and width option
@@ -66,6 +67,8 @@ abstract class AbstractTable extends AbstractElement implements TableInterface
     protected $valuesOfItemPerPage = [5=>5, 10=>10, 20=>20, 50=>50 , 100=>100];
 
     protected $actions;
+
+    protected $coverConfig;
 
      /**
      *
@@ -338,12 +341,14 @@ abstract class AbstractTable extends AbstractElement implements TableInterface
 
     public function setSearch($name){
             $quickSearch = new Search($this->getParamAdapter()->getQuickSearch());
+            $quickSearch->setView(new Template($this->container));
             $this->quickSearchObjects[$name] = $quickSearch;
         return $this;
     }
 
     public function setDateFilters($name){
             $dateFilters = new DateFilters($this->getParamAdapter()->getStartDate(),$this->getParamAdapter()->getEndDate());
+            $dateFilters->setView(new Template($this->container));
             $this->dateFiltersObjects[$name] = $dateFilters;
         return $this;
     }
@@ -387,7 +392,7 @@ abstract class AbstractTable extends AbstractElement implements TableInterface
         foreach ($actions as $name => $options) {
             $action = new Actions($name, $options, $this->getParamAdapter()->getStatus());
             $action->setTable($this);
-            $action->addUrl($this->url);
+            $action->setView(new Template($this->container));
             $this->actionsObjects[$name] = $action;
         }
         return $this;
@@ -397,6 +402,7 @@ abstract class AbstractTable extends AbstractElement implements TableInterface
         $this->valuesOfState = $valuesOfState;
         foreach ($valuesOfState as $value => $Label) {
             $Status = new Status($value, $Label, $this->getParamAdapter()->getStatus());
+            $Status->setView(new Template($this->container));
             $this->statusObjects[$Label] = $Status;
         }
         return $this;
@@ -406,6 +412,7 @@ abstract class AbstractTable extends AbstractElement implements TableInterface
         $this->valuesOfItemPerPage = $valuesOfItemPerPage;
         foreach ($valuesOfItemPerPage as $value => $Label) {
             $ItemPerPage = new ValuesOfItemPerPage($value, $Label,$this->getParamAdapter()->getItemCountPerPage());
+            $ItemPerPage->setView(new Template($this->container));;
             $ItemPerPage->setTable($this);
             $this->valuesOfItemPerPageObjects[$value] = $ItemPerPage;
         }

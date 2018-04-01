@@ -1,0 +1,54 @@
+<?php //$users = $this->identity();?>
+<?php //$acl = $this->Acl()->getAcl();?>
+<?php //$state = $acl->isAllowed($users->access,$this->Route()->getParan('controller'),'state')?"":"disabled";
+$state ="";
+$Btns=[];
+?>
+
+<?php if($this->showButtonsActions):
+    foreach ($this->valueButtonsActions as $key => $item):
+        array_filter($item);
+        $paramsUrl =  [
+            'controller'=>$this->controller,
+            'action'=> $item['action'],
+            'id'=> $item['id']
+        ];
+        $disabled = isset($item['disabled'])?"disabled":"";?>
+        <?php if ($this->valuesState): ?>
+        <?php if (array_search($this->valuesState,$item['state'])):
+            $Btns[] =  $this->html('a')->setAttributes(
+                [
+                    "href"  =>   $this->url(sprintf("%s/default", $this->route),array_filter($paramsUrl),false),
+                    "id" => $item['id'],
+                    "style" =>  'margin-left: 10px;',
+                    "class" =>  sprintf($item['class'], $state).' '.$disabled
+                ]
+            )->setText($this->html('i')->setClass($item['ico']))->appendText($this->translate($item['label']));
+            ?>
+        <?php endif; ?>
+    <?php else:?>
+        <?php if (isset($item['state']) && array_search(1, $item['state']) || array_search(2, $item['state'])):
+            $Btns[] =  $this->html('a')->setAttributes(
+                [
+                    "href"  =>   $this->url(sprintf("%s/default", $this->route),array_filter($paramsUrl),false),
+                    "id" => $item['id'],
+                    "style" =>  'margin-left: 10px;',
+                    "class" =>  sprintf($item['class'], $state).' '.$disabled
+                ]
+            )->setText($this->html('i')->setClass($item['ico']))->appendText($this->translate($item['label']));
+        endif; ?>
+    <?php endif; ?>
+    <?php endforeach; ?>
+    <?=$this->html('div')->setClass('mailbox-controls')->setText(
+    $this->html('div')->setClass('btn-group')->setText(
+        implode("", $Btns)
+    )
+)->appendText(
+    $this->html('div')->setAttributes(
+        [
+            "style" =>  'margin-left: 10px;',
+            "class" =>  'pull-right'
+        ]
+    )->setText($this->pages['firstItemNumber'])->appendText('-')->appendText($this->pages['lastItemNumber'])
+        ->appendText('/')->appendText($this->pages['totalItemCount']));?>
+<?php endif;?>

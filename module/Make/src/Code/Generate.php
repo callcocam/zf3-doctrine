@@ -29,8 +29,8 @@ class Generate
     public function __construct($data)
     {
         $this->Default = [
-            "S_Name" => ucfirst($data['controller']),
-            "S_Demo" => ucfirst($data['route']),
+            "S_Name" => $this->filteredName($data['controller']),
+            "S_Demo" => $this->filteredName($data['alias']),
             "S_route" => $data['route'],
             "S_controller" => $data['controller'],
         ];
@@ -72,12 +72,15 @@ class Generate
                 endif;
             }
         }
-        if (file_exists("./module/{$this->data['alias']}/config/module.demo.php")) {
-            unlink("./module/{$this->data['alias']}/config/module.demo.php");
+        if (file_exists("./module/{$this->filteredName($this->data['alias'])}/config/module.demo.php")) {
+            unlink("./module/{$this->filteredName($this->data['alias'])}/config/module.demo.php");
         }
 
-        if (file_exists("./module/{$this->data['alias']}/src/_Module.php")) {
-            unlink("./module/{$this->data['alias']}/src/_Module.php");
+        if (!file_exists("./module/{$this->filteredName($this->data['alias'])}/src/Module.php")) {
+            Debug::dump($this->copyemz("./module/{$this->filteredName($this->data['alias'])}/src/_Module.php", "./module/{$this->filteredName($this->data['alias'])}/src/Module.php"));
+         }
+        if (file_exists("./module/{$this->filteredName($this->data['alias'])}/src/_Module.php")) {
+            unlink("./module/{$this->filteredName($this->data['alias'])}/src/_Module.php");
         }
         return implode("", $Cried);
     }
@@ -96,21 +99,21 @@ class Generate
             $Controller["Home\Controller\Start"] = "Home\Controller\Factory\FactoryController";
         endif;
         foreach ($Alias as $alia):
-            $Controller[sprintf("%s\Controller\%s", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Controller\Factory\FactoryController", ucfirst($alia->getAlias()));
-            $Services[sprintf("%s\Service\%sService", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Service\Factory\FactoryService", ucfirst($alia->getAlias()));
-            $Form[sprintf("%s\Form\%sForm", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Form\Factory\FactoryForm", ucfirst($alia->getAlias()));
-            $Filter[sprintf("%s\Filter\%sFilter", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Filter\Factory\FactoryFilter", ucfirst($alia->getAlias()));
-            $Table[sprintf("%s\Table\%sTable", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Table\Factory\FactoryTable", ucfirst($alia->getAlias()));
+            $Controller[sprintf("%s\Controller\%s", $this->filteredName($alia->getAlias()), $this->filteredName($alia->getController()))] = sprintf("\%s\Controller\Factory\FactoryController", $this->filteredName($alia->getAlias()));
+            $Services[sprintf("%s\Service\%sService", $this->filteredName($alia->getAlias()), $this->filteredName($alia->getController()))] = sprintf("\%s\Service\Factory\FactoryService", $this->filteredName($alia->getAlias()));
+            $Form[sprintf("%s\Form\%sForm", $this->filteredName($alia->getAlias()), $this->filteredName($alia->getController()))] = sprintf("\%s\Form\Factory\FactoryForm", $this->filteredName($alia->getAlias()));
+            $Filter[sprintf("%s\Filter\%sFilter", $this->filteredName($alia->getAlias()), $this->filteredName($alia->getController()))] = sprintf("\%s\Filter\Factory\FactoryFilter", $this->filteredName($alia->getAlias()));
+            $Table[sprintf("%s\Table\%sTable", $this->filteredName($alia->getAlias()), $this->filteredName($alia->getController()))] = sprintf("\%s\Table\Factory\FactoryTable", $this->filteredName($alia->getAlias()));
         endforeach;
         $writer = new PhpArray();
         $configController = new Config($Controller);
-        $configServices = new Config(['session_manager' => $Services ]);
-        $configForm = new Config(['session_manager' => $Form ]);
-        $configFilter = new Config(['session_manager' => $Filter ]);
-        $configTable = new Config(['session_manager' => $Table ]);
+        $configServices = new Config(['session_manager' => $Services]);
+        $configForm = new Config(['session_manager' => $Form]);
+        $configFilter = new Config(['session_manager' => $Filter]);
+        $configTable = new Config(['session_manager' => $Table]);
 
         file_put_contents("./module/{$this->data['alias']}/config/controller.service.php", $writer->toString($configController));
-         file_put_contents("./config/autoload/filter.global.php", $writer->toString($configFilter));
+        file_put_contents("./config/autoload/filter.global.php", $writer->toString($configFilter));
         file_put_contents("./config/autoload/form.global.php", $writer->toString($configForm));
         file_put_contents("./config/autoload/table.global.php", $writer->toString($configTable));
         file_put_contents("./config/autoload/service.global.php", $writer->toString($configServices));
@@ -118,74 +121,6 @@ class Generate
 
     }
 
-    public function generate_service_table($Alias)
-    {
-        if ($this->data['alias'] == 'Admin'):
-            $service["Admin\Controller\Admin"] = "Admin\Controller\Factory\FactoryController";
-        endif;
-        if ($this->data['alias'] == 'Home'):
-            $service["Home\Controller\Start"] = "Home\Controller\Factory\FactoryController";
-        endif;
-        foreach ($Alias as $alia):
-            $service[sprintf("%s\Controller\%s", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Controller\Factory\FactoryController", ucfirst($alia->getAlias()));
-        endforeach;
-        $config = new Config($service);
-        $writer = new PhpArray();
-        file_put_contents("./module/{$this->data['alias']}/config/controller.service.php", $writer->toString($config));
-
-
-    }
-    public function generate_service_form($Alias)
-    {
-        if ($this->data['alias'] == 'Admin'):
-            $service["Admin\Controller\Admin"] = "Admin\Controller\Factory\FactoryController";
-        endif;
-        if ($this->data['alias'] == 'Home'):
-            $service["Home\Controller\Start"] = "Home\Controller\Factory\FactoryController";
-        endif;
-        foreach ($Alias as $alia):
-            $service[sprintf("%s\Controller\%s", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Controller\Factory\FactoryController", ucfirst($alia->getAlias()));
-        endforeach;
-        $config = new Config($service);
-        $writer = new PhpArray();
-        file_put_contents("./module/{$this->data['alias']}/config/controller.service.php", $writer->toString($config));
-
-
-    }
-    public function generate_service_filter($Alias)
-    {
-        if ($this->data['alias'] == 'Admin'):
-            $service["Admin\Controller\Admin"] = "Admin\Controller\Factory\FactoryController";
-        endif;
-        if ($this->data['alias'] == 'Home'):
-            $service["Home\Controller\Start"] = "Home\Controller\Factory\FactoryController";
-        endif;
-        foreach ($Alias as $alia):
-            $service[sprintf("%s\Controller\%s", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Controller\Factory\FactoryController", ucfirst($alia->getAlias()));
-        endforeach;
-        $config = new Config($service);
-        $writer = new PhpArray();
-        file_put_contents("./module/{$this->data['alias']}/config/controller.service.php", $writer->toString($config));
-
-
-    }
-    public function generate_service_service($Alias)
-    {
-        if ($this->data['alias'] == 'Admin'):
-            $service["Admin\Controller\Admin"] = "Admin\Controller\Factory\FactoryController";
-        endif;
-        if ($this->data['alias'] == 'Home'):
-            $service["Home\Controller\Start"] = "Home\Controller\Factory\FactoryController";
-        endif;
-        foreach ($Alias as $alia):
-            $service[sprintf("%s\Controller\%s", ucfirst($alia->getAlias()), ucfirst($alia->getController()))] = sprintf("\%s\Controller\Factory\FactoryController", ucfirst($alia->getAlias()));
-        endforeach;
-        $config = new Config($service);
-        $writer = new PhpArray();
-        file_put_contents("./module/{$this->data['alias']}/config/controller.service.php", $writer->toString($config));
-
-
-    }
 
     private function copyemz($file1, $file2)
     {
@@ -218,8 +153,142 @@ class Generate
      */
     public function getDestine($destine, $item)
     {
-        $itemDest = str_replace(["Demo", "demo", "s_name"], [ucfirst($this->newName), strtolower($this->data['alias']), strtolower($this->newName)], $item);
+        $itemDest = str_replace(["Demo", "demo", "s_name"], [$this->filteredName($this->newName), strtolower($this->data['alias']), strtolower($this->newName)], $item);
         return sprintf("%s/%s", $destine, $itemDest);
+    }
+
+    /**
+     * Processo de tratamento para o mecanismo MVC
+     * @param string $input String que será convertida
+     * @return string           String convertida
+     */
+    public function filteredName(string $input): string
+    {
+//        $input = explode('?', $input);
+//        $input = $input[0];
+        $find = [
+            '-',
+            '_'
+        ];
+        $replace = [
+            ' ',
+            ' '
+        ];
+        return str_replace(' ', '', ucwords(str_replace($find, $replace, $input)));
+    }
+
+    public function filteredFileName(string $input): string
+    {
+        $input = trim($input);
+        //Remove " caso exista
+        $new = str_replace('&#34;', '', $input);
+        $find = [
+            '  ',
+            '"',
+            'á',
+            'ã',
+            'à',
+            'â',
+            'ª',
+            'é',
+            'è',
+            'ê',
+            'ë',
+            'í',
+            'ì',
+            'î',
+            'ï',
+            'ó',
+            'ò',
+            'õ',
+            'ô',
+            '°',
+            'º',
+            'ö',
+            'ú',
+            'ù',
+            'û',
+            'ü',
+            'ç',
+            'ñ',
+            'Á',
+            'Ã',
+            'À',
+            'Â',
+            'É',
+            'È',
+            'Ê',
+            'Ë',
+            'Í',
+            'Ì',
+            'Î',
+            'Ï',
+            'Ó',
+            'Ò',
+            'Õ',
+            'Ô',
+            'Ö',
+            'Ú',
+            'Ù',
+            'Û',
+            'Ü',
+            'Ç',
+            'Ñ',
+        ];
+        $replace = [
+            '',
+            '',
+            'a',
+            'a',
+            'a',
+            'a',
+            'a',
+            'e',
+            'e',
+            'e',
+            'e',
+            'i',
+            'i',
+            'i',
+            'i',
+            'o',
+            'o',
+            'o',
+            'o',
+            'o',
+            'o',
+            'o',
+            'u',
+            'u',
+            'u',
+            'u',
+            'c',
+            'n',
+            'A',
+            'A',
+            'A',
+            'A',
+            'E',
+            'E',
+            'E',
+            'E',
+            'I',
+            'I',
+            'I',
+            'I',
+            'O',
+            'O',
+            'O',
+            'O',
+            'O',
+            'U',
+            'U',
+            'U',
+            'U',
+            'C',
+            'N',
+        ];
+        return strtolower(str_replace(' ', '_', str_replace($find, $replace, $new)));
     }
 
 }

@@ -10,6 +10,7 @@ namespace Core\Table;
 use Core\Service\Date;
 use Core\View\Helper\RouteHelper;
 use Interop\Container\ContainerInterface;
+use Zend\Mvc\Service\ViewHelperManagerFactory;
 use Zend\View\Helper\Url;
 
 abstract class AbstractCommon
@@ -89,22 +90,6 @@ abstract class AbstractCommon
         return $this;
     }
 
-    /**
-     * @return Acl
-     */
-    public function getAcl() {
-        return $this->acl;
-    }
-
-    /**
-     * @param Acl $acl
-     *
-     * @return AbstractCommon
-     */
-    public function setAcl(Acl $acl) {
-        $this->acl = $acl;
-        return $this;
-    }
 
     /**
      * @return string

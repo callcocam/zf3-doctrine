@@ -1,0 +1,9 @@
+<th><a href="<?= $this->url($this->Route()->getRoute(), [
+        'controller' => $this->Route()->getController(),
+        'action' => "state",
+        'id' => "1"
+    ]); ?>" class="btn btn-warning actions waves-light btn-lg btn-block" id ="active">
+    <i class="fa fa-check"></i>
+            <?= $this->translate("Ativar"); ?>
+        </a>
+</th>

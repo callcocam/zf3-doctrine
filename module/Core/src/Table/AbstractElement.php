@@ -8,6 +8,7 @@
 namespace Core\Table;
 
 use Core\Table\AbstractCommon;
+use Zend\View\Model\ViewModel;
 
 abstract class AbstractElement extends AbstractCommon
 {
@@ -41,7 +42,11 @@ abstract class AbstractElement extends AbstractCommon
      * Array of vars attr
      * @var array
      */
-    protected $varAttr= array();
+    protected $varAttr = array();
+    /**
+     * @var ViewModel
+     */
+    protected $tPl;
 
     /**
      * Add new class to element
@@ -71,9 +76,9 @@ abstract class AbstractElement extends AbstractCommon
         return $this;
     }
 
-     /**
+    /**
      * Add new var class to element
-      *
+     *
      * @param string $class
      * @return $this
      */
@@ -161,7 +166,7 @@ abstract class AbstractElement extends AbstractCommon
         return ' ' . implode(' ', $ret);
     }
 
-     /**
+    /**
      * Clearing var classes
      */
     public function clearVar()
@@ -197,5 +202,15 @@ abstract class AbstractElement extends AbstractCommon
     protected function attachDecorator($decorator)
     {
         $this->decorators[] = $decorator;
+    }
+    public function getTpl($tpl)
+    {
+        $this->tPl->setTemplate($tpl);
+        return $this;
+    }
+    public function setTpl(ViewModel $view)
+    {
+        $this->tPl = $view;
+        return $this;
     }
 }

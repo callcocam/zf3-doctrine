@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <button id="add-category" type="button" data-url="<?=$this->url(sprintf("%s/default",$this->route),[
+                                    'controller'=>'evento',
+                                    'action'=>'add',
+                                    'id'=>'id',
+                                ]);?>" class="btn btn-lg btn-primary btn-block waves-effect waves-light">
+                                    <i class="fa fa-plus"></i> <?=$this->translate('Add Categoria');?>
+                                </button>
+                                <div id="external-events" class="m-t-20">
+                                    <div id='loading'>carregando...</div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            <div class="col-lg-9">
+                <div class="card-box">
+                    <div id='loading'>carregando...</div>
+                    <div id="calendar" data-url="<?=$this->url(sprintf("%s/default",$this->route),[
+                            'controller'=>$this->controller,
+                            'action'=>'action',
+                            'id'=>'id',
+                    ]);?>"></div>
+                </div>
+            </div> <!-- end col -->
+        </div>  <!-- end row -->
+
+    </div>
+    <!-- end col-12 -->
+</div> <!-- end row -->
+
+</div>
+<!-- end container -->
+<?php $this->inlineScript()
+    ->appendFile($this->basePath('/green-vertical/plugins/fullcalendar/js/fullcalendar.min.js'))
+    ->appendFile($this->basePath('/assets-admin/js/jquery.fullcalendar.js'))
+    ->appendFile($this->basePath('/green-vertical/plugins/fullcalendar/js/pt-br.js'));
+?>

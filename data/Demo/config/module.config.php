@@ -18,7 +18,7 @@ return [
                     "route" => "/S_route",
                     "defaults" => [
                         "__NAMESPACE__" => "S_Demo\Controller",
-                        "controller" => "S_Demo",
+                        "controller" => "S_Name",
                         "action" => "index",
                     ],
                 ],
@@ -29,7 +29,7 @@ return [
                     "route" => "/S_route",
                     "defaults" => [
                         "__NAMESPACE__" => "S_Demo\Controller",
-                        "controller" => "S_Demo",
+                        "controller" => "S_Name",
                         "action" => "index",
                     ],
                 ],

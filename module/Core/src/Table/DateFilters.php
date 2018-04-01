@@ -17,6 +17,7 @@ class DateFilters extends AbstractElement
     protected $start_date;
     protected $end_date;
     protected $dateFormatLong;
+    private $view;
 
     /**
      * Array of options
@@ -31,22 +32,23 @@ class DateFilters extends AbstractElement
     }
 
     /**
-     * @param PhpRenderer $view
+     * @param $view
      * @return DateFilters
      */
-    public function setView(PhpRenderer $view)
+    public function setView( $view )
     {
-        $this->dateFormat = $view->getHelperPluginManager()->getRenderer();
+        $this->view = $view;
         return $this;
     }
-
+    /**
+     * Init header (like asc, desc, column name )
+     */
 
     /**
      *
      */
     protected function initRendering()
     {
-
          if(!empty($this->start_date) && !empty($this->start_date)):
             $start_date = date_create($this->start_date);
             $end_date = date_create($this->end_date);
@@ -62,9 +64,8 @@ class DateFilters extends AbstractElement
     public function render()
     {
         $this->initRendering();
-        return sprintf("<button type='button'  style='margin-right: 10px;' class='btn btn-default btn-lg pull-right' id='daterange-btn'>
-                                        <span><i class='fa fa-calendar'></i> %s</span>
-                                        <i class='fa fa-caret-down'></i>
-                                    </button>",$this->dateSearch);
+        return $this->view->render("/table/date-time-piker",[
+            'dateSearch' => $this->dateSearch,
+        ]);
     }
 }

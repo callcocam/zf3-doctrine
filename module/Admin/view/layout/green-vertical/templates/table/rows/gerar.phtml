@@ -1,0 +1,9 @@
+<a class="btn btn-success btn-sm" id="gerar-<?=$this->id?>" data-state="<?=$this->id?>"
+   href="<?=$this->url($this->Route()->getRoute(),
+    [
+        "controller"=>$this->Route()->getController(),
+        "action"=>"gerar",
+        "id"=>$this->id
+    ])?>">
+    <i class="fa fa-gears"> </i>
+</a>

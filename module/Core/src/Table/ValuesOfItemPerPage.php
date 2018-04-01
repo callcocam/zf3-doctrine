@@ -34,6 +34,7 @@ class ValuesOfItemPerPage extends AbstractElement
      * @var string $class
      */
     protected $class = "itemPerPage form-control input-lg";
+    private $view;
 
     /**
      * Array of options
@@ -50,15 +51,15 @@ class ValuesOfItemPerPage extends AbstractElement
         $this->statusLabel = $Label;
         $this->statusValue = $Value;
     }
+
     /**
-     * Set reference to table
-     *
-     * @param $table
-     * @return void|\Core\Table\AbstractCommon
+     * @param $view
+     * @return ValuesOfItemPerPage
      */
-    public function setTable($table)
+    public function setView( $view )
     {
-        $this->table = $table;
+        $this->view = $view;
+        return $this;
     }
 
 
@@ -78,8 +79,12 @@ class ValuesOfItemPerPage extends AbstractElement
     public function render()
     {
         $this->initRendering();
-        return sprintf("<option %s value='%s'>%s</option>",$this->statusSelect, $this->statusValue, $this->statusLabel);
-    }
+        return $this->view->render("/table/option",[
+            'statusSelect' => $this->statusSelect,
+            'statusValue' => $this->statusValue,
+            'statusLabel' => $this->statusLabel,
+        ]);
+      }
 
     public function getClass(){
         return $this->class;

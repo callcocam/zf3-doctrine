@@ -22,6 +22,7 @@ class LayoutErrorListener extends Event
         if (!$error) {
             return;
         }
+
        // file_put_contents("./data/log.log",implode("",$error->getError()));
         $response = $e->getResponse();
         $exception = $e->getParam('exception');
@@ -47,7 +48,10 @@ class LayoutErrorListener extends Event
 
         $sm = $e->getApplication()->getServiceManager();
         $serviceLog = $sm->get('errorhandling');
-        $serviceLog->logException($exception);
+        if($exception){
+           $serviceLog->logException($exception);
+        }
+        //var_dump($exception);
 
         $model = new ViewModel(['errors' => [$errorJson],'debug'=>true]);
         $model->setTerminal(true);

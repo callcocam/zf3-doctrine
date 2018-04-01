@@ -29,6 +29,7 @@ class DecoratorPluginManager
         'cellstate' => '\Core\Table\Decorator\Cell\State',
         'cellcheck' => '\Core\Table\Decorator\Cell\Check',
         'cellbtn' => '\Core\Table\Decorator\Cell\Btn',
+        'cellimg' => '\Core\Table\Decorator\Cell\Img',
 
 
         'rowclass' => '\Core\Table\Decorator\Row\ClassDecorator',

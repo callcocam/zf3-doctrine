@@ -1,0 +1,6 @@
+<div id="tableContainer"  style="position: relative;min-height: 500px">
+    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 85%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<script>
+    $("#tableContainer").zfTable('<?=$this->url("{$this->route}/default",['controller'=>$this->controller, 'action'=>'listar'])?>');
+</script>

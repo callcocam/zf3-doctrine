@@ -11,10 +11,9 @@
  * This should be an array of module namespaces used in the application.
  */
 return [
-    'Zend\Mvc\Console',
+    'Zend\Paginator',
     'Zend\Mail',
     'Zend\Navigation',
-    'Zend\Paginator',
     'Zend\Cache',
     'Zend\Session',
     'Zend\Mvc\Plugin\Prg',
@@ -33,7 +32,9 @@ return [
     'Admin',
     'Auth',
     'Make',
+    'Agenda',
     'Home',
-    'Api',
-    'Register'
+    'ControleEstoque',
+    //'Api',
+    //'Register'
 ];

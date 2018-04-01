@@ -5,6 +5,7 @@
  */
 namespace Admin;
 
+use Admin\View\Helper\Message;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
@@ -47,7 +48,7 @@ class Module implements ServiceProviderInterface, ViewHelperProviderInterface
 
             ],
             'invokables'=>[
-
+               'Message'=>Message::class
             ]
         ];
     }

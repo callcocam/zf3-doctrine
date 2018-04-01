@@ -27,7 +27,7 @@ class MakeTable extends AbstractTable
     {
 
         parent::__construct($container);
-
+        $this->container = $container;
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
 
         $this->headers = (new HeadersConfig())
@@ -48,8 +48,7 @@ class MakeTable extends AbstractTable
 
     public function init()
     {
-        $this->buttonConfig = new ButtonsConfig($this->getRoute(), $this->getController());
-        $this->buttonConfig->setParams($this->getRouteHelper()->getParans());
+        $this->buttonConfig = new ButtonsConfig();
 
 //        $this->getHeader('cover')->getCell()->addDecorator('img', [
 //            (new ImgConfig())
@@ -59,12 +58,9 @@ class MakeTable extends AbstractTable
 //        ]);
 
         $this->getHeader('name')->getCell()->addDecorator('link', [
-            'url' =>  $this->getUrl(sprintf('%s/default', $this->Route), [
-                'controller'=> $this->Controller,
-                'action'=>'create',
-                'id' => "%s"
-            ]),
-            'vars' => ['id'],
+            'action'=>'create',
+            'vars' => 'id',
+          //  'container'=>$this->container
         ]);
         $this->getHeader('id')->addDecorator('check');
         $this->getHeader('id')->getCell()->addDecorator('check');
@@ -83,31 +79,18 @@ class MakeTable extends AbstractTable
 
 
         $this->buttonConfig->setName("editar")
-            ->add("editar")
-            ->setLink($this->url);
+            ->add("editar");
 
         $this->buttonConfig->setName("gerar")
-            ->setAttrs([
-                'class'=>'btn btn-primary btn-xs btn-flat'
-            ])
-            ->setIcone('fa fa-gears')
-            ->add("gerar")
-            ->setLink($this->url,"gerar");
+            ->add("gerar");
 
         $this->buttonConfig->setName("excluir")
-            ->setIcone('fa fa-trash')
-            ->setAttrs([
-                'class'=>'btn btn-danger btn-xs btn-flat j_confirm_delete',
-                'data-state' => '%s'
-            ])
             ->setStatus([1,2,3])
-            ->add("excluir")
-            ->setLink($this->url,"action","id");
+            ->add("excluir");
 
 
         $this->getHeader('status')->getCell()->addDecorator('btn', [
-            'params' => $this->getRouteHelper()->getParans(),
-            'url' => $this->buttonConfig,
+            'url' => $this->buttonConfig
         ]);
 
         //$this->getHeader('fantasia')->addClass('text-center');

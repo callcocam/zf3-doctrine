@@ -29,7 +29,8 @@ class HeadersConfig
      */
     protected $headers = [];
 
-    public function add($name,array $header , $position){
+    public function add($name,array $header , $position,$join=null){
+
         $this->headers=[];
         foreach ($this->defaultHeaders as $index => $defaultHeader) {
             $this->headers[$index] = $defaultHeader;
@@ -37,6 +38,9 @@ class HeadersConfig
                 $this->headers[$name] = $header;
             }
          }
+        if($join){
+            $this->headers[$name]['join'] = $join;
+        }
          $this->defaultHeaders = $this->headers;
         return $this;
     }

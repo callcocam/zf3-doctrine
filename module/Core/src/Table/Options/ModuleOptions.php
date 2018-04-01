@@ -125,6 +125,18 @@ class ModuleOptions extends AbstractOptions implements
                 'data-table-init' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/data-table-init.phtml',__DIR__, LAYOUT),
                 'custom-b2' =>sprintf(  '%s/../../../../Admin/view/layout/%s/templates/custom-b2.phtml',__DIR__, LAYOUT),
                 'custom-b3' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/custom-b3.phtml',__DIR__, LAYOUT),
+                'search' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/search.phtml',__DIR__, LAYOUT),
+                'option' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/option.phtml',__DIR__, LAYOUT),
+                'select-status' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/select-status.phtml',__DIR__, LAYOUT),
+                'item-per-page' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/item-per-page.phtml',__DIR__, LAYOUT),
+                'data-table-filter' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/data-table-filter.phtml',__DIR__, LAYOUT),
+                'date-time-piker' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/date-time-piker.phtml',__DIR__, LAYOUT),
+                'actions-add' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/actions/actions-add.phtml',__DIR__, LAYOUT),
+                'actions-active' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/actions/actions-active.phtml',__DIR__, LAYOUT),
+                'actions-inactive' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/actions/actions-inactive.phtml',__DIR__, LAYOUT),
+                'actions-trash' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/actions/actions-trash.phtml',__DIR__, LAYOUT),
+                'actions-ajuda' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/actions/actions-ajuda.phtml',__DIR__, LAYOUT),
+                'actions-csv' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/actions/actions-csv.phtml',__DIR__, LAYOUT),
         );
 
         parent::__construct($options);
@@ -189,7 +201,7 @@ class ModuleOptions extends AbstractOptions implements
      */
     public function setTemplateMap($templateMap)
     {
-        $this->templateMap = $templateMap;
+        $this->templateMap =array_merge($this->templateMap, $templateMap);
     }
 
 

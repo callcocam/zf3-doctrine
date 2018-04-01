@@ -75,7 +75,6 @@ class CreateController extends AbstractController
         if (is_string($this->filter)):
             $this->getFilter();
         endif;
-
         if ($this->params()->fromPost()):
             $this->data = $this->params()->fromPost();
             $this->data['status'] = 1;
@@ -103,6 +102,7 @@ class CreateController extends AbstractController
         endif;
         $view = new ViewModel($this->args);
         $view->setVariable('form', $this->form);
+        $view->setTemplate(sprintf("make/%s/%s/gerar-form", $this->controller,LAYOUT));
         $view->setTerminal(true);
         $view->setVariable('route', $this->getRoute($this->route));
         $view->setVariable('controller', $this->controller);

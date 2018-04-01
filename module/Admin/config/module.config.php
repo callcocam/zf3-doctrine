@@ -65,6 +65,17 @@ return [
 
                 ],
             ],
+            "adm-upload" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/admin/upload",
+                    "defaults" => [
+                        "__NAMESPACE__" => "Admin\Controller",
+                        "controller" => "Upload",
+                        "action" => "upload",
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [

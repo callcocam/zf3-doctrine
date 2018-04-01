@@ -1,0 +1,14 @@
+<?php
+$action = array_filter([
+    "controller" => $this->Route()->getController(),
+    "action" => 'file',
+    "id" => $this->id
+]);
+$queryParameters['query'] = [];
+if ($this->query) {
+    $queryParameters['query'] = $this->query;
+}
+?>
+<img src="<?= $this->url($this->Route()->getRoute(),
+    $action
+    , $queryParameters) ?>" class="rounded-circle" alt="user">

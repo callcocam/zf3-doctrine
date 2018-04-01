@@ -1,0 +1,43 @@
+<?php
+$collums12[] =  $this->El()->hidden('id')->hidden('empresa')->hidden('created_at')->hidden('updated_at')
+    ->setClass('col-md-7 col-sm-12')
+    ->input('title')
+    ->setClass('col-md-5 col-sm-12')
+    ->input('event_id')
+    ->render($this->html('div')->setClass('row'));
+
+$collums12[] = $this->El()
+    ->setClass('col-md-8 col-sm-12')
+    ->input('client')
+    ->setClass('col-md-4 col-sm-12')
+    ->input('author')
+    ->render($this->html('div')->setClass('row'));
+
+$collums12[] = $this->El()->setClass('col-md-5 col-sm-12')
+    ->input('start')
+    ->input('end')
+    ->setClass('col-md-2 col-sm-12')
+    ->input('status')
+    ->render($this->html('div')->setClass('row'));
+
+$collums12[] = $this->El()->input('description')->render($this->html('div')->setClass('row'));
+
+
+$html[] = $this->html('div')->setClass('row')->setText(
+    $this->html('div')->setClass('col-md-12 col-xs-12')->setText( implode("", $collums12))
+);
+
+$actions[] = $this->Actions()
+    ->dismiss(5)
+    ->upload(7)
+    ->render($this->html('div')->setClass('row'));
+?>
+
+<?= $this->partial(sprintf("/layout/%s/partial/modal-default", LAYOUT), [
+    'body' => implode("", $html),
+    'actions' => implode("", $actions),
+    'form' => $this->form,
+    'title' => "Criar Evento",
+    'route' => $this->route,
+    'controller' => $this->controller,
+]); ?>

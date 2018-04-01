@@ -8,10 +8,7 @@
 namespace Core\Table;
 
 use Core\Table\Table\Exception\InvalidArgumentException;
-use Core\Table\AbstractElement;
 use Core\Table\Decorator\DecoratorFactory;
-use Core\Table\Table\Exception;
-use Zend\Debug\Debug;
 
 class Row extends AbstractElement
 {
@@ -37,7 +34,7 @@ class Row extends AbstractElement
      *
      * @param string $name
      * @param array $options
-     * @return AbstractHeaderDecorator
+     * @return Decorator\AbstractDecorator
      */
     public function addDecorator($name, $options = array())
     {
@@ -124,7 +121,6 @@ class Row extends AbstractElement
         $data = $this->getTable()->getData();
         $headers = $this->getTable()->getHeaders();
         $render = '';
-
         foreach ($data as $rowData) {
             $this->setActualRow($rowData);
             $rowRender = '';

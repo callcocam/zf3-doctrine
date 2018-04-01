@@ -30,7 +30,6 @@ class FlashMsg extends AbstractHelper
      */
     public function __invoke()
     {
-        $Url = $this->Url;
         $Route=[];
         $Time=3000;
         $plugin   = $this->flashMessenger->getPluginFlashMessenger();
@@ -66,24 +65,17 @@ class FlashMsg extends AbstractHelper
         $plugin->clearCurrentMessages('warning');
         $plugin->clearCurrentMessages('error');
         $plugin->clearCurrentMessages('danger');
-
+        $this->view->html('div')->setAttributes([
+            'id'=>'alert'
+        ]);
         $this->inlineScript->captureStart();
         foreach(array_filter($noty) as $type => $messages){
             $message = implode('<br/><br/>', $messages);
             $message = preg_replace('/\s+/', ' ', $message);
-            switch($type){
-                case "alert":echo 'toastr.info("'.$message.'");';break;
-                case "information":echo 'toastr.info("'.$message.'");';break;
-                case "success":echo 'toastr.success("'.$message.'");';break;
-                case "warning":echo 'toastr.warning("'.$message.'");';break;
-                case "error":echo 'toastr.error("'.$message.'");';break;
-            }
-
+            echo sprintf("zfAlert('%s','%s')",$message, $type);
         }
         if($Route):
-            echo sprintf('setTimeout(function () {
-					window.location.href = "%s";
-				 }, %s);',$this->view->url($Route[0],$Route[1]), $Time);
+            echo sprintf("zfRedirect('%s','%s')",$this->view->url($Route[0],$Route[1]), $Time);
         endif;
         $this->inlineScript->captureEnd();
     }

@@ -24,7 +24,7 @@ class Cell extends AbstractElement
      *
      * @param Header $header
      */
-    public function __construct($header)
+    public function __construct( $header )
     {
         $this->header = $header;
     }
@@ -35,7 +35,7 @@ class Cell extends AbstractElement
      * @param array $options type
      * @return Decorator\AbstractDecorator
      */
-    public function addDecorator($name, $options = array())
+    public function addDecorator( $name, $options = array() )
     {
         $decorator = DecoratorFactory::factoryCell($name, $options);
         $decorator->setCell($this);
@@ -58,7 +58,7 @@ class Cell extends AbstractElement
      * @param Header $header
      * @return $this
      */
-    public function setHeader($header)
+    public function setHeader( $header )
     {
         $this->header = $header;
         return $this;
@@ -79,11 +79,12 @@ class Cell extends AbstractElement
      *
      * @return string
      */
-    public function render($type = 'html')
+    public function render( $type = 'html' )
     {
         $row = $this->getTable()->getRow()->getActualRow();
 
         $value = '';
+
 
         if (is_array($row) || $row instanceof \ArrayAccess) {
             $value = (isset($row[$this->getHeader()->getName()])) ? $row[$this->getHeader()->getName()] : '';
@@ -92,6 +93,14 @@ class Cell extends AbstractElement
             $methodName = 'get' . ucfirst($headerName);
             if (method_exists($row, $methodName)) {
                 $value = $row->$methodName();
+                if ($value instanceof AbstractEntity) {
+                    $headerName = $this->getHeader()->getJoin();
+                    $methodName = 'get' . ucfirst($headerName);
+                    if (method_exists($row, $methodName)) {
+                        $value = $row->$methodName();
+                    }
+                }
+
             } else {
                 $value = (property_exists($row, $headerName)) ? $row->$headerName : '';
             }
@@ -99,7 +108,7 @@ class Cell extends AbstractElement
 
         foreach ($this->decorators as $decorator) {
             if ($decorator->validConditions()) {
-                $value = $decorator->render($value);
+                $value = $decorator->render($value, $this->getTable()->container);
             }
         }
 
@@ -109,7 +118,7 @@ class Cell extends AbstractElement
                 $value = $value->format("d/m/Y");
             }
             if ($value instanceof AbstractEntity) {
-                $headerName = $this->getHeader()->getName();
+                $headerName = $this->getHeader()->getJoin();
                 $methodName = 'get' . ucfirst($headerName);
                 if (method_exists($row, $methodName)) {
                     $value = $value->$methodName();

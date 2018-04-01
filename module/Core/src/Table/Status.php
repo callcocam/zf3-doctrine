@@ -33,6 +33,7 @@ class Status extends AbstractElement
      * @var string $class
      */
     protected $class = "valuesState form-control input-lg";
+    private $view;
 
     /**
      * Array of options
@@ -49,7 +50,15 @@ class Status extends AbstractElement
         $this->statusAction = $Status;
     }
 
-
+    /**
+     * @param $view
+     * @return Status
+     */
+    public function setView( $view )
+    {
+        $this->view = $view;
+        return $this;
+    }
 
     protected function initRendering()
     {
@@ -68,7 +77,11 @@ class Status extends AbstractElement
     public function render()
     {
         $this->initRendering();
-        return sprintf("<option %s value='%s'>%s</option>",$this->statusSelect, $this->statusValue, $this->statusLabel);
+        return $this->view->render("/table/option",[
+            'statusSelect' => $this->statusSelect,
+            'statusValue' => $this->statusValue,
+            'statusLabel' => $this->statusLabel,
+        ]);
     }
 
     public function getClass(){

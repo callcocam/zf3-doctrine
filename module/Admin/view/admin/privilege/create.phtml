@@ -1,5 +1,6 @@
-<?= $this->partial(sprintf("layout/%s/partial/top-navigation", LAYOUT),[
-    'a'=>"Admin",'b'=>$this->route,'c'=>$this->controller,'d'=>"Privilege", "e"=>'editar']); ?>
-<?=$this->Tab()->setInfoTitle("Manutenção do Privilege")->tabPanel(
-    $this->html('div')->setClass('col-md-12')->setText($this->html('div'))->appendText($this->render(sprintf("%s/editar-form", LAYOUT)))
-)->nav("Geral")->render($this->html('section')->setClass('content'));
+<?= $this->Tab()
+    ->setInfoTitle("Manutenção dos privilegios")->tabPanel(
+        $this->render(sprintf("%s/editar-form", LAYOUT))
+    )
+    ->nav("Geral")
+    ->render();

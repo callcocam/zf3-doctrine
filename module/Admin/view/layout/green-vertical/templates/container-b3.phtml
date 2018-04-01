@@ -1,0 +1,51 @@
+
+        <div class="card-box table-responsive">
+            <h4 class="m-t-0 header-title">
+                <?php if ($this->name): ?>
+                    <?= $this->name ?>
+                <?php endif; ?></h4>
+            <form class="form-inline p-b-10 pull-right">
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <?= $this->DateFilters; ?>
+                    </div>
+                    <div class="col-auto">
+
+                        <?= $this->QuickSearch; ?>
+                    </div>
+                    <div class="col-auto">
+                        <?= $this->valueStatus; ?>
+                    </div>
+                    <div class="col-auto">
+                        <?= $this->ValuesOfItemPerPage; ?>
+                    </div>
+                </div>
+            </form>
+
+
+            <?= $this->table ?>
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info" id="responsive-datatable_info" role="status" aria-live="polite">De
+                        <?=$this->pages['firstItemNumber']?> Até <?=$this->pages['lastItemNumber']?> De <?=$this->pages['totalItemCount']?> Registros
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="responsive-datatable_paginate">
+                        <?= $this->paginator; ?>
+                    </div>
+                </div>
+            </div>
+
+            <?php echo $this->paramsWrap; ?>
+        </div>
+<?php
+if (!empty($this->ChartTemplate)) {
+    echo $this->render($this->ChartTemplate, [
+        'sEcho' => $this->sEcho
+    ]);
+}
+?>
+</section>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+<?= ""//$this->ICheck(); ?>

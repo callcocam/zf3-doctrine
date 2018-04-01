@@ -1,0 +1,18 @@
+
+<div class="form-group  input-group-lg">
+    <label for="<?= $this->field->getAttribute('id') ?>"><?=$this->translate($this->field->getLabel()) ?></label>
+    <?=$this->formRow($this->field->setLabel(""));?>
+</div>
+<?php
+$Params = [
+    'controller' => $this->controller,
+    'action' => $this->action,
+    'id' => $this->id,
+];
+$Rota = $this->url(sprintf("%s/default", $this->route), $Params);
+$this->headScript()->appendFile($this->basePath('/assets-admin/plugins/tinymce/tiny_mce.init.js'))
+    ->prependFile($this->basePath('/assets-admin/plugins/tinymce/tinymce.min.js'));
+?>
+<script>
+    zfTiny('<?=$Rota?>');
+</script>

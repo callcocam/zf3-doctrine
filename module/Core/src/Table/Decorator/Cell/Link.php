@@ -19,11 +19,7 @@ class Link extends AbstractCellDecorator
      */
     protected $vars;
 
-    /**
-     * Link url
-     * @var string
-     */
-    protected $url;
+    private $action;
 
 
     /**
@@ -32,43 +28,50 @@ class Link extends AbstractCellDecorator
      * @param array $options
      * @throws InvalidArgumentException
      */
-    public function __construct(array $options = array())
+    public function __construct( array $options = array() )
     {
-        if (!isset($options['url'])) {
-            throw new InvalidArgumentException('Url key in options argument required');
+        if (!isset($options['vars'])) {
+            throw new InvalidArgumentException('vars key in options argument required');
         }
 
-        $this->url = $options['url'];
+            $this->vars = isset($options['vars']) ? $options['vars'] : "";
+            $this->action = isset($options['action']) ? $options['action'] : "create";
 
-        if (isset($options['vars'])) {
-            $this->vars = is_array($options['vars']) ? $options['vars'] : array($options['vars']);
-        }
     }
 
     /**
      * Rendering decorator
      * @param string $context
+     * @param null $opt
      * @return string
      */
-    public function render($context)
+    public function render( $context, $opt = null )
     {
-        $values = array();
-        if($context instanceof \DateTime){
+        if ($opt) {
+            $this->view = new \Core\Table\Template($opt);
+        }
+        if ($context instanceof \DateTime) {
             $context = $context->format("d/m/Y");
         }
-        if (count($this->vars)) {
-            if($this->getCell()->getActualRow() instanceof AbstractEntity){
-                $actualRow = $this->getCell()->getActualRow()->toArray();
-            }
-            foreach ($this->vars as $var) {
-                if($actualRow[$var] instanceof \DateTime):
-                    $values[] = $actualRow[$var]->format("d/m/Y");
-                else:
-                    $values[] = $actualRow[$var];
-                endif;
-            }
+
+        if ($this->getCell()->getActualRow() instanceof AbstractEntity) {
+            $actualRow = $this->getCell()->getActualRow()->toArray();
+        } else {
+            $actualRow = $this->getCell()->getActualRow();
         }
-        $url = vsprintf($this->url, $values);
-        return sprintf('<a  href="%s">%s</a>', str_replace(" ","",$url), $context);
+
+        if ($actualRow[$this->vars] instanceof \DateTime):
+            $actualRow[$this->vars] = $actualRow[$this->vars]->format("d/m/Y");
+        endif;
+
+        //$url = vsprintf($this->url, $values);
+        return $this->view->render("table/rows/link", [
+            'id' => trim($actualRow[$this->vars]),
+            'action' => $this->action,
+            'context' => $context,
+            'attr' => '',
+
+        ]);
+        //return sprintf('<a  href="%s">%s</a>', str_replace(" ","",$url), $context);
     }
 }

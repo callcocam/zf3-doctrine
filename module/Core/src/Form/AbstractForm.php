@@ -10,6 +10,7 @@ namespace Core\Form;
 
 
 use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
@@ -20,6 +21,7 @@ class AbstractForm extends Form
     protected $container;
 
     protected $util;
+    protected $rotulo;
 
     /**
      * @param $name
@@ -55,7 +57,7 @@ class AbstractForm extends Form
 
         ################# status #################
         $this->add([
-            'type' => \Zend\Form\Element\Select::class,
+            'type' => Select::class,
             'name' => 'status',
             'options' => [
                 'disable_inarray_validator' => true,
@@ -159,6 +161,27 @@ class AbstractForm extends Form
         ],$flags);
         return parent::add($elementOrFieldset);
     }
+
+    public function addSelect($name,$label,array $value_options = [],array $flags = [])
+    {
+        //######################## Text #######################
+        $elementOrFieldset = array_merge([
+            'type' => Select::class,
+            'name' => $name,
+            'options' => [
+                'disable_inarray_validator' => true,
+                'label' => $label,
+                'empty_option'=>'--Selecione--',
+                'value_options' => $value_options,
+            ],
+            'attributes' => [
+                'id' => $name,
+                'class' => 'form-control',
+                'value' => '1',
+            ],
+        ],$flags);
+        return parent::add($elementOrFieldset);
+    }
     public function addTextArea($name,$label,array $flags = [])
     {
         //######################## Text #######################
@@ -178,7 +201,33 @@ class AbstractForm extends Form
         ],$flags);
         return parent::add($elementOrFieldset);
     }
-
+    public function addObjectSelect($name,$Entity,$property="name",$params=['status' => 1], array $flags = []){
+        //######################## Hidden #######################
+        $elementOrFieldset = array_merge([
+                'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+                'name' => $name,
+                'attributes' => [
+                    'id'   => $name,
+                    'class'   => 'form-control'
+                ],
+                'options' => [
+                    'label'=>$this->getRotulo($name),
+                    'object_manager' => $this->container->get('doctrine.entitymanager.orm_default'),
+                    'target_class'   => $Entity,
+                    'property'       => $property,
+                    'is_method'      => true,
+                    'display_empty_item' => true,
+                    'empty_item_label'   => '--Selecione--',
+                    'find_method'    => [
+                        'name'   => 'findBy',
+                        'params' => [
+                            'criteria' => $params
+                        ],
+                    ],
+                ],
+            ],$flags);
+        return parent::add($elementOrFieldset);
+    }
     public function addHidden($name,array $flags = [])
     {
         //######################## Hidden #######################
@@ -208,6 +257,28 @@ class AbstractForm extends Form
                 endif;
             endif;
         endif;
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function getRotulo( $name){
+        if(isset($this->rotulo[$name])){
+            return $this->rotulo[$name];
+        }
+        return $name;
+    }
+
+    /**
+     * @param $name
+     * @param mixed $rotulo
+     * @return AbstractForm
+     */
+    public function setRotulo($name, $rotulo )
+    {
+        $this->rotulo[$name] = $rotulo;
         return $this;
     }
 

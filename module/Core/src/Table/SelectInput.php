@@ -34,6 +34,7 @@ class SelectInput extends AbstractElement
      */
     protected $class = "form-control %s";
     protected $name;
+    private $view;
 
     /**
      * Array of options
@@ -52,7 +53,15 @@ class SelectInput extends AbstractElement
     }
 
 
-
+    /**
+     * @param $view
+     * @return SelectInput
+     */
+    public function setView( $view )
+    {
+        $this->view = $view;
+        return $this;
+    }
     protected function initRendering()
     {
 
@@ -70,7 +79,12 @@ class SelectInput extends AbstractElement
     public function render()
     {
         $this->initRendering();
-        return sprintf("<option %s value='%s'>%s</option>",$this->statusSelect, $this->statusValue, $this->statusLabel);
+        return $this->view->render("/table/option",[
+            'statusSelect' => $this->statusSelect,
+            'statusValue' => $this->statusValue,
+            'statusLabel' => $this->statusLabel,
+        ]);
+
     }
 
     public function getClass(){

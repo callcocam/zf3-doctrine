@@ -1,0 +1,6 @@
+<a class="btn btn-primary btn-flat btn-sm" id="editar-<?=$this->id?>" href="<?=$this->url($this->Route()->getRoute(),
+    [
+        "controller"=>$this->Route()->getController(),
+        "action"=>"create",
+        "id"=>$this->id
+    ])?>"><i class="fa fa-pencil"> </i></a>

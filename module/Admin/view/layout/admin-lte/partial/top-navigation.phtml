@@ -5,7 +5,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?=$this->url('admin')?>"><i class="fa fa-dashboard"></i> <?=$this->a?></a></li>
-        <li><a href="<?=$this->url(sprintf("%s/default",$this->b), [
+        <li><a href="<?=$this->url($this->b, [
                 'controller'=>$this->c
             ])?>"><?=$this->d?></a></li>
         <li class="active"><?=$this->e?></li>

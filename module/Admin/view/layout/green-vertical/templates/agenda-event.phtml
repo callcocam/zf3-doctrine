@@ -1,0 +1,17 @@
+<?php
+$result=[];
+if ($this->rows) {
+    foreach ($this->rows as $row):
+        $result[] = $this->html('div')->setAttributes([
+            'class' => sprintf("external-event bg-%s", $row['className']),
+            'data-class' => sprintf("bg-%s", $row['className']),
+            'data-id' =>  $row['id'],
+            'data-description' => $row['description'],
+            'style' => 'position: relative;'
+        ])->setText(
+            $this->html('i')->setClass('fa fa-move')
+        )->appendText($row['title']);
+    endforeach;
+
+}
+echo implode("",$result);

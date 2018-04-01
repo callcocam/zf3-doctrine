@@ -1,0 +1,8 @@
+<th><a href="<?= $this->url($this->Route()->getRoute(), [
+        'controller' => $this->Route()->getController(),
+        'action' => "delete"
+    ]); ?>" class="actions btn btn-danger waves-light btn-lg btn-block" id ="trashall">
+    <i class="fa fa-eraser"></i>
+            <?= $this->translate("Excluir do sistema"); ?>
+        </a>
+</th>

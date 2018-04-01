@@ -87,7 +87,7 @@ class ClientEntity extends AbstractEntity
     /**
      * @return int|null
      */
-    public function getEmpresa(): ?int
+    public function getEmpresa()
     {
         return $this->empresa;
     }
@@ -96,7 +96,7 @@ class ClientEntity extends AbstractEntity
      * @param int|null $empresa
      * @return ClientEntity
      */
-    public function setEmpresa(?int $empresa): ClientEntity
+    public function setEmpresa( $empresa)
     {
         $this->empresa = $empresa;
         return $this;

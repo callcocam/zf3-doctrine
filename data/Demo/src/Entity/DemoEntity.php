@@ -30,7 +30,7 @@ class S_NameEntity extends AbstractEntity
     /**
      * @var int|null
      *
-     * @ORM\OneToOne(targetEntity="Admin\Entity\EmpresaEntity")
+     * @ORM\ManyToOne(targetEntity="Admin\Entity\EmpresaEntity")
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      */
     private $empresa = 1;

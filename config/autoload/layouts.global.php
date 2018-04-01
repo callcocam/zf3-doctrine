@@ -8,6 +8,8 @@
 return [
     'module_layouts' => [
         'Admin' => 'layout/%s/admin',
+        'Agenda' => 'layout/%s/admin',
+        'ControleEstoque' => 'layout/%s/admin',
         'Make' => 'layout/%s/admin',
         'Home' => 'layout/%s/home',
         'Auth' => 'layout/%s/auth',

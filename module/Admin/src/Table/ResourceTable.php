@@ -26,39 +26,26 @@ class ResourceTable extends AbstractTable
 
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
         $this->headers = (new HeadersConfig())
-            ->add('name',['tableAlias' => 'p','title' => 'Nome do modulo'],'id')
-            ->add('route',['tableAlias' => 'p','title' => 'Rota'],'name')
-            ->add('alias',['tableAlias' => 'p','title' => 'Alias'],'route')
+            ->add('name',['tableAlias' => 'p','title' => 'Name'],'id')
+            ->add('action',['tableAlias' => 'p','title' => '#', 'width' => '100',"sortable"=>false,],'status')
             ->getHeaders();
-        $this->config = (new Config())->add('name','Lista de modulos')->getConfigs();
+
+        $this->config = (new Config())->add('name','Lista de makes')->getConfigs();
 
         $this->valuesOfState = (new StatusConfig())->getStatus();
 
         $this->valuesOfItemPerPage = (new ItemPerPageConfig())->add(2,2)->getItems();
 
-
-
     }
 
     public function init()
     {
-        $this->buttonConfig = new ButtonsConfig($this->getRoute(), $this->getController());
-        $this->buttonConfig->setParams($this->getRouteHelper()->getParans());
+        $this->buttonConfig = new ButtonsConfig();
 
-//        $this->getHeader('cover')->getCell()->addDecorator('img', [
-//            (new ImgConfig())
-//                ->setRoute($this->getRoute())
-//                ->setController($this->getController())
-//                ->add()
-//        ]);
 
         $this->getHeader('name')->getCell()->addDecorator('link', [
-            'url' =>  $this->getUrl(sprintf('%s/default', $this->Route), [
-                'controller'=> $this->Controller,
-                'action'=>'create',
-                'id' => "%s"
-            ]),
-            'vars' => ['id'],
+            'action'=>'create',
+            'vars' => 'id'
         ]);
         $this->getHeader('id')->addDecorator('check');
         $this->getHeader('id')->getCell()->addDecorator('check');
@@ -77,26 +64,16 @@ class ResourceTable extends AbstractTable
 
 
         $this->buttonConfig->setName("editar")
-            ->add("editar")
-            ->setLink($this->url);
+            ->add("editar");
 
         $this->buttonConfig->setName("excluir")
-            ->setIcone('fa fa-trash')
-            ->setAttrs([
-                'class'=>'btn btn-danger btn-xs btn-flat j_confirm_delete',
-                'data-state' => '%s'
-            ])
             ->setStatus([1,2,3])
-            ->add("excluir")
-            ->setLink($this->url,"action","id");
+            ->add("excluir");
 
-
-        $this->getHeader('status')->getCell()->addDecorator('btn', [
+        $this->getHeader('action')->getCell()->addDecorator('btn', [
             'params' => $this->getRouteHelper()->getParans(),
             'url' => $this->buttonConfig,
         ]);
-
-        //$this->getHeader('fantasia')->addClass('text-center');
     }
 
     //The filters could also be done with a parametrised query

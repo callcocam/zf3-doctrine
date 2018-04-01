@@ -109,8 +109,8 @@ class TinyElement extends AbstractHelper
             'id' => $this->view->Route()->getId(),
         ];
         $Rota = $this->view->Url(sprintf("%s/default", $this->route), $Params);
-        $this->inlineScript->prependFile('/admin-lte/plugins/tinymce/tiny_mce.init.js')
-            ->prependFile('/admin-lte/plugins/tinymce/tinymce.min.js');
+        $this->inlineScript->prependFile('/assets-admin/plugins/tinymce/tiny_mce.init.js')
+            ->prependFile('/assets-admin/plugins/tinymce/tinymce.min.js');
         $this->inlineScript->captureStart();
          echo  "$('#content').zfTiny('{$Rota}');";
         $this->inlineScript->captureEnd();

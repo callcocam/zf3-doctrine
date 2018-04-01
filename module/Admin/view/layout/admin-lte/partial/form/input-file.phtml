@@ -5,10 +5,7 @@
 			['query'=>['name'=>$this->field->getValue(), 'thumbnail'=>true,'w'=>520]]);?>" alt="<?=$this->translate("No Imagem")?>">
 		<?=$this->formRow($this->field->setLabel("")->setAttribute('id','cover'));?>
 
-        <a href="<?=$this->url(sprintf("%s/default", $this->route),[
-                'controller'=>'upload',
-                 'action'=>"upload"
-                ],[
+        <a href="<?=$this->url("adm-upload",[],[
                         'query'=>[
                             'assets'=>$this->controller,
                             'parent'=>$this->id

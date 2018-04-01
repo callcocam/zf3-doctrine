@@ -1,0 +1,46 @@
+<?= $this->partial(sprintf('layout/%s/partial/form-error', LAYOUT), ['form' => $this->form]); ?>
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url(sprintf("%s/default", $this->route), [
+    'controller' => $this->controller,
+    'action' => 'login'
+]))->setAttribute('name', 'AjaxForm')->setAttribute('class', 'form-horizontal m-t-20')); ?>
+<?= $this->html('div')->setClass('row')->setText(
+    $this->html('div')->setClass('col-md-12')->setText(
+        $this->El()
+            ->setPartialExtra('-icon')
+            ->input('email')
+            ->render($this->html('div')->setClass('row'))
+    )->appendText(
+        $this->El()
+            ->input('password')
+            ->render($this->html('div')->setClass('row'))
+    )->appendText(
+        $this->Actions()
+            ->logar(12)
+            ->render($this->html('div')->setClass('row'))
+    )->appendText(
+        $this->html('div')->setClass('form-group row m-t-30')->setText(
+            $this->html('div')->setClass('col-sm-5')->setText(
+                $this->html('a')->setAttributes([
+                    'class' => 'text-muted',
+                    'href' => $this->url(),
+                ])->setText(
+                    $this->translate('Create an account')
+                )
+            )
+        )->appendText(
+            $this->html('div')->setClass('col-sm-7')->setText(
+                $this->html('a')->setAttributes([
+                    'class' => 'text-muted',
+                    'href' => $this->url(sprintf('%s/default', $this->route), [
+                        'controller'=>$this->controller,
+                        'action'=>'recupera-senha'
+                    ]),
+                ])->setText(
+                    $this->translate('Forgot your password?')
+                )
+            )
+        )
+    )
+); ?>
+<?= $this->form()->closeTag(); ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>

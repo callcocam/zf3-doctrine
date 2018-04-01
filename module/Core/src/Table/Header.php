@@ -86,6 +86,7 @@ class Header extends AbstractElement
         'asc' => 'desc',
         'desc' => 'asc'
     );
+    protected $join;
 
     /**
      * Array of options
@@ -129,6 +130,7 @@ class Header extends AbstractElement
         $this->sortable = (isset($options['sortable'])) ? $options['sortable'] : true;
         $this->separatable = (isset($options['separatable'])) ? $options['separatable'] : $this->getSeparatable();
         $this->tableAlias = (isset($options['tableAlias'])) ? $options['tableAlias'] : '';
+        $this->join = (isset($options['join'])) ? $options['join'] : '';
 
         if (isset($options['editable']) && $options['editable'] == true) {
             $this->editable = $options['editable'];
@@ -300,6 +302,24 @@ class Header extends AbstractElement
     public function getTableAlias()
     {
         return $this->tableAlias;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJoin()
+    {
+        return $this->join;
+    }
+
+    /**
+     * @param mixed $join
+     * @return Header
+     */
+    public function setJoin( $join )
+    {
+        $this->join = $join;
+        return $this;
     }
 
     /**

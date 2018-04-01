@@ -1,0 +1,24 @@
+<?php
+$this->formElementErrors()
+    ->setMessageOpenFormat('<div class="help-inline">')
+    ->setMessageSeparatorString('</div><div class="help-inline">')
+    ->setMessageCloseString('</div>')
+    ->render($this->form);
+?>
+
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url(sprintf("%s/default", $this->route), [
+    'controller' => $this->controller,
+    'action' => isset($this->action)?$this->action:"save"
+]))->setAttribute('name', 'AjaxForm')->setAttribute('class', '')); ?>
+<?= $this->html('div')->setClass('card')->setText(
+    $this->html('div')->setClass('card-body')->setText(
+        $this->body
+    )
+)->appendText(
+//ADD PANEL FOOTER
+    $this->html('div')->setClass('card-body')->setText(
+        $this->actions
+    )
+); ?>
+<?= $this->form()->closeTag(); ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>

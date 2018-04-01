@@ -1,0 +1,15 @@
+<?php $this->formElementErrors()
+    ->setMessageOpenFormat('<div class="help-inline">')
+    ->setMessageSeparatorString('</div><div class="help-inline">')
+    ->setMessageCloseString('</div>')
+    ->render($this->form);
+?>
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url(sprintf("%s/default", $this->route), [
+    'controller' => $this->controller,
+    'action' => 'add-event'
+]))->setAttribute('name', 'AjaxEventForm')->setAttribute('class', 'modal fade in')->setAttribute('id', 'modal-default')); ?>
+<?= $this->html('div')->setClass('modal-dialog')->setText(
+    $this->render(sprintf("%s/add-event", LAYOUT))
+); ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+<?= $this->form()->closeTag(); ?>

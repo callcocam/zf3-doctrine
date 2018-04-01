@@ -94,6 +94,13 @@ class Module implements BootstrapListenerInterface, ViewHelperProviderInterface,
         $app = $e->getApplication()->getServiceManager();
         $dotenv = new Dotenv(dirname(__DIR__, 3));
         $dotenv->load();
+//        if($dotenv->required('THEME')->notEmpty()){
+//            define('LAYOUT',getenv('THEME'));
+//        }
+//        else{
+//            define('LAYOUT',getenv('THEME'));
+//        }
+
 
         /**
          * @var $Authenticate Authentication
@@ -180,6 +187,7 @@ class Module implements BootstrapListenerInterface, ViewHelperProviderInterface,
                 //'Date' => DateHelper::class,
                // 'chartjs' => ChartJs::class,
                 'html' => Helper\HtmlElement::class,
+                'RenderHtml' => Helper\RenderHtml::class,
                 'date'=>DateHelper::class,
                 'Tab' => Helper\Service\TabElement::class,
                 'Addon' => Helper\Service\AddonElement::class,

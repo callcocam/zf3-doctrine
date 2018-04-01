@@ -10,6 +10,7 @@ namespace Core\Service;
 
 
 use Admin\Entity\EmpresaEntity;
+use Admin\Entity\UserEntity;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Doctrine\ORM\EntityManager;
@@ -54,6 +55,9 @@ abstract class AbstractService extends Utils
                 $data['empresa'] = 1;
             }
             $data['empresa'] = $this->em->getReference(EmpresaEntity::class, $data['empresa']);
+        }
+        if (isset($data['author'])) {
+             $data['author'] = $this->em->getReference(UserEntity::class, $data['author']);
         }
         if (isset($data['created_at']) && $data['created_at']) {
             $data['created_at'] = new \DateTime ($this->Data($data['created_at']));

@@ -3,6 +3,7 @@
 vendor/
 Migrations/
 public_html/dist/
+public_html/green-vertical/images/
 config/development.config.php
 config/doctrine_orm.local.php
 data/cache/

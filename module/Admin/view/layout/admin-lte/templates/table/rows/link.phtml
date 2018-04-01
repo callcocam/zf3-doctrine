@@ -1,0 +1,15 @@
+<?php
+$action = array_filter([
+    "controller"=>$this->Route()->getController(),
+    "action"=>$this->action,
+    "id"=>$this->id
+]);
+$queryParameters['query'] = [];
+if($this->query){
+    $queryParameters['query'] =  $this->query;
+}
+?>
+<a <?=$this->attr?> href="<?=$this->url($this->Route()->getRoute(),
+    $action
+,$queryParameters)?>"><?=$this->context?>
+</a>

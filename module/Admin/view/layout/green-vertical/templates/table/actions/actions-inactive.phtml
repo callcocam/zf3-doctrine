@@ -1,0 +1,9 @@
+<th><a href="<?= $this->url($this->Route()->getRoute(), [
+        'controller' => $this->Route()->getController(),
+        'action' => "state",
+        'id' => "2"
+    ]); ?>" class="actions btn btn-success waves-light btn-lg btn-block" id ="inactive">
+    <i class="fa fa fa-close"></i>
+            <?= $this->translate("Desabilitar"); ?>
+        </a>
+</th>

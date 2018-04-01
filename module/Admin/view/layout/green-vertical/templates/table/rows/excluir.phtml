@@ -1,0 +1,9 @@
+<a class="btn btn-danger btn-sm j_confirm_delete" id="excluir-<?=$this->id?>" data-state="<?=$this->id?>"
+   href="<?=$this->url($this->Route()->getRoute(),
+    [
+        "controller"=>$this->Route()->getController(),
+        "action"=>"create",
+        "id"=>$this->id
+    ])?>">
+    <i class="fa fa-trash"> </i>
+</a>

@@ -1,5 +1,6 @@
 <?php
-
+ini_set('display_errors', 0);
+set_time_limit(0);
 use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
 
@@ -17,7 +18,8 @@ if (php_sapi_name() === 'cli-server') {
     }
     unset($path);
 }
-define('LAYOUT','admin-lte');
+define('LAYOUT','green-vertical');
+//define('LAYOUT','admin-lte');
 // Composer autoloading
 include __DIR__ . '/../vendor/autoload.php';
 

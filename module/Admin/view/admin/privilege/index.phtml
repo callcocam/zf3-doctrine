@@ -1,6 +1,1 @@
-<div id="tableContainer"  style="position: relative;">
-    <div class="processing" style=""></div>
-</div>
-<script>
-    $("#tableContainer").zfTable('<?=$this->url("{$this->route}/default",['controller'=>$this->controller, 'action'=>'listar'])?>');
-</script>
+<?= $this->partial(sprintf("/layout/%s/partial/index", LAYOUT))?>

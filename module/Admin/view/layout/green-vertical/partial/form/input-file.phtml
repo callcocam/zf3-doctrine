@@ -1,0 +1,15 @@
+<div class="card m-b-0">
+    <img id="cover-default"  class="card-img-top img-fluid" src="<?=$this->url(sprintf("%s/default", $this->route), ['controller'=>$this->controller,'action'=>'file'],
+        ['query'=>['name'=>$this->field->getValue(), 'thumbnail'=>true,'w'=>520]]);?>" alt="<?=$this->translate("No Imagem")?>">
+    <div class="card-body">
+        <?=$this->formRow($this->field->setLabel("")->setAttribute('id','cover'));?>
+        <a href="<?=$this->url("adm-upload",[],[
+            'query'=>[
+                'assets'=>$this->controller,
+                'parent'=>$this->id
+            ]
+        ])?>" class="btn btn-primary btn-block  <?=$this->id?'upload':'disabled';?>">
+            <i class="fa fa-file-image-o"></i> <b><?=$this->translate("Selecionar Imagem")?></b>
+        </a>
+    </div>
+</div>

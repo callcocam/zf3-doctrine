@@ -114,14 +114,16 @@ abstract class AbstractController extends AbstractActionController
      * @var $imageManager
      */
     protected $imageManager;
+    protected $templateCreate = "";
+    protected $terminal = false;
 
     /**
      * AbstractController constructor.
      * @param ContainerInterface $container
      */
-    abstract public function __construct(ContainerInterface $container);
+    abstract public function __construct( ContainerInterface $container );
 
-    public function onDispatch(MvcEvent $e)
+    public function onDispatch( MvcEvent $e )
     {
         $this->serviceManager = $this->container->get(ServiceManager::class);
         $this->user = $this->identity();
@@ -164,6 +166,40 @@ abstract class AbstractController extends AbstractActionController
 
     }
 
+    public function perssomAction()
+    {
+        if (!$this->identity()):
+            return $this->auth();
+        endif;
+        //I don't know if it necesary to validate that request is POST
+        $queryBuilder = $this->repository->createQueryBuilder("p");
+        $this->table->setSource($queryBuilder)
+            ->setRoute($this->getRoute($this->route))
+            ->setController($this->controller)
+            ->setParamAdapter($this->getRequest()->getPost());
+        $view = $this->table->render('custom', sprintf($this->template, LAYOUT));
+        $view->setVariable('route', $this->getRoute($this->route));
+        $view->setVariable('controller', $this->controller);
+        return $view;
+
+    }
+
+    public function dataTableJson()
+    {
+        if (!$this->identity()):
+            return $this->auth();
+        endif;
+        //I don't know if it necesary to validate that request is POST
+        $queryBuilder = $this->repository->createQueryBuilder("p");
+        $this->table->setSource($queryBuilder)
+            ->setRoute($this->getRoute($this->route))
+            ->setController($this->controller)
+            ->setParamAdapter($this->getRequest()->getPost());
+        $view = $this->table->render('dataTableJson');
+        return $view;
+
+    }
+
 
     public function createAction()
     {
@@ -183,11 +219,16 @@ abstract class AbstractController extends AbstractActionController
                         'action' => "create"
                     ]);
             }
+
             $this->form->setData($this->extracted($data->toArray()));
         } else {
             $this->form->get('save_copy')->setAttribute('disabled', true);
         }
         $view = new ViewModel($this->args);
+        if(!empty($this->templateCreate)){
+            $view->setTemplate($this->templateCreate);
+        }
+        $view->setTerminal($this->terminal);
         $view->setVariable('id', $id);
         $view->setVariable('form', $this->form);
         $view->setVariable('route', $this->getRoute($this->route));
@@ -216,9 +257,11 @@ abstract class AbstractController extends AbstractActionController
                     $this->params()->fromFiles()
                 );
             endif;
+
             $this->form->setData($this->data)->setInputFilter($this->filter->getInputFilter());
             if ($this->form->isValid()):
                 $this->args = array_merge($this->args, $this->service->save($this->data));
+
                 if ($this->args['result']):
                     $this->addMessage($this->args['msg'], $this->args['type']);
                     if ($this->params()->fromPost('submit')):
@@ -242,7 +285,6 @@ abstract class AbstractController extends AbstractActionController
                     $this->form->setData($data);
 
                 else:
-
                     $this->addMessage($this->args['msg'], $this->args['type']);
                 endif;
             else:
@@ -252,7 +294,7 @@ abstract class AbstractController extends AbstractActionController
                     foreach ($Msgs as $msg) {
                         $ArayMsg[] = array_pop($msg);
                     }
-                    $this->args['msg'] = implode(PHP_EOL, $ArayMsg);
+                    $this->args['msg'] = str_replace("'", "-", implode(PHP_EOL, $ArayMsg));
                     //d($this->args['msg']);
                 endif;
                 $this->addMessage($this->args['msg'], 'info');
@@ -389,17 +431,19 @@ abstract class AbstractController extends AbstractActionController
         return $this->ImagePlugin()->get($this);
     }
 
-    protected function extracted($data, $suffix = "copy")
+    protected function extracted( $data, $suffix = "copy" )
     {
         foreach ($data as $key => $value) {
             if ($value instanceof \Datetime):
-                $data[$key] = $value->format("Y/m/d");
+                $data[$key] = $value->format("d/m/Y H:i:s");
             else:
                 if ($value instanceof AbstractEntity) {
-                    $methodName = 'get' . ucfirst($key);
-                    if (method_exists($value, $methodName)) {
-                        $value = $value->getId();
-                    }
+                    //$methodName = 'get' . ucfirst($key);
+                    $value = $value->getId();
+
+//                    if (method_exists($value, $methodName)) {
+//                        $value = $value->getId();
+//                    }
                 }
                 if (strstr($value, $suffix, true)) {
                     $data[$key] = strstr($value, $suffix, true);
@@ -412,7 +456,7 @@ abstract class AbstractController extends AbstractActionController
         return $data;
     }
 
-    protected function copy($data, $suffix = "")
+    protected function copy( $data, $suffix = "" )
     {
         foreach ($data as $key => $value) {
             if ($value instanceof \Datetime):
@@ -434,7 +478,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function setTable($table)
+    public function setTable( $table )
     {
         $this->table = $this->serviceManager->get($table);
         return $this;
@@ -445,7 +489,7 @@ abstract class AbstractController extends AbstractActionController
      * @param mixed $container
      * @return AbstractController
      */
-    public function setContainer($container)
+    public function setContainer( $container )
     {
         $this->container = $container;
         return $this;
@@ -455,7 +499,7 @@ abstract class AbstractController extends AbstractActionController
      * @param string $controller
      * @return AbstractController
      */
-    public function setController($controller)
+    public function setController( $controller )
     {
         $this->controller = $controller;
         return $this;
@@ -465,7 +509,7 @@ abstract class AbstractController extends AbstractActionController
      * @param string $action
      * @return AbstractController
      */
-    public function setAction($action)
+    public function setAction( $action )
     {
         $this->action = $action;
         return $this;
@@ -477,7 +521,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function setEntity($entity)
+    public function setEntity( $entity )
     {
         $this->entity = $entity;
         if (!$this->repository) {
@@ -515,7 +559,7 @@ abstract class AbstractController extends AbstractActionController
      * @param string $route
      * @return AbstractController
      */
-    public function setRoute($route)
+    public function setRoute( $route )
     {
         $this->route = $route;
         return $this;
@@ -530,8 +574,8 @@ abstract class AbstractController extends AbstractActionController
     {
         if (!$this->container->has($this->service)):
             $this->setServiceManager($this->service, $this->factoryService);
-            $this->service = $this->serviceManager->get($this->service);
         endif;
+        $this->service = $this->serviceManager->get($this->service);
         return $this->service;
     }
 
@@ -544,8 +588,8 @@ abstract class AbstractController extends AbstractActionController
     {
         if (!$this->container->has($this->filter)):
             $this->setServiceManager($this->filter, $this->factoryFilter);
-            $this->filter = $this->serviceManager->get($this->filter);
         endif;
+        $this->filter = $this->serviceManager->get($this->filter);
         return $this->filter;
     }
 
@@ -568,7 +612,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function addMessage($text, $type = "error")
+    public function addMessage( $text, $type = "error" )
     {
         if (!$this->serviceManager->has(Messages::class)) {
             $this->setServiceManager(Messages::class, InvokableFactory::class);
@@ -585,7 +629,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function addRedirect($text, $hops = 1)
+    public function addRedirect( $text, $hops = 1 )
     {
         if (!$this->serviceManager->has(Messages::class)) {
             $this->setServiceManager(Messages::class, InvokableFactory::class);
@@ -602,7 +646,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function addTime($time, $hops = 1)
+    public function addTime( $time, $hops = 1 )
     {
         if (!$this->serviceManager->has(Messages::class)) {
             $this->setServiceManager(Messages::class, InvokableFactory::class);
@@ -619,7 +663,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function getRoute($config)
+    public function getRoute( $config )
     {
         if (isset($this->container->get("config")[$config])):
             return $this->container->get("config")[$config];
@@ -649,7 +693,7 @@ abstract class AbstractController extends AbstractActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function setServiceManager($service, $factory, $type = "factories")
+    public function setServiceManager( $service, $factory, $type = "factories" )
     {
         $this->serviceManager = $this->container->get(ServiceManager::class);
         $this->serviceManager->setFactory($service, $factory);
@@ -663,7 +707,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function auth()
     {
-       return $this->redirect()->toRoute($this->getRoute('adm-auth'));
+        return $this->redirect()->toRoute($this->getRoute('adm-auth'));
     }
 
     /**
@@ -692,6 +736,6 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function quest()
     {
-       return $this->redirect()->toRoute($this->getRoute('adm-admin'));
+        return $this->redirect()->toRoute($this->getRoute('adm-admin'));
     }
 }

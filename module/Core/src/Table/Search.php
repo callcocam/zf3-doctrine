@@ -12,6 +12,7 @@ namespace Core\Table;
 class Search extends AbstractElement
 {
     private $quickSearch = "";
+    private $view;
 
     /**
      * Array of options
@@ -22,6 +23,16 @@ class Search extends AbstractElement
     {
 
         $this->quickSearch = $quickSearch;
+    }
+
+    /**
+     * @param $view
+     * @return Search
+     */
+    public function setView( $view )
+    {
+        $this->view = $view;
+        return $this;
     }
 
     protected function initRendering()
@@ -37,9 +48,9 @@ class Search extends AbstractElement
     public function render()
     {
         $this->initRendering();
-        return sprintf("<input name='table_search' aria-controls='dataTable' class='quick-search form-control pull-right' placeholder='Search' type='text' value='%s'>
-                                <div class='input-group-btn'>
-                                    <button type='submit' class='btn btn-default'><i class='fa fa-search'></i></button>
-                                </div>",$this->quickSearch);
+
+        return $this->view->render("/table/search",[
+            'quickSearch' => $this->quickSearch
+        ]);
     }
 }

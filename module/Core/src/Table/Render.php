@@ -8,6 +8,7 @@
 namespace Core\Table;
 
 use Zend\Debug\Debug;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Zend\View\Resolver;
 use Zend\View\Renderer\PhpRenderer;
@@ -58,12 +59,12 @@ class Render extends AbstractCommon
     public function renderDataTableJson()
     {
         $res = array();
-        $render = $this->getTable()->getRow()->renderRows('array');
+        $render = $this->getTable()->getRow()->renderRows('array_assc');
         $res['sEcho'] = $render;
         $res['iTotalDisplayRecords'] = $this->getTable()->getSource()->getPaginator()->getTotalItemCount();
         $res['aaData'] = $render;
 
-        return json_encode($res);
+        return $res;
     }
 
 
@@ -95,7 +96,7 @@ class Render extends AbstractCommon
         $view->setVariable('headers', $renderedHeads);
         $view->setVariable('attributes', $this->getTable()->getAttributes());
 
-        return $this->getRenderer()->render($view);
+        return $view->render($view);
 
     }
 
@@ -108,9 +109,7 @@ class Render extends AbstractCommon
 
         $view = new ViewModel();
         $view->setTemplate($template);
-
         $view->setVariable('rows', $rowsArray);
-
         $view->setVariable('paginator', $this->renderPaginator());
         $view->setVariable('paramsWrap', $this->renderParamsWrap());
         $view->setVariable('itemCountPerPage', $this->getTable()->getParamAdapter()->getItemCountPerPage());
@@ -122,7 +121,7 @@ class Render extends AbstractCommon
         $view->setVariable('showItemPerPage', $tableConfig->getShowItemPerPage());
         $view->setVariable('showExportToCSV', $tableConfig->getShowExportToCSV());
 
-        return $this->getRenderer()->render($view);
+        return $view;
     }
 
     /**
@@ -141,13 +140,13 @@ class Render extends AbstractCommon
         if($tableConfig->isShowButtonsActions()){
             $render .= $this->renderAction();
         }
-
+        $view = new ViewModel();
         $render .= $this->renderHead();
         $render = sprintf('<thead>%s</thead>', $render);
         $render .= $this->getTable()->getRow()->renderRows();
         $table = sprintf('<table %s>%s</table>', $this->getTable()->getAttributes(), $render);
 
-        $view = new ViewModel();
+
         $view->setTemplate(sprintf('layout/%s/templates/container-b3', LAYOUT));
         $view->setVariable('table', $table);
 
@@ -263,8 +262,13 @@ class Render extends AbstractCommon
         foreach ($actions as $name => $title) {
             $render .= $this->getTable()->getActions($name)->render();
         }
-        $render = sprintf('<tr class="zf-title"><th  style="margin: 0 10px;" colspan="%s"><table class="table"> <tr class="zf-title">%s</tr></table></th></tr>',$collspam, $render);
-        return $render;
+        //tr-table-actions
+        $view = new Template($this->getTable()->container);
+        $render = $view->render("/table/tr-table-actions",[
+            'render'=> $render,
+            'collspam'=>$collspam
+        ]);
+         return $render;
     }
 
     /**
@@ -274,12 +278,7 @@ class Render extends AbstractCommon
      */
     public function renderDateFilters()
     {
-        $render = $this->getTable()->getDateFilters("DateTimePiker")->setView($this->renderer)->render();
-        $render = sprintf(" <div class='form-group'>
-                                <div class='input-group'>
-                                    %s
-                                </div>
-                            </div>", $render);
+        $render = $this->getTable()->getDateFilters("DateTimePiker")->render();
         return $render;
     }
     /**
@@ -289,9 +288,7 @@ class Render extends AbstractCommon
      */
     public function renderQuickSearch()
     {
-        $render = $this->getTable()->getQuickSearch("Search")->render();
-        $render = sprintf("<div class='input-group input-group-lg pull-right' id='dataTable_filter' style='width: 250px; margin-right: 10px;'>%s</div>", $render);
-        return $render;
+        return  $this->getTable()->getQuickSearch("Search")->render();
     }
 
     /**
@@ -301,27 +298,29 @@ class Render extends AbstractCommon
      */
     public function renderStatus()
     {
-        $tatus = $this->getTable()->getStatus();
+        $status = $this->getTable()->getStatus();
         $render = '';
-        foreach ($tatus as $name => $title) {
+        foreach ($status as $name => $title) {
            $render .= $this->getTable()->getStatu($title)->render();
         }
-        $render = sprintf('<label class="pull-right"><select id="valuesState" style="margin-right: 10px;"  class="%s">%s</select></label>', $this->getTable()->getStatu($title)->getClass(), $render);
-        return $render;
+        return $this->getRenderer()->render("select-status",[
+            "class" => $this->getTable()->getStatu($title)->getClass(),
+            "render"=>$render
+        ]);
     }
 
     public function renderValuesOfItemPerPage()
     {
-        //$this->itemCountPerPage
         $valuesOfItemPerPage = $this->getTable()->getValuesOfItemPerPages();
         $render = '';
         foreach ($valuesOfItemPerPage as $name => $title) {
            $render .= $this->getTable()->getValuesOfItemPerPage($name)->render();
         }
-        $render = sprintf('<label class="pull-right">
-                                    <select id="itemPerPage" style="margin-right: 10px;"  class="%s">%s</select>
-                                </label>', $this->getTable()->getValuesOfItemPerPage($title)->getClass(), $render);
-        return $render;
+        return $this->getRenderer()->render('item-per-page',[
+            "class" => $this->getTable()->getValuesOfItemPerPage($title)->getClass(),
+            "render"=>$render,
+            "id"=>"itemPerPage"
+        ]);
     }
     /**
      * Rendering params wrap to ajax communication

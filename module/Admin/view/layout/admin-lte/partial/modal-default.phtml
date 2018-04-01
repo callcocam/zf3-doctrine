@@ -1,0 +1,22 @@
+<?= $this->html('div')->setClass('modal-content')->setText(
+    $this->html('div')->setClass('modal-header')->setText(
+        $this->html('button')->setAttributes([
+            'class'=>'close',
+            'data-dismiss'=>'modal',
+            'aria-hidden'=>'true',
+        ])->setText('×')
+    )->appendText(
+        $this->html('h4')->setClass('modal-title')->setText(
+            $this->title
+        )
+    )
+)->appendText(
+    $this->html('div')->setClass('modal-body')->setText(
+        $this->body
+    )
+)->appendText(
+    $this->html('div')->setClass('modal-footer')->setText(
+        $this->actions
+    )
+) ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>

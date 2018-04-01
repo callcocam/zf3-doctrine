@@ -22,6 +22,7 @@ $acl = $this->Acl()->getAcl()
             ->prependStylesheet($this->basePath('assets-admin/css/toastr.min.css'))
             ->prependStylesheet($this->basePath('assets-admin/plugins/bootstrap-timerpicker/css/bootstrap-datepicker.min.css'))
             ->prependStylesheet($this->basePath('assets-admin/plugins/bootstrap-daterangepicker/css/daterangepicker.css'))
+            ->prependStylesheet($this->basePath('assets-admin/plugins/fullcalendar/css/fullcalendar.min.css'))
             ->prependStylesheet($this->basePath('assets-admin/css/jquery-confirm.min.css'))
             ->prependStylesheet($this->basePath('assets-admin/plugins/iCheck/square/_all.css'))
             ->prependStylesheet($this->basePath('assets-admin/css/ionicons.css'))
@@ -115,6 +116,7 @@ $acl = $this->Acl()->getAcl()
            immediately after the control sidebar -->
            <div class="control-sidebar-bg"></div>
        </div>
-
+<?= $this->inlineScript()
+    ->prependFile($this->basePath('assets-admin/plugins/jquery-ui/jquery-ui.min.js'));?>
     </body>
 </html>

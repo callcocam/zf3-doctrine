@@ -18,8 +18,8 @@ if (php_sapi_name() === 'cli-server') {
     }
     unset($path);
 }
-define('LAYOUT','green-vertical');
-//define('LAYOUT','admin-lte');
+//define('LAYOUT','green-vertical');
+define('LAYOUT','admin-lte');
 // Composer autoloading
 include __DIR__ . '/../vendor/autoload.php';
 

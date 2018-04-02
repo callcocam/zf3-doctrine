@@ -1,7 +1,58 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: caltj
- * Date: 02/04/2018
- * Time: 09:15
- */
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h4 class="box-title">Lista de eventos</h4>
+                </div>
+                <div class="box-body">
+                    <!-- /btn-group -->
+                    <div class="input-group">
+                        <button id="add-category" type="button" data-url="<?=$this->url(sprintf("%s/default",$this->route),[
+                            'controller'=>'categorie',
+                            'action'=>'add'
+                        ]);?>" class="btn btn-lg btn-primary btn-block waves-effect waves-light">
+                            <i class="fa fa-plus"></i> <?=$this->translate('Add Categoria');?>
+                        </button>
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="box-body">
+                    <!-- the events -->
+                    <div id="external-events">
+
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id='loading'>carregando...</div>
+                    <div id="calendar" data-url="<?=$this->url(sprintf("%s/default",$this->route),[
+                        'controller'=>$this->controller,
+                        'action'=>'action',
+                        'id'=>'id',
+                    ]);?>"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- end container -->
+<?php $this->inlineScript()
+    ->appendFile($this->basePath('/assets-admin/plugins/fullcalendar/js/fullcalendar.min.js'))
+    ->appendFile($this->basePath('/assets-admin/plugins/fullcalendar/js/jquery.fullcalendar.js'))
+    ->appendFile($this->basePath('/assets-admin/plugins/fullcalendar/js/pt-br.js'));
+?>

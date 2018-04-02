@@ -32,45 +32,99 @@ class EventoController extends AbstractController
         $this->setEntity('Agenda\Entity\EventoEntity')->setTable('Agenda\Table\EventoTable');
     }
 
-    public function listeventAction(){
-        if (!$this->identity()):
-            return $this->auth();
-        endif;
-        $this->setServiceManager('Agenda\Table\EvTable', $this->factoryTable)
-            ->setTable('Agenda\Table\EvTable');
-        //I don't know if it necesary to validate that request is POST
-        $queryBuilder = $this->repository->createQueryBuilder("p");
-        $this->table->setSource($queryBuilder)
-            ->setRoute($this->getRoute($this->route))
-            ->setController($this->controller)
-            ->setParamAdapter($this->getRequest()->getPost());
-         $view = $this->table->render('custom',sprintf('layout/%s/templates/agenda-event', LAYOUT));
-        $view->setTerminal(true);
+    public function compromissosAction(){
+        $this->setServiceManager('Agenda\Table\CalendarTable', $this->factoryTable)
+            ->setTable('Agenda\Table\CalendarTable');
+        $data = $this->dataTableJson();
+        $view = new ViewModel();
         $view->setVariable('route', $this->getRoute($this->route));
         $view->setVariable('controller', $this->controller);
+        $view->setVariable('data', $data);
         return $view;
     }
+
+
     public function addAction()
     {
-        if (!$this->identity()):
-            return $this->restrict();
+        $this->form = 'Agenda\Form\AddForm';
+        $data = $this->params()->fromPost();
+        if ($data):
+            if (!$this->identity()):
+                return $this->restrict();
+            endif;
+        else:
+            if (!$this->identity()):
+                return $this->auth();
+            endif;
         endif;
-        $id = $this->params()->fromRoute("id", 0);
         if (is_string($this->form)):
             $this->getForm();
         endif;
-        $view = new ViewModel($this->args);
+        $this->form->get('start')->setValue($data['start']);
+        $this->form->get('end')->setValue($data['end']);
+        $view = new ViewModel();
         $view->setTerminal(true);
-        $view->setVariable('id', $id);
-        $view->setVariable('form', $this->form);
         $view->setVariable('route', $this->getRoute($this->route));
         $view->setVariable('controller', $this->controller);
+        $view->setVariable('data', $data);
+
+        $view->setVariable('form', $this->form);
         return $view;
     }
 
     public function addeventAction()
     {
+        $this->form = 'Agenda\Form\AddForm';
         $this->template = sprintf("agenda/evento/%s/add-event", LAYOUT);
         return parent::saveAction();
+    }
+
+    public function updateAction()
+    {
+        $data=$this->params()->fromPost();
+        if ($data):
+            if (!$this->identity()):
+                return $this->restrict();
+            endif;
+        else:
+            if (!$this->identity()):
+                return $this->auth();
+            endif;
+        endif;
+        if (is_string($this->form)):
+            $this->getForm();
+        endif;
+        $id = $this->params()->fromRoute("id", 0);
+        if ((int)$id) {
+            $data = $this->repository->find($id);
+            $this->form->setData($this->extracted($data->toArray()));
+        } else {
+            $this->form->get('categorie_id')->setValue($data['categorieId']);
+            $this->form->get('description')->setValue($data['description']);
+            $this->form->get('title')->setValue($data['title']);
+            $this->form->get('start')->setValue($data['start']);
+            $this->form->get('end')->setValue($data['end']);
+        }
+        $view = new ViewModel();
+        $view->setTerminal(true);
+        $view->setVariable('route', $this->getRoute($this->route));
+        $view->setVariable('controller', $this->controller);
+        $view->setVariable('form', $this->form);
+        return $view;
+    }
+
+    public function updateeventAction()
+    {
+        $this->template = sprintf("agenda/evento/%s/update-event", LAYOUT);
+        return parent::saveAction();
+    }
+
+    public function listeventAction()
+    {
+        $this->setServiceManager('Agenda\Table\CalendarTable', $this->factoryTable)
+            ->setTable('Agenda\Table\CalendarTable');
+        $data = $this->dataTableJson();
+        $view = new JsonModel($data['sEcho']);
+        return $view;
     }
 }

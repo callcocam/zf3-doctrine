@@ -7,6 +7,8 @@
 namespace Agenda\Form;
 
 
+use Admin\Entity\ClientEntity;
+use Admin\Entity\UserEntity;
 use Core\Form\AbstractForm;
 use Core\Service\Utils;
 
@@ -20,21 +22,17 @@ class EventoForm extends AbstractForm
             'controller' => "evento",
             'action' => 'create'
         ]);
-
         $this->util = new Utils();
-        $this->addText("title", "Nome\Descrição");
-        $this->addSelect("class_name", "Cor", [
-            "success" => "Success",
-            "danger" => "Danger",
-            "info" => "Info",
-            "pink" => "Pink",
-            "primary" => "Primary",
-            "warning" => "Warning",
-            "inverse" => "Inverse"
-        ]);
-
-        $this->addTextArea("description", "Descrição", ['attributes' => [
-            'class' => 'form-control tiny_mce'
+        $this->addText("title","Nome\Descrição");
+        $this->addText("start","Inicio");
+        $this->addText("end","Final");
+        $this->addHidden("categorie_id");
+        $this->setRotulo('client','Selecione Um Cliente');
+        $this->addObjectSelect("client",ClientEntity::class,'name');
+        $this->setRotulo('author','Selecione Um Responsavel');
+        $this->addObjectSelect("author",UserEntity::class,'firstName');
+        $this->addTextArea("description","Descrição",['attributes'=>[
+            'class'=>'form-control tiny_mce'
         ]]);
     }
 

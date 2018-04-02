@@ -3,7 +3,6 @@
  * Created By: Claudio  Campos
  * E-Mail: callcocam@gmail.com
  */
-
 namespace Agenda\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,11 +11,11 @@ use Core\Entity\AbstractEntity;
 /**
  * Make
  *
- * @ORM\Table(name="event")
- * @ORM\Entity(repositoryClass="\Agenda\Repository\EventoRepository")
+ * @ORM\Table(name="categorie_agenda")
+ * @ORM\Entity(repositoryClass="\Agenda\Repository\CategorieRepository")
  * @ORM\Entity
  */
-class EventoEntity extends AbstractEntity
+class CategorieEntity extends AbstractEntity
 {
 
     /**
@@ -35,45 +34,20 @@ class EventoEntity extends AbstractEntity
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      */
     private $empresa = 1;
+
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=50, nullable=false)
      */
     private $title;
     /**
-     * @var int|null
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Admin\Entity\ClientEntity")
-     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     * @ORM\Column(name="class_name", type="string", length=50, nullable=false, options={"default"="bg-success"})
      */
-    private $client;
-    /**
-     * @var int|null
-     *
-     * @ORM\ManyToOne(targetEntity="Agenda\Entity\CategorieEntity")
-     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
-     */
-    private $categorieId;
-    /**
-     * @var int|null
-     *
-     * @ORM\ManyToOne(targetEntity="Admin\Entity\UserEntity")
-     * @ORM\JoinColumn(name="author", referencedColumnName="id")
-     */
-    private $author;
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="start", type="datetime", nullable=true)
-     */
-    private $start;
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="end", type="datetime", nullable=true)
-     */
-    private $end;
+    private $class_name;
+
     /**
      * @var string
      *
@@ -110,7 +84,6 @@ class EventoEntity extends AbstractEntity
         return $this->id;
     }
 
-
     /**
      * @return int|null
      */
@@ -121,9 +94,9 @@ class EventoEntity extends AbstractEntity
 
     /**
      * @param int|null $empresa
-     * @return EventoEntity
+     * @return CategorieEntity
      */
-    public function setEmpresa(  $empresa )
+    public function setEmpresa( $empresa )
     {
         $this->empresa = $empresa;
         return $this;
@@ -139,101 +112,29 @@ class EventoEntity extends AbstractEntity
 
     /**
      * @param string $title
-     * @return EventoEntity
+     * @return CategorieEntity
      */
-    public function setTitle( string $title )
+    public function setTitle( $title )
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @return int|null
+     * @return string
      */
-    public function getClient(): ?int
+    public function getClassName()
     {
-        return $this->client;
+        return $this->class_name;
     }
 
     /**
-     * @param int|null $client
-     * @return EventoEntity
+     * @param string $class_name
+     * @return CategorieEntity
      */
-    public function setClient( ?int $client )
+    public function setClassName( $class_name )
     {
-        $this->client = $client;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCategorieId()
-    {
-        return $this->categorieId;
-    }
-
-    /**
-     * @param int|null $categorieId
-     * @return EventoEntity
-     */
-    public function setCategorieId( $categorieId )
-    {
-        $this->categorieId = $categorieId;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param int|null $author
-     * @return EventoEntity
-     */
-    public function setAuthor(  $author )
-    {
-        $this->author = $author;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
-     * @param \DateTime|null $start
-     * @return EventoEntity
-     */
-    public function setStart( $start )
-    {
-        $this->start = $start;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
-     * @param \DateTime|null $end
-     * @return EventoEntity
-     */
-    public function setEnd( $end )
-    {
-        $this->end = $end;
+        $this->class_name = $class_name;
         return $this;
     }
 
@@ -247,7 +148,7 @@ class EventoEntity extends AbstractEntity
 
     /**
      * @param string $description
-     * @return EventoEntity
+     * @return CategorieEntity
      */
     public function setDescription( $description )
     {
@@ -258,16 +159,16 @@ class EventoEntity extends AbstractEntity
     /**
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
     /**
      * @param int $status
-     * @return EventoEntity
+     * @return CategorieEntity
      */
-    public function setStatus( int $status )
+    public function setStatus( $status )
     {
         $this->status = $status;
         return $this;
@@ -283,7 +184,7 @@ class EventoEntity extends AbstractEntity
 
     /**
      * @param \DateTime|null $createdAt
-     * @return EventoEntity
+     * @return CategorieEntity
      */
     public function setCreatedAt( $createdAt )
     {
@@ -301,13 +202,15 @@ class EventoEntity extends AbstractEntity
 
     /**
      * @param \DateTime $updatedAt
-     * @return EventoEntity
+     * @return CategorieEntity
      */
-    public function setUpdatedAt( $updatedAt )
+    public function setUpdatedAt(  $updatedAt )
     {
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
+
 
 
 

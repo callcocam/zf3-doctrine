@@ -27,8 +27,8 @@ class AddForm extends AbstractForm
         $this->addText("title","Nome\Descrição");
         $this->addText("start","Inicio");
         $this->addText("end","Final");
-        $this->setRotulo('event_id','Selecione Uma Categoria');
-        $this->addObjectSelect("event_id",EventoEntity::class,'title');
+        $this->setRotulo('categorie_id','Selecione Uma Categoria');
+        $this->addObjectSelect("categorie_id",EventoEntity::class,'title');
         $this->setRotulo('client','Selecione Um Cliente');
         $this->addObjectSelect("client",ClientEntity::class,'name');
         $this->setRotulo('author','Selecione Um Responsavel');

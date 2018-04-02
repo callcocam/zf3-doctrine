@@ -86,7 +86,7 @@ var agendaForm = function ($form) {
                 title: jqForm.find("input[name='title']").val(),
                 start: jqForm.find("input[name='start']").val(),
                 end: jqForm.find("input[name='end']").val(),
-                eventId: jqForm.find("input[name='event_id']").val(),
+                categorieId: jqForm.find("input[name='event_id']").val(),
                 description: jqForm.find("input[name='description']").val()
             }
             return true;
@@ -116,7 +116,7 @@ var eventForm = function ($form) {
 
 var listEvent = function () {
     $.ajax({
-        url: $addCategory.attr('data-url').replace('add', 'list-event'),
+        url: $addCategory.attr('data-url').replace('add', 'listar'),
         type: 'get',
         dataType: 'html',
         success: function (data) {
@@ -152,7 +152,7 @@ var onEventClick = function (event) {
         id: event.id,
         title: event.title,
         description: event.description,
-        eventId: event.eventId,
+        categorieId: event.categorieId,
         start: moment(event.start).format('DD/MM/YYYY HH:mm'),
         end: moment(event.end).format('DD/MM/YYYY HH:mm')
     };
@@ -181,7 +181,7 @@ var enableDrag = function ($events) {
         // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
         // it doesn't need to have a start or end
         var eventObject = {
-            eventId: $.trim($(this).attr('data-id')),
+            categorieId: $.trim($(this).attr('data-id')),
             title: $.trim($(this).text()),
             description: $.trim($(this).attr('data-description')),
             className: $.trim($(this).attr('data-class')),

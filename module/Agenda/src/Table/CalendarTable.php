@@ -28,8 +28,8 @@ class CalendarTable extends AbstractTable
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
         $this->headers = (new HeadersConfig())
             ->add('title', ['tableAlias' => 'p', 'title' => 'Nome'], 'id')
-            ->add('eventId', ['tableAlias' => 'p', 'title' => 'event'], 'title')
-            ->add('start', ['tableAlias' => 'p', 'title' => 'Inicio'], 'eventId')
+            ->add('categorieId', ['tableAlias' => 'p', 'title' => 'event'], 'title')
+            ->add('start', ['tableAlias' => 'p', 'title' => 'Inicio'], 'categorieId')
             ->add('end', ['tableAlias' => 'p', 'title' => 'Final'], 'start')
             ->add('className', ['tableAlias' => 'p', 'title' => 'Classe'], 'end')
             ->getHeaders();
@@ -51,14 +51,14 @@ class CalendarTable extends AbstractTable
                 return $context->format("Y-m-d H:i");
             }
         ));
-        $this->getHeader('eventId')->getCell()->addDecorator('callable', array(
+        $this->getHeader('categorieId')->getCell()->addDecorator('callable', array(
             'callable' => function ( $context, $record ) {
                 return $context->getId();
             }
         ));
         $this->getHeader('className')->getCell()->addDecorator('callable', array(
             'callable' => function ( $context, $record ) {
-                return sprintf("bg-%s",$record->getEventId()->getClassName());
+                return sprintf("bg-%s",$record->getCategorieId()->getClassName());
             }
         ));
 

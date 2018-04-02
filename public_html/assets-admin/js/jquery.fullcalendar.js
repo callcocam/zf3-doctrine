@@ -116,7 +116,7 @@ var eventForm = function ($form) {
 
 var listEvent = function () {
     $.ajax({
-        url: $addCategory.attr('data-url').replace('add', 'list-event'),
+        url: $addCategory.attr('data-url').replace('add', 'listar'),
         type: 'get',
         dataType: 'html',
         success: function (data) {

@@ -12,21 +12,10 @@ use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 return [
     'router' => [
         'routes' => [
-            "agenda" => [
+             "adm-agenda" => [
                 "type" => Literal::class,
                 "options" => [
-                    "route" => "/agenda",
-                    "defaults" => [
-                        "__NAMESPACE__" => "Agenda\Controller",
-                        "controller" => "Agenda",
-                        "action" => "index",
-                    ],
-                ],
-            ],
-            "adm-agenda" => [
-                "type" => Literal::class,
-                "options" => [
-                    "route" => "/agenda",
+                    "route" => "/admin/agenda",
                     "defaults" => [
                         "__NAMESPACE__" => "Agenda\Controller",
                         "controller" => "Agenda",

@@ -26,8 +26,11 @@ class EventoTable extends AbstractTable
 
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
         $this->headers = (new HeadersConfig())
-            //->add('name',['tableAlias' => 'p','title' => 'Name'],'id')
-            ->add('action',['tableAlias' => 'p','title' => '#', 'width' => '125',"sortable"=>false,],'status')
+            ->add('title', ['tableAlias' => 'p', 'title' => 'Nome'], 'id')
+            ->add('start', ['tableAlias' => 'p', 'title' => 'Inicio'], 'title')
+            ->add('end', ['tableAlias' => 'p', 'title' => 'Final'], 'start')
+            //  ->add('client', ['tableAlias' => 'p', 'title' => 'Cliente'], 'end')
+            ->add('action', ['tableAlias' => 'p', 'title' => '#', 'width' => '125', "sortable" => false,], 'status')
             ->getHeaders();
 
         $this->config = (new Config())->add('name','Lista de makes')->getConfigs();

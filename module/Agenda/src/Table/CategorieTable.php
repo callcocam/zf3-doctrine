@@ -3,7 +3,7 @@
  * Created By: Claudio  Campos
  * E-Mail: callcocam@gmail.com
  */
-namespace Admin\Table;
+namespace Agenda\Table;
 
 
 use Core\Table\AbstractTable;
@@ -15,7 +15,7 @@ use Core\Table\Table\ItemPerPageConfig;
 use Core\Table\Table\StatusConfig;
 use Interop\Container\ContainerInterface;
 
-class GroupTable extends AbstractTable
+class CategorieTable extends AbstractTable
 {
 
 
@@ -26,7 +26,7 @@ class GroupTable extends AbstractTable
 
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
         $this->headers = (new HeadersConfig())
-            ->add('name',['tableAlias' => 'p','title' => 'Name'],'id')
+            ->add('title',['tableAlias' => 'p','title' => 'Name'],'id')
             ->add('action',['tableAlias' => 'p','title' => '#', 'width' => '125',"sortable"=>false,],'status')
             ->getHeaders();
 
@@ -35,23 +35,11 @@ class GroupTable extends AbstractTable
         $this->valuesOfState = (new StatusConfig())->getStatus();
 
         $this->valuesOfItemPerPage = (new ItemPerPageConfig())->add(10,10)->getItems();
-        //Descomente para imagem
-        //$this->coverConfig = new ImgConfig();
-
-
-
-    }
+     }
 
     public function init()
     {
         $this->buttonConfig = new ButtonsConfig();
-
-//        $this->getHeader('cover')->getCell()->addDecorator('img', $this->coverConfig->getConfig());
-//
-//        $this->getHeader('name')->getCell()->addDecorator('link', [
-//            'action'=>'create',
-//            'vars' => 'id'
-//        ]);
         $this->getHeader('id')->addDecorator('check');
         $this->getHeader('id')->getCell()->addDecorator('check');
         $this->getHeader('status')->getCell()->addDecorator('state', [

@@ -40,14 +40,9 @@ abstract class AbstractController extends AbstractActionController
     protected $factoryTable = "Core\\Table\\Factory\\FactoryTable";
     protected $factoryForm = "Core\\Form\\Factory\\FactoryForm";
     protected $factoryFilter = "Core\\Filter\\Factory\\FactoryFilter";
-    /**
-     * @var AuthManager $AuthManagerClass
-     */
-    protected $AuthManagerClass = "Admin\\Auth\\AuthManager";
-    /**
-     * @var UserManager $UserManagerClass
-     */
-    protected $UserManagerClass = "Admin\\Auth\\UserManager";
+
+    protected $templateList;
+    protected $templateCuston = "html";
 
     /**
      * @var $table AbstractTable
@@ -155,34 +150,14 @@ abstract class AbstractController extends AbstractActionController
             ->setRoute($this->getRoute($this->route))
             ->setController($this->controller)
             ->setParamAdapter($this->getRequest()->getPost());
-        $view = $this->table->render();
-        //$view = $this->table->render('custom',sprintf('admin/cidade/%s/listar', LAYOUT));
-        //$view = $this->table->render('dataTableAjaxInit');
-        //$view = $this->table->render('dataTableJson');
-        //$view = $this->table->render('newDataTableJson');
+        $view = $this->table->render($this->templateCuston, $this->templateList);
+        $view->setTerminal(true);
         $view->setVariable('route', $this->getRoute($this->route));
         $view->setVariable('controller', $this->controller);
         return $view;
 
     }
 
-    public function perssomAction()
-    {
-        if (!$this->identity()):
-            return $this->auth();
-        endif;
-        //I don't know if it necesary to validate that request is POST
-        $queryBuilder = $this->repository->createQueryBuilder("p");
-        $this->table->setSource($queryBuilder)
-            ->setRoute($this->getRoute($this->route))
-            ->setController($this->controller)
-            ->setParamAdapter($this->getRequest()->getPost());
-        $view = $this->table->render('custom', sprintf($this->template, LAYOUT));
-        $view->setVariable('route', $this->getRoute($this->route));
-        $view->setVariable('controller', $this->controller);
-        return $view;
-
-    }
 
     public function dataTableJson()
     {
@@ -257,7 +232,7 @@ abstract class AbstractController extends AbstractActionController
                     $this->params()->fromFiles()
                 );
             endif;
-
+            $this->data['empresa'] = $this->user->getEmpresa()->getId();
             $this->form->setData($this->data)->setInputFilter($this->filter->getInputFilter());
             if ($this->form->isValid()):
                 $this->args = array_merge($this->args, $this->service->save($this->data));

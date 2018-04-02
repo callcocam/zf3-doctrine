@@ -3,6 +3,7 @@
  * Created By: Claudio  Campos
  * E-Mail: callcocam@gmail.com
  */
+
 namespace Agenda\Filter;
 
 
@@ -17,7 +18,7 @@ class EventoFilter extends AbstractFilter
      * FilterInterface constructor.
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct( ContainerInterface $container )
     {
         $this->container = $container;
     }
@@ -28,27 +29,55 @@ class EventoFilter extends AbstractFilter
 
 
         ########################### name ####################
-//        $this->inputFilter->add([
-//            'name'=>'name',
-//            'required'=>true,
-//            'filters'=>$this->filters(),
-//            'validators'=>[
-//                $this->NotEmpty('name'),
-//                $this->StringLength('name')
-//            ]
-//        ]);
+        $this->inputFilter->add([
+            'name' => 'title',
+            'required' => true,
+            'filters' => $this->filters(),
+            'validators' => [
+                $this->NotEmpty('Titulo'),
+                $this->StringLength('Titulo')
+            ]
+        ]);
 
-        ########################### controller ####################
-//        $this->inputFilter->add([
-//            'name'=>'controller',
-//            'required'=>true,
-//            'filters'=>$this->filters(),
-//            'validators'=>[
-//                $this->StringLength('controller'),
-//                $this->NotEmpty('controller'),
-//                $this->getInputFilterSpecification(Make::class,['id','controller'],"Controlador")
-//            ]
-//        ]);
+        $this->inputFilter->add([
+            'name' => 'client',
+            'required' => true,
+            'filters' => $this->filters(),
+            'validators' => [
+                $this->NotEmpty('Cliente'),
+                $this->StringLength('Cliente')
+            ]
+        ]);
+
+        $this->inputFilter->add([
+            'name' => 'author',
+            'required' => true,
+            'filters' => $this->filters(),
+            'validators' => [
+                $this->NotEmpty('Responsavel'),
+                $this->StringLength('Responsavel')
+            ]
+        ]);
+
+        $this->inputFilter->add([
+            'name' => 'categorie_id',
+            'required' => true,
+            'filters' => $this->filters(),
+            'validators' => [
+                $this->NotEmpty('Categoria'),
+                $this->StringLength('Categoria')
+            ]
+        ]);
+
+        $this->inputFilter->add([
+            'name' => 'start',
+            'required' => true,
+            'filters' => $this->filters(),
+            'validators' => [
+                $this->NotEmpty('Data Inicial'),
+                $this->StringLength('Data Inicial')
+            ]
+        ]);
 
         return parent::getInputFilter();
     }

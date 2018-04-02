@@ -15,7 +15,7 @@ use Core\Table\Table\ItemPerPageConfig;
 use Core\Table\Table\StatusConfig;
 use Interop\Container\ContainerInterface;
 
-class CategorieTable extends AbstractTable
+class CategorieAjaxTable extends AbstractTable
 {
 
 
@@ -27,14 +27,14 @@ class CategorieTable extends AbstractTable
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
         $this->headers = (new HeadersConfig())
             ->add('title',['tableAlias' => 'p','title' => 'Name'],'id')
-            ->add('action',['tableAlias' => 'p','title' => '#', 'width' => '125',"sortable"=>false,],'status')
+            ->add('className',['tableAlias' => 'p','title' => 'Name'],'title')
+            ->add('description',['tableAlias' => 'p','title' => 'Name'],'title')
             ->getHeaders();
 
         $this->config = (new Config())->add('name','Lista de makes')->getConfigs();
 
-        $this->valuesOfState = (new StatusConfig())->getStatus();
 
-        $this->valuesOfItemPerPage = (new ItemPerPageConfig())->add(10,10)->getItems();
+        $this->valuesOfItemPerPage = (new ItemPerPageConfig())->add('itemCountPerPage', '100')->getItems();
         //Descomente para imagem
         //$this->coverConfig = new ImgConfig();
 
@@ -44,41 +44,7 @@ class CategorieTable extends AbstractTable
 
     public function init()
     {
-        $this->buttonConfig = new ButtonsConfig();
 
-//        $this->getHeader('cover')->getCell()->addDecorator('img', $this->coverConfig->getConfig());
-//
-//        $this->getHeader('name')->getCell()->addDecorator('link', [
-//            'action'=>'create',
-//            'vars' => 'id'
-//        ]);
-        $this->getHeader('id')->addDecorator('check');
-        $this->getHeader('id')->getCell()->addDecorator('check');
-        $this->getHeader('status')->getCell()->addDecorator('state', [
-            'value' => [
-                '1' => 'Active',
-                '2' => 'Desactive',
-                '3' => 'Trash',
-            ],
-            'class' => [
-                '1' => 'green',
-                '2' => 'yellow',
-                '3' => 'red',
-            ],
-        ]);
-
-
-        $this->buttonConfig->setName("editar")
-            ->add("editar");
-
-        $this->buttonConfig->setName("excluir")
-            ->setStatus([1,2,3])
-            ->add("excluir");
-
-        $this->getHeader('action')->getCell()->addDecorator('btn', [
-            'params' => $this->getRouteHelper()->getParans(),
-            'url' => $this->buttonConfig,
-        ]);
     }
 
     //The filters could also be done with a parametrised query

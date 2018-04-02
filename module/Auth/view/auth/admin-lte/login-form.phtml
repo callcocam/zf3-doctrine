@@ -24,3 +24,8 @@ $this->form->get('submit')->setValue('Iniciar Sessão')->setAttribute('class','b
 );?>
 <?=$this->form()->closeTag();?>
 <?=$this->partial(sprintf('layout/%s/partial/messages', LAYOUT));?>
+<script>
+    $(function () {
+        formInit();
+    })
+</script>

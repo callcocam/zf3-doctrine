@@ -7,9 +7,8 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <button id="add-category" type="button" data-url="<?=$this->url(sprintf("%s/default",$this->route),[
-                                    'controller'=>'evento',
-                                    'action'=>'add',
-                                    'id'=>'id',
+                                    'controller'=>'categorie',
+                                    'action'=>'add'
                                 ]);?>" class="btn btn-lg btn-primary btn-block waves-effect waves-light">
                                     <i class="fa fa-plus"></i> <?=$this->translate('Add Categoria');?>
                                 </button>

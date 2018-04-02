@@ -49,7 +49,7 @@ function form_upload($form) {
         }, // post-submit callback
         uploadProgress:function(evento, posicao, total, completo) {
             var porcento = completo + '%';
-            $("#upload-progress").css("width", + porcento +"%").find('span').text(porcento);
+            $('form[name="AjaxUploadForm"]').find("#upload-progress").css("width", + porcento +"%").find('span').text(porcento).fadeIn(100);
         },
         type: 'post', // 'get' or 'post', override for form's 'method' attribute
         dataType: 'json' // 'xml', 'script', or 'json' (expected server response type)

@@ -117,6 +117,7 @@ class AbstractForm extends Form
                 'id' => "submit",
                 'class' => 'btn btn-primary btn-block btn-flat btn-block',
                 'value' => "Atualizar Cadastro",
+                'data-toggle'=>"reload"
             ],
         ]);
         //######################## save_copy #######################
@@ -127,6 +128,7 @@ class AbstractForm extends Form
                 'id' => "save_copy",
                 'class' => 'btn btn-warning btn-block btn-flat btn-block',
                 'value' => "Duplicar Cadastro",
+                'data-toggle'=>"reload"
             ],
         ]);
         //######################## save_close #######################
@@ -137,6 +139,7 @@ class AbstractForm extends Form
                 'id' => "save_close",
                 'class' => 'btn btn-success btn-block btn-flat btn-block',
                 'value' => "Atualizar e Fechar",
+                'data-toggle'=>"reload"
             ],
         ]);
 

@@ -26,6 +26,8 @@ class ClientTable extends AbstractTable
         parent::__construct($container);
 
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
+
+
         $this->headers = (new HeadersConfig())
             ->add('cover',['tableAlias' => 'p','title' => 'Cover', 'width' => '100',"sortable"=>false,],'id')
             ->add('name',['tableAlias' => 'p','title' => 'Name'],'cover')

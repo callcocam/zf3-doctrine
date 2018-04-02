@@ -42,10 +42,9 @@ $collums08[] = $this->El()
     ->input('country')
     ->render($this->html('div')->setClass('row'));
 
-$collums08[] = $this->Tiny()->setField($this->form->get('description'))
-    ->setRoute($this->route)
-    ->setController($this->controller)
-    ->render($this->html('div')->setClass('col-xs-12'));
+$collums08[] = $this->El()
+    ->editor('description',$this->route,$this->controller,$this->form->get("id")->getValue())
+    ->render($this->html('div')->setClass('row'));
 
 $collums04[] = $this->html('div')->setClass('row')->setText(
     $this->El()->file()->render($this->html('div')->setClass('col-md-12'))

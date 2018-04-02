@@ -18,6 +18,7 @@ $acl = $this->Acl()->getAcl()
     ?>
     <!-- Le styles -->
     <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+        ->prependStylesheet($this->basePath('assets-admin/css/style-default.css'))
         ->prependStylesheet($this->basePath('assets-admin/css/zf-table.css'))
         ->prependStylesheet($this->basePath('assets-admin/css/toastr.min.css'))
         ->prependStylesheet($this->basePath('assets-admin/plugins/bootstrap-timerpicker/css/bootstrap-datepicker.min.css'))
@@ -26,7 +27,8 @@ $acl = $this->Acl()->getAcl()
         ->prependStylesheet($this->basePath('assets-admin/plugins/iCheck/square/_all.css'))
         ->prependStylesheet($this->basePath('assets-admin/css/ionicons.css'))
         ->prependStylesheet($this->basePath('assets-admin/css/font-awesome.css'))
-        ->prependStylesheet($this->basePath('green-vertical/css/style.css'))
+        ->prependStylesheet($this->basePath('green-vertical/css/style_dark.css'))
+//        ->prependStylesheet($this->basePath('green-vertical/css/style.css'))
         ->prependStylesheet($this->basePath('green-vertical/plugins/fullcalendar/css/fullcalendar.min.css'))
         ->prependStylesheet($this->basePath('green-vertical/css/icons.css'))
         ->prependStylesheet($this->basePath('green-vertical/css/bootstrap.min.css'))
@@ -72,7 +74,7 @@ $acl = $this->Acl()->getAcl()
 <div id="wrapper" class="wrapper">
     <?= $this->partial(sprintf("layout/%s/partial/header", LAYOUT)); ?>
     <!-- Left side column. contains the logo and sidebar -->
-    <?= $this->navigation('Navigation')->menu()->setAcl($acl)->setRole((string)$this->identity()->getAccess())->setPartial(sprintf("layout/%s/partial/sidebar", LAYOUT)); ?>
+    <?= $this->navigation('Navigation')->menu()->setAcl($acl)->setRole((string)$this->identity()->getAccess()->getId())->setPartial(sprintf("layout/%s/partial/sidebar", LAYOUT)); ?>
     <!-- Content Wrapper. Contains page content -->
     <!-- ============================================================== -->
     <!-- Start right Content here -->

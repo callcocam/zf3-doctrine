@@ -20,8 +20,8 @@ class GroupController extends AbstractController
     public function __construct(ContainerInterface $container)
     {
         $this->route = "adm-admin";
-        $this->controller = "Group";
-        $this->template = sprintf("admin/Group/%s/editar-form", LAYOUT);
+        $this->controller = "group";
+        $this->template = sprintf("admin/group/%s/editar-form", LAYOUT);
         $this->container = $container;
         $this->service = 'Admin\Service\GroupService';
         $this->form = 'Admin\Form\GroupForm';

@@ -13,7 +13,7 @@ $.Tiny.options = {
     skin: 'lightgray',
     entity_encoding: "raw",
     theme_advanced_resizing: true,
-    content_css: "/admin-lte/css/tinymce.css",
+    content_css: "/assets-admin/css/tinymce.css",
     init_instance_callback: function (editor) {
         editor.on('Change', function (e) {
             tinymce.triggerSave();

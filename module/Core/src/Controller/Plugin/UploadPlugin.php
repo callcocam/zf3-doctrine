@@ -67,7 +67,7 @@ class UploadPlugin extends AbstractPlugin
      * @param UploadService $service
      * @return UploadPlugin
      */
-    public function setService(UploadService $service): UploadPlugin
+    public function setService( UploadService $service ): UploadPlugin
     {
         $this->service = $service;
         return $this;
@@ -85,7 +85,7 @@ class UploadPlugin extends AbstractPlugin
      * @param UploadForm $form
      * @return UploadPlugin
      */
-    public function setForm(UploadForm $form): UploadPlugin
+    public function setForm( UploadForm $form ): UploadPlugin
     {
         $this->form = $form;
         return $this;
@@ -103,7 +103,7 @@ class UploadPlugin extends AbstractPlugin
      * @param UploadFilter $filter
      * @return UploadPlugin
      */
-    public function setFilter(UploadFilter $filter): UploadPlugin
+    public function setFilter( UploadFilter $filter ): UploadPlugin
     {
         $this->filter = $filter;
         return $this;
@@ -121,7 +121,7 @@ class UploadPlugin extends AbstractPlugin
      * @param $repository
      * @return UploadPlugin
      */
-    public function setRepository($repository)
+    public function setRepository( $repository )
     {
         $this->repository = $repository;
         return $this;
@@ -139,7 +139,7 @@ class UploadPlugin extends AbstractPlugin
      * @param ImagesUpload $ImagesUpload
      * @return UploadPlugin
      */
-    public function setImagesUpload(ImagesUpload $ImagesUpload): UploadPlugin
+    public function setImagesUpload( ImagesUpload $ImagesUpload ): UploadPlugin
     {
         $this->ImagesUpload = $ImagesUpload;
         return $this;
@@ -157,7 +157,7 @@ class UploadPlugin extends AbstractPlugin
      * @param array $data
      * @return UploadPlugin
      */
-    public function setData(array $data): UploadPlugin
+    public function setData( array $data ): UploadPlugin
     {
         $this->data = $data;
         return $this;
@@ -175,13 +175,13 @@ class UploadPlugin extends AbstractPlugin
      * @param array $File
      * @return UploadPlugin
      */
-    public function setFile(array $File): UploadPlugin
+    public function setFile( array $File ): UploadPlugin
     {
         $this->File = $File;
         return $this;
     }
 
-     /**
+    /**
      * @return array
      */
     public function getQuery(): array
@@ -193,36 +193,39 @@ class UploadPlugin extends AbstractPlugin
      * @param array $Query
      * @return UploadPlugin
      */
-    public function setQuery(array $Query): UploadPlugin
+    public function setQuery( array $Query ): UploadPlugin
     {
         $this->Query = $Query;
         return $this;
     }
 
 
-    public function upload($BasePath){
+    public function upload( $BasePath )
+    {
 
         $Result = [];
-        if($this->data):
+        if ($this->data):
+            $this->data['path'] = $BasePath;
             $this->form->setData($this->data);
             if ($this->form->isValid()):
                 //Verifica se existe uma imagem para enviar
-                if($this->File):
+                if ($this->File):
                     $this->ImagesUpload->setBasePath($BasePath);
                     $Result = $this->ImagesUpload->persistFile($this->File['file'], [
                         'controller' => $this->data['assets'],
                         'id' => $this->data['parent'],
                     ]);
-                    $this->data['cover']=$Result['location'];
-                    $this->data['path']=$Result['path'];
+                    $this->data['cover'] = $Result['location'];
+                    $this->data['path'] = $Result['path'];
                 endif;
                 //Salva ou atualiza os dados
                 $Result = array_merge($Result, $this->service->save($this->data));
             endif;
         else:
-            if($this->Query){
-                   $File = $this->repository->findOneBy($this->Query);
-                if($File){
+            if ($this->Query) {
+                unset($this->Query['name']);
+                $File = $this->repository->findOneBy($this->Query);
+                 if ($File) {
                     $this->form->setData($this->extracted($File->toArray()));
                 }
 
@@ -231,7 +234,8 @@ class UploadPlugin extends AbstractPlugin
         return $Result;
     }
 
-    public function uploadmce($id,$controller,$BasePath) {
+    public function uploadmce( $id, $controller, $BasePath )
+    {
         $this->ImagesUpload->setBasePath($BasePath);
         $Result = $this->ImagesUpload->persistFile($this->File['file'], [
             'controller' => $controller,
@@ -240,7 +244,7 @@ class UploadPlugin extends AbstractPlugin
         return $Result;
     }
 
-    protected function extracted($data, $suffix = "copy")
+    protected function extracted( $data, $suffix = "copy" )
     {
         foreach ($data as $key => $value) {
             if ($value instanceof \Datetime):

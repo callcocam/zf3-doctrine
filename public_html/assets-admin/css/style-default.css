@@ -1,0 +1,17 @@
+.processing {
+    background: url("../../admin-lte/img/datatable/ajax-loader.gif") no-repeat center rgba(0, 0, 0, 0.3);
+    /*background: url("../../admin-lte/img/datatable/ajax-loader.gif") no-repeat   center transparent;*/
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    display: none;
+    float: left;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+}

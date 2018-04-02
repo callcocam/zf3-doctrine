@@ -18,9 +18,26 @@ class ActionsElement extends AbstractHelper
     protected $html = [];
 
     /**
-     * @param string $class
+     * @param string $label
+     * @param string $icone
      * @return $this
      */
+    public function save($label='Salvar', $icone="fa fa-save"){
+        $this->html[] = $this->view->partial(sprintf('layout/%s/partial/modal-save', LAYOUT), [
+            'label' =>  $label,
+            'icone' =>  $icone,
+        ]);
+        return $this;
+    }
+
+    public function dismiss($label="Fechar", $icone="fa fa-close"){
+        $this->html[] = $this->view->partial(sprintf('layout/%s/partial/dismiss', LAYOUT), [
+            'label' =>  $label,
+            'icone' =>  $icone
+        ]);
+        return $this;
+    }
+
     public function logar($class='3'){
         $this->html[] = $this->view->html('div')->setClass(sprintf("col-md-%s", $class))->appendClass('col-xs-12')->setText(
             $this->view->partial(sprintf('layout/%s/partial/form/submit', LAYOUT), [
@@ -42,6 +59,7 @@ class ActionsElement extends AbstractHelper
         );
         return $this;
     }
+
     /**
      * @param string $class
      * @return $this
@@ -126,15 +144,6 @@ class ActionsElement extends AbstractHelper
         return $this;
     }
 
-     public function dismiss($class='3'){
-        $this->html[] =  $this->view->html('div')->setClass(sprintf("col-md-%s", $class))->appendClass('col-xs-12')->setText(
-            $this->view->html('button')->setAttributes([
-                'class'=>'btn btn-default btn-block pull-left',
-                'data-dismiss'=>'modal',
-            ])->setText($this->view->html('i')->setClass('fa fa-close'))->appendText('Fechar')
-        );
-        return $this;
-    }
 
 
 

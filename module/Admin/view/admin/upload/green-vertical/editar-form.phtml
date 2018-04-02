@@ -6,6 +6,7 @@
 <?php
 $this->form->get('parent')->setValue($this->parent);
 $this->form->get('assets')->setValue($this->assets);
+$this->form->get('cover')->setValue($this->name);
 
 $html1[] = $this->html('img')->setAttributes([
     'id' => 'file',
@@ -89,8 +90,8 @@ $html4[] = $this->html('div')->setClass('member-card')->setText(implode('',$html
                         ->render())
             ) ?>
             <?= $this->html('div')->setClass('modal-footer')->setText($this->Actions()
-                ->dismiss(5)
-                ->upload(7)
+                ->dismiss()
+                ->save("Enviar Imagem","fa fa-upload")
                 ->render($this->html('div')->setClass('row'))) ?>
         </div>
     </div>

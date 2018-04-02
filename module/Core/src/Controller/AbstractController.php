@@ -200,7 +200,7 @@ abstract class AbstractController extends AbstractActionController
             $this->form->get('save_copy')->setAttribute('disabled', true);
         }
         $view = new ViewModel($this->args);
-        if(!empty($this->templateCreate)){
+        if (!empty($this->templateCreate)) {
             $view->setTemplate($this->templateCreate);
         }
         $view->setTerminal($this->terminal);
@@ -244,6 +244,7 @@ abstract class AbstractController extends AbstractActionController
                     elseif ($this->params()->fromPost('save_copy')):
                         $data = $this->copy($this->args['entity']->toArray(), 'copy');
                         $data['id'] = "";
+                        $data['empresa'] = $this->user->getEmpresa()->getId();
                         $this->args = array_merge($this->args, $this->service->save($data));
                         $this->addRedirect([sprintf("%s/default", $this->getRoute($this->route)), [
                             'controller' => $this->controller,
@@ -289,13 +290,13 @@ abstract class AbstractController extends AbstractActionController
         if (!$this->identity()):
             return $this->restrict();
         endif;
-        if (!$this->params()->fromPost()):
+        if ($this->params()->fromPost()):
+            $Data = $this->params()->fromPost('id');
+        elseif ($this->params()->fromRoute('id')):
+            $Data = $this->params()->fromRoute('id');
+        else:
             return new JsonModel($this->args);
         endif;
-        if (!$this->params()->fromRoute('id')):
-            return new JsonModel($this->args);
-        endif;
-        $Data = $this->params()->fromPost('id');
         if (!is_array($Data)):
             $Data = [$Data];
         endif;
@@ -337,10 +338,13 @@ abstract class AbstractController extends AbstractActionController
 
     public function uploadAction()
     {
+        
         if ($this->params()->fromPost()):
             if (!$this->identity()):
                 return $this->restrict();
             endif;
+            $this->data = $this->params()->fromPost();
+            $this->data['empresa'] = $this->user->getEmpresa()->getId();
         else:
             if (!$this->identity()):
                 return $this->auth();
@@ -363,6 +367,8 @@ abstract class AbstractController extends AbstractActionController
         $view->setTemplate("admin/upload/create");
         $view->setVariable('assets', $this->params()->fromQuery('assets'));
         $view->setVariable('parent', $this->params()->fromQuery('parent'));
+        $view->setVariable('name', $this->params()->fromQuery('name'));
+
         $Result = $this->UploadPlugin()
             ->setService($this->service)
             ->setForm($this->form)
@@ -370,7 +376,7 @@ abstract class AbstractController extends AbstractActionController
             ->setFilter($this->filter)
             ->setRepository($this->repository)
             ->setQuery($this->params()->fromQuery())
-            ->setData($this->params()->fromPost())
+            ->setData($this->data)
             ->setFile($this->params()->fromFiles())
             ->upload($this->getRequest()->getServer('DOCUMENT_ROOT'));
         $view->setTerminal(true);
@@ -440,7 +446,15 @@ abstract class AbstractController extends AbstractActionController
                 if (is_integer($value) || is_double($value) || $key == "status" || $key == "empresa"):
                     $data[$key] = $value;
                 else:
-                    $data[$key] = sprintf("%s%s", $value, $suffix);
+                    if ($value instanceof AbstractEntity) {
+                        //$methodName = 'get' . ucfirst($key);
+                        $value = $value->getId();
+                    }
+                    if (is_integer($value) || is_double($value)):
+                        $data[$key] = $value;
+                    else:
+                        $data[$key] = sprintf("%s%s", $value, $suffix);
+                    endif;
                 endif;
             endif;
         }

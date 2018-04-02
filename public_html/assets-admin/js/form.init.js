@@ -28,7 +28,7 @@ function showRequest(formData, jqForm, options) {
     if (typeof tinymce !== 'undefined') {
         tinymce.triggerSave();
     }
-    $(jqForm).append('<div class="processing" style=""></div>');
+    $(jqForm).append('<div class="processing" style="display: block"></div>').fadeIn(100);
     return true;
 }
 // post-submit callback

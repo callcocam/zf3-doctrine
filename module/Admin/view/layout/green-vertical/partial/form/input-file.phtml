@@ -6,7 +6,8 @@
         <a href="<?=$this->url("adm-upload",[],[
             'query'=>[
                 'assets'=>$this->controller,
-                'parent'=>$this->id
+                'parent'=>$this->id,
+                'name'=>$this->field->getValue()
             ]
         ])?>" class="btn btn-primary btn-block  <?=$this->id?'upload':'disabled';?>">
             <i class="fa fa-file-image-o"></i> <b><?=$this->translate("Selecionar Imagem")?></b>

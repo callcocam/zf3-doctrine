@@ -97,7 +97,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param int $empresa
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setEmpresa($empresa)
     {
@@ -121,7 +121,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param string $name
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setName($name)
     {
@@ -145,7 +145,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param string $alias
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setAlias($alias)
     {
@@ -169,7 +169,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param string $route
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setRoute($route)
     {
@@ -193,7 +193,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param string|null $description
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setDescription($description = null)
     {
@@ -217,7 +217,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param int $status
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setStatus($status)
     {
@@ -241,7 +241,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param \DateTime $createdAt
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setCreatedAt($createdAt)
     {
@@ -265,7 +265,7 @@ class ResourceEntity extends AbstractEntity
      *
      * @param \DateTime $updatedAt
      *
-     * @return Resource
+     * @return ResourceEntity
      */
     public function setUpdatedAt($updatedAt)
     {

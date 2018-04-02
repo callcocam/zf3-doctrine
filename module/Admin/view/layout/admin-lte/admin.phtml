@@ -85,7 +85,7 @@ $acl = $this->Acl()->getAcl()
        <div class="wrapper">
            <?=$this->partial(sprintf("layout/%s/partial/header", LAYOUT));?>
            <!-- Left side column. contains the logo and sidebar -->
-           <?=$this->navigation('Navigation')->menu()->setAcl($acl)->setRole((string)$this->identity()->getAccess())->setPartial(sprintf("layout/%s/partial/sidebar", LAYOUT));?>
+           <?=$this->navigation('Navigation')->menu()->setAcl($acl)->setRole((string)$this->identity()->getAccess()->getId())->setPartial(sprintf("layout/%s/partial/sidebar", LAYOUT));?>
            <!-- Content Wrapper. Contains page content -->
            <div class="content-wrapper">
                <!-- Content Header (Page header) -->

@@ -11,4 +11,5 @@ return array(
     'Admin\\Controller\\Upload' => '\\Admin\\Controller\\Factory\\FactoryController',
     'Admin\\Controller\\Gallery' => '\\Admin\\Controller\\Factory\\FactoryController',
     'Admin\\Controller\\Privilege' => '\\Admin\\Controller\\Factory\\FactoryController',
+    'Admin\\Controller\\Group' => '\\Admin\\Controller\\Factory\\FactoryController',
 );

@@ -47,15 +47,6 @@ class Module implements ServiceProviderInterface
                 },
 				Authentication::class =>AuthenticationFactory::class,
 
-//				LoginForm::class => FormFactory::class,
-//
-//				LoginFilter::class => LoginModelFactory::class,
-//
-//				LoginTable::class => LoginTableFactory::class,
-
-				Company::class => TableFactory::class,
-
-				Logado::class => TableFactory::class,
 			]
 
 		];

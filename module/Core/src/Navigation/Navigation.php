@@ -32,11 +32,11 @@ class Navigation extends DefaultNavigationFactory
              * @var $fetchMenu EntityManager
              */
             $fetchMenu = $serviceLocator->get("Doctrine\ORM\EntityManager");
-            $sql = $fetchMenu->getRepository("Admin\\Entity\\MenuEntity")->createQueryBuilder('genus');
-            $sql->where($sql->expr()->isNull('genus.parent'));
-            $Datas = $sql->getQuery()->getResult();
-            if($Datas):
-                foreach($Datas as $key=>$row)
+            $sql = $fetchMenu->getRepository("Admin\\Entity\\GroupEntity")->createQueryBuilder('genus');
+            $sql->where($sql->expr()->eq('genus.status',1));
+            $Groups = $sql->getQuery()->getResult();
+            if($Groups):
+                foreach($Groups as $key=>$row)
                 {
                     if(!empty($row->getRoute())):
                         $Pages=[];

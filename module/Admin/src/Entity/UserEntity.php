@@ -24,7 +24,6 @@ class UserEntity extends AbstractEntity
     private $id;
 
     /**
-     * @var int
      *
      * @ORM\ManyToOne(targetEntity="Admin\Entity\EmpresaEntity")
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
@@ -136,12 +135,11 @@ class UserEntity extends AbstractEntity
     private $createdAt;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="access", type="string", length=40, nullable=false, options={"default"="4"})
+     * @ORM\ManyToOne(targetEntity="Admin\Entity\RoleEntity")
+     * @ORM\JoinColumn(name="access", referencedColumnName="id")
      */
-    private $access = '4';
-
+    private $access;
 
 
     /**
@@ -161,7 +159,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setEmpresa($empresa)
+    public function setEmpresa( $empresa )
     {
         $this->empresa = $empresa;
 
@@ -185,7 +183,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setFirstName($firstName)
+    public function setFirstName( $firstName )
     {
         $this->firstName = $firstName;
 
@@ -209,7 +207,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setLastName($lastName)
+    public function setLastName( $lastName )
     {
         $this->lastName = $lastName;
 
@@ -233,7 +231,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setEmail($email)
+    public function setEmail( $email )
     {
         $this->email = $email;
 
@@ -257,7 +255,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setFacebook($facebook)
+    public function setFacebook( $facebook )
     {
         $this->facebook = $facebook;
 
@@ -281,7 +279,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setTwitter($twitter)
+    public function setTwitter( $twitter )
     {
         $this->twitter = $twitter;
 
@@ -305,7 +303,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setGoogle($google)
+    public function setGoogle( $google )
     {
         $this->google = $google;
 
@@ -329,7 +327,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setDescription($description)
+    public function setDescription( $description )
     {
         $this->description = $description;
 
@@ -353,7 +351,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setCover($cover)
+    public function setCover( $cover )
     {
         $this->cover = $cover;
 
@@ -377,7 +375,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setPassword($password)
+    public function setPassword( $password )
     {
         $this->password = $password;
 
@@ -406,7 +404,7 @@ class UserEntity extends AbstractEntity
      * @param null|string $pwdResetToken
      * @return UserEntity
      */
-    public function setPwdResetToken($pwdResetToken)
+    public function setPwdResetToken( $pwdResetToken )
     {
         $this->pwdResetToken = $pwdResetToken;
         return $this;
@@ -424,12 +422,11 @@ class UserEntity extends AbstractEntity
      * @param \DateTime $pwdResetTokenCreationDate
      * @return UserEntity
      */
-    public function setPwdResetTokenCreationDate($pwdResetTokenCreationDate)
+    public function setPwdResetTokenCreationDate( $pwdResetTokenCreationDate )
     {
         $this->pwdResetTokenCreationDate = $pwdResetTokenCreationDate;
         return $this;
     }
-
 
 
     /**
@@ -439,7 +436,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setUserActive($userActive = null)
+    public function setUserActive( $userActive = null )
     {
         $this->userActive = $userActive;
 
@@ -463,7 +460,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setStatus($status)
+    public function setStatus( $status )
     {
         $this->status = $status;
 
@@ -487,7 +484,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt( $updatedAt )
     {
         $this->updatedAt = $updatedAt;
 
@@ -511,7 +508,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt( $createdAt )
     {
         $this->createdAt = $createdAt;
 
@@ -535,7 +532,7 @@ class UserEntity extends AbstractEntity
      *
      * @return UserEntity
      */
-    public function setAccess($access)
+    public function setAccess( $access )
     {
         $this->access = $access;
 

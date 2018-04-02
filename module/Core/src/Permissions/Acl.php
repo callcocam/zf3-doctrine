@@ -60,7 +60,7 @@ class Acl extends ZendAcl
     public function setRoles($Roles)
     {
         $sql = $Roles->createQueryBuilder('R');
-        $sql->where($sql->expr()->eq('R.status', 1))->orderBy('R.id', 'DESC');
+        $sql->where($sql->expr()->eq('R.status', 1))->orderBy('R.id', 'ASC');
         $this->Roles = $sql->getQuery()->getResult();
         if ($this->Roles):
             foreach ($this->Roles as $role) {

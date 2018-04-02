@@ -1,25 +1,23 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: caltj
- * Date: 22/03/2018
- * Time: 08:33
+ * Created By: Claudio  Campos
+ * E-Mail: callcocam@gmail.com
  */
-
 namespace Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Core\Entity\AbstractEntity;
 
 /**
- * Make
+ * Group
  *
- * @ORM\Table(name="menu")
- * @ORM\Entity(repositoryClass="Admin\Repository\MenuRepository")
+ * @ORM\Table(name="menu_group")
+ * @ORM\Entity(repositoryClass="\Admin\Repository\GroupRepository")
  * @ORM\Entity
  */
-class MenuEntity extends AbstractEntity
+class GroupEntity extends AbstractEntity
 {
+
     /**
      * @var int
      *
@@ -28,7 +26,6 @@ class MenuEntity extends AbstractEntity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var int|null
      *
@@ -36,15 +33,7 @@ class MenuEntity extends AbstractEntity
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      */
     private $empresa = 1;
-
     /**
-     * @var int|null
-     *
-     * @ORM\ManyToOne(targetEntity="Admin\Entity\GroupEntity")
-     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
-     */
-    private $parent;
-     /**
      * @var ResourceEntity
      *
      * @ORM\ManyToOne(targetEntity="Admin\Entity\ResourceEntity")
@@ -131,6 +120,16 @@ class MenuEntity extends AbstractEntity
     }
 
     /**
+     * @param int $id
+     * @return GroupEntity
+     */
+    public function setId( $id )
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * @return int|null
      */
     public function getEmpresa()
@@ -139,33 +138,14 @@ class MenuEntity extends AbstractEntity
     }
 
     /**
-     * @param EmpresaEntity $empresa
-     * @return MenuEntity
+     * @param int|null $empresa
+     * @return GroupEntity
      */
-    public function setEmpresa( EmpresaEntity $empresa )
+    public function setEmpresa(  $empresa )
     {
         $this->empresa = $empresa;
         return $this;
     }
-
-    /**
-     * @return int|null
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param int|null $parent
-     * @return MenuEntity
-     */
-    public function setParent(  $parent )
-    {
-        $this->parent = $parent;
-        return $this;
-    }
-
 
     /**
      * @return ResourceEntity
@@ -177,7 +157,7 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param ResourceEntity $route
-     * @return MenuEntity
+     * @return GroupEntity
      */
     public function setRoute( $route )
     {
@@ -195,9 +175,9 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param string $name
-     * @return MenuEntity
+     * @return GroupEntity
      */
-    public function setName( $name )
+    public function setName( string $name )
     {
         $this->name = $name;
         return $this;
@@ -213,7 +193,7 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param string $controller
-     * @return MenuEntity
+     * @return GroupEntity
      */
     public function setController( $controller )
     {
@@ -231,16 +211,16 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param string $action
-     * @return MenuEntity
+     * @return GroupEntity
      */
-    public function setAction( $action )
+    public function setAction(  $action )
     {
         $this->action = $action;
         return $this;
     }
 
     /**
-     * @return int|null
+     * @return mixed
      */
     public function getRole()
     {
@@ -248,8 +228,8 @@ class MenuEntity extends AbstractEntity
     }
 
     /**
-     * @param int|null $role
-     * @return MenuEntity
+     * @param mixed $role
+     * @return GroupEntity
      */
     public function setRole( $role )
     {
@@ -267,7 +247,7 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param string $alias
-     * @return MenuEntity
+     * @return GroupEntity
      */
     public function setAlias( $alias )
     {
@@ -285,7 +265,7 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param string $icone
-     * @return MenuEntity
+     * @return GroupEntity
      */
     public function setIcone( $icone )
     {
@@ -303,7 +283,7 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param int|null $ordem
-     * @return MenuEntity
+     * @return GroupEntity
      */
     public function setOrdem( $ordem )
     {
@@ -321,9 +301,9 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param string $description
-     * @return MenuEntity
+     * @return GroupEntity
      */
-    public function setDescription( $description )
+    public function setDescription(  $description )
     {
         $this->description = $description;
         return $this;
@@ -339,9 +319,9 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param int $status
-     * @return MenuEntity
+     * @return GroupEntity
      */
-    public function setStatus( $status )
+    public function setStatus(  $status )
     {
         $this->status = $status;
         return $this;
@@ -357,9 +337,9 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param \DateTime|null $createdAt
-     * @return MenuEntity
+     * @return GroupEntity
      */
-    public function setCreatedAt( $createdAt )
+    public function setCreatedAt(  $createdAt )
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -375,13 +355,15 @@ class MenuEntity extends AbstractEntity
 
     /**
      * @param \DateTime $updatedAt
-     * @return MenuEntity
+     * @return GroupEntity
      */
-    public function setUpdatedAt( $updatedAt )
+    public function setUpdatedAt( \DateTime $updatedAt )
     {
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
+
 
 
 }

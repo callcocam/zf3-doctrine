@@ -109,6 +109,10 @@ return [
                     __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
                 ]
             ]
+        ],
+        'fixtures' => [
+            __NAMESPACE__.'_fixture' => __DIR__ . '/../src/Fixture',
         ]
+
     ]
 ];

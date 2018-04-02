@@ -3,7 +3,6 @@
  * Created By: Claudio  Campos
  * E-Mail: callcocam@gmail.com
  */
-
 namespace Agenda\Table;
 
 
@@ -16,31 +15,29 @@ use Core\Table\Table\ItemPerPageConfig;
 use Core\Table\Table\StatusConfig;
 use Interop\Container\ContainerInterface;
 
-class AgendaTable extends AbstractTable
+class CategorieTable extends AbstractTable
 {
 
 
-    public function __construct( ContainerInterface $container )
+    public function __construct(ContainerInterface $container)
     {
 
         parent::__construct($container);
 
         $this->actions = (new ActionsConfig())->remove('csv')->getActions();
         $this->headers = (new HeadersConfig())
-            ->add('title', ['tableAlias' => 'p', 'title' => 'Nome'], 'id')
-            ->add('start', ['tableAlias' => 'p', 'title' => 'Inicio'], 'title')
-            ->add('end', ['tableAlias' => 'p', 'title' => 'Final'], 'start')
-          //  ->add('client', ['tableAlias' => 'p', 'title' => 'Cliente'], 'end')
-            ->add('action', ['tableAlias' => 'p', 'title' => '#', 'width' => '125', "sortable" => false,], 'status')
+            ->add('title',['tableAlias' => 'p','title' => 'Name'],'id')
+            ->add('action',['tableAlias' => 'p','title' => '#', 'width' => '125',"sortable"=>false,],'status')
             ->getHeaders();
 
-        $this->config = (new Config())->add('name', 'Lista de makes')->getConfigs();
+        $this->config = (new Config())->add('name','Lista de makes')->getConfigs();
 
         $this->valuesOfState = (new StatusConfig())->getStatus();
 
-        $this->valuesOfItemPerPage = (new ItemPerPageConfig())->add(10, 10)->getItems();
+        $this->valuesOfItemPerPage = (new ItemPerPageConfig())->add(10,10)->getItems();
         //Descomente para imagem
         //$this->coverConfig = new ImgConfig();
+
 
 
     }
@@ -55,12 +52,6 @@ class AgendaTable extends AbstractTable
 //            'action'=>'create',
 //            'vars' => 'id'
 //        ]);
-
-//        $this->getHeader('client')->getCell()->addDecorator('callable', array(
-//            'callable' => function ( $context, $record ) {
-//                return $context->getClient()->getName();
-//            }
-//        ));
         $this->getHeader('id')->addDecorator('check');
         $this->getHeader('id')->getCell()->addDecorator('check');
         $this->getHeader('status')->getCell()->addDecorator('state', [
@@ -81,7 +72,7 @@ class AgendaTable extends AbstractTable
             ->add("editar");
 
         $this->buttonConfig->setName("excluir")
-            ->setStatus([1, 2, 3])
+            ->setStatus([1,2,3])
             ->add("excluir");
 
         $this->getHeader('action')->getCell()->addDecorator('btn', [
@@ -91,7 +82,7 @@ class AgendaTable extends AbstractTable
     }
 
     //The filters could also be done with a parametrised query
-    protected function initFilters( $query )
+    protected function initFilters($query)
     {
 
     }

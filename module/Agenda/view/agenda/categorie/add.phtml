@@ -7,8 +7,8 @@
 <?= $this->form()->openTag($this->form->setAttribute('action', $this->url(sprintf("%s/default", $this->route), [
     'controller' => $this->controller,
     'action' => 'add-event'
-]))->setAttribute('name', 'AjaxAgendaForm')->setAttribute('class', 'modal fade in')->setAttribute('id', 'modal-default')); ?>
-<?= $this->html('div')->setClass('modal-dialog  modal-lg')->setText(
+]))->setAttribute('name', 'AjaxEventForm')->setAttribute('class', 'modal fade in')->setAttribute('id', 'modal-default')); ?>
+<?= $this->html('div')->setClass('modal-dialog')->setText(
     $this->render(sprintf("%s/add-event", LAYOUT))
 ); ?>
 <?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>

@@ -1,14 +1,22 @@
 <?php
-
 $collums12[] =  $this->El()->hidden('id')->hidden('empresa')->hidden('created_at')->hidden('updated_at')
+    ->setClass('col-md-7 col-sm-12')
     ->input('title')
-    ->render($this->html('div')->setClass('row'));
-
-$collums12[] =  $this->El()
-    ->input('class_name')
+    ->setClass('col-md-5 col-sm-12')
+    ->input('event_id')
     ->render($this->html('div')->setClass('row'));
 
 $collums12[] = $this->El()
+    ->setClass('col-md-8 col-sm-12')
+    ->input('client')
+    ->setClass('col-md-4 col-sm-12')
+    ->input('author')
+    ->render($this->html('div')->setClass('row'));
+
+$collums12[] = $this->El()->setClass('col-md-5 col-sm-12')
+    ->input('start')
+    ->input('end')
+    ->setClass('col-md-2 col-sm-12')
     ->input('status')
     ->render($this->html('div')->setClass('row'));
 

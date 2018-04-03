@@ -69,16 +69,16 @@ return [
 Em seguida rode os comandos:
 
 ```
-diff-db
+composer diff-db
 ```
 E
 ```
-migrate-db
+composer migrate-db
 ```
 e por fim rode o segunte comando
 
 ```
-vendor/bin/doctrine-module data-fixture:import
+bin/doctrine-module data-fixture:import
 ```
 
 Na pasta public_html inicio um serviço com o comando

@@ -1,4 +1,4 @@
-<?=$this->html('button')->setAttributes([
-'class'=>'btn btn-outline',
-'data-dismiss'=>'modal',
+<?= $this->html('button')->setAttributes([
+    'class' => 'btn btn-outline',
+    'type' => 'submit'
 ])->setText($this->html('i')->setClass($this->icone))->appendText(" ")->appendText($this->label);

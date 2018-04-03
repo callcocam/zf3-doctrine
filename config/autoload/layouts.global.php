@@ -11,7 +11,7 @@ return [
         'Agenda' => 'layout/%s/admin',
         'ControleEstoque' => 'layout/%s/admin',
         'Make' => 'layout/%s/admin',
-        'Home' => 'layout/%s/home',
+        'Home' => 'layout/home',
         'Auth' => 'layout/%s/auth',
     ],
 ];

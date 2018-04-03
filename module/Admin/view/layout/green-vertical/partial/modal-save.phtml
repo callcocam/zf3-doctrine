@@ -1,4 +1,4 @@
-<?=$this->html('button')->setAttributes([
-'class'=>'btn btn-primary waves-effect waves-light',
-'data-dismiss'=>'modal',
-])->setText($this->html('i')->setClass($this->icone))->appendText(" ")->appendText( $this->label);
+<?= $this->html('button')->setAttributes([
+    'class' => 'btn btn-primary waves-effect waves-light',
+    'type' => 'submit'
+])->setText($this->html('i')->setClass($this->icone))->appendText(" ")->appendText($this->label);

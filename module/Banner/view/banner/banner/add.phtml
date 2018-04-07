@@ -1,0 +1,9 @@
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url(sprintf("%s/default", $this->route), [
+    'controller' => $this->controller,
+    'action' => 'add'
+]))->setAttribute('name', 'AjaxAddForm')->setAttribute('class', 'modal fade in')->setAttribute('id', 'modal-default')); ?>
+<?= $this->html('div')->setClass('modal-dialog modal-dialog-centered')->setText(
+    $this->render(sprintf("%s/add-form", LAYOUT))
+); ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+<?= $this->form()->closeTag(); ?>

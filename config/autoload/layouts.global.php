@@ -8,10 +8,15 @@
 return [
     'module_layouts' => [
         'Admin' => 'layout/%s/admin',
+        'SIGAUpload' => 'layout/%s/admin',
+        'Banner' => 'layout/%s/admin',
+        'Blog' => 'layout/%s/admin',
         'Agenda' => 'layout/%s/admin',
-        'ControleEstoque' => 'layout/%s/admin',
+        'ControlDeEstoque' => 'layout/%s/admin',
         'Make' => 'layout/%s/admin',
         'Home' => 'layout/home',
+        'vodkaeverest_controller_bannercontroller' => 'layout/%s/admin',
+        'VodkaEverest' => 'layout/vodka-everest',
         'Auth' => 'layout/%s/auth',
     ],
 ];

@@ -1,0 +1,6 @@
+<?php $html = $this->Tab()
+    ->setInfoTitle("Manutenção dos Produto")->tabPanel(
+        $this->GallHelper()->setId($this->Route()->getId())->setRoute($this->route)->setController($this->controller)->render($this->html('div')->setClass('row'))
+    )
+    ->nav("Conteudo Principal");
+echo $html->render();

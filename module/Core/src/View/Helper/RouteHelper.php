@@ -25,7 +25,8 @@ class RouteHelper extends AbstractHelper
     /**
      * @return mixed
      */
-    public function getRotaAndContrllerAction($index = "") {
+    public function getRotaAndContrllerAction( $index = "" )
+    {
         if (empty($index)) {
             return $this->rota_and_contrller_action;
         }
@@ -39,79 +40,90 @@ class RouteHelper extends AbstractHelper
      * @param mixed $rota_and_contrller_action
      * @return RouteHelper
      */
-    public function setRotaAndContrllerAction($rota_and_contrller_action) {
+    public function setRotaAndContrllerAction( $rota_and_contrller_action )
+    {
         $this->rota_and_contrller_action = $rota_and_contrller_action;
         return $this;
     }
 
 
-
     /**
      * @return mixed
      */
-    public function getRoute() {
+    public function getRoute()
+    {
         return $this->route;
     }
 
     /**
      * @param mixed $route
      */
-    public function setRoute($route) {
+    public function setRoute( $route )
+    {
         $this->route = $route;
     }
 
     /**
      * @return mixed
      */
-    public function getController() {
+    public function getController()
+    {
         return $this->controller;
     }
 
     /**
      * @param mixed $controller
      */
-    public function setController($controller) {
+    public function setController( $controller )
+    {
         $this->controller = $controller;
     }
 
     /**
      * @return mixed
      */
-    public function getAction() {
+    public function getAction()
+    {
         return $this->action;
     }
 
     /**
      * @param mixed $action
      */
-    public function setAction($action) {
+    public function setAction( $action )
+    {
         $this->action = $action;
     }
 
     /**
      * @return mixed
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
      * @param mixed $id
      */
-    public function setId($id) {
+    public function setId( $id )
+    {
         $this->id = $id;
     }
 
-    public function getParans() {
+    public function getParans()
+    {
         return $this->parans;
     }
 
-    public function setParans($parans) {
+    public function setParans( $parans )
+    {
         $this->parans = $parans;
     }
 
-    public function getParan($param) {
-        if(isset($this->parans[$param])):
+    public function getParan( $param )
+    {
+        if (isset($this->parans[$param])):
             return $this->parans[$param];
         endif;
     }
@@ -122,15 +134,20 @@ class RouteHelper extends AbstractHelper
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function __construct(ContainerInterface $container) {
+    public function __construct( ContainerInterface $container )
+    {
         $this->queryParams = $container->get('request')->getQuery();
         $param = $container->get('application')->getMvcEvent()->getRouteMatch();
         if (!is_null($param)):
             $this->setParans($param->getParams());
             $controller = $param->getParams();
-            $result = ['route' => $param->getMatchedRouteName(),
+            $result = [
+                'route' => $param->getMatchedRouteName(),
                 'controller' => isset($controller['__CONTROLLER__']) ? $controller['__CONTROLLER__'] : "",
-                'action' => $controller['action']];
+                'controller' => isset($controller['__CONTROLLER__']) ? $controller['__CONTROLLER__'] : "",
+                'action' => isset($controller['action']) ? $controller['action'] : null,
+            ];
+
             if (isset($controller['type'])) {
                 $result['type'] = $controller['type'];
             }
@@ -160,9 +177,9 @@ class RouteHelper extends AbstractHelper
     /**
      * @return mixed
      */
-    public function getQueryParams($name = "")
+    public function getQueryParams( $name = "" )
     {
-        if($name):
+        if ($name):
             return $this->queryParams[$name];
         else:
             return $this->queryParams;

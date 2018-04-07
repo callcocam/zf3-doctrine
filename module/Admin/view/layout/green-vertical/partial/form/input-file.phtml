@@ -3,13 +3,13 @@
         ['query'=>['name'=>$this->field->getValue(), 'thumbnail'=>true,'w'=>520]]);?>" alt="<?=$this->translate("No Imagem")?>">
     <div class="card-body">
         <?=$this->formRow($this->field->setLabel("")->setAttribute('id','cover'));?>
-        <a href="<?=$this->url("adm-upload",[],[
+        <a href="<?=$this->url("siga-upload/upload-up",[],[
             'query'=>[
                 'assets'=>$this->controller,
                 'parent'=>$this->id,
                 'name'=>$this->field->getValue()
             ]
-        ])?>" class="btn btn-primary btn-block  <?=$this->id?'upload':'disabled';?>">
+        ])?>" class="btn btn-primary btn-block  <?=$this->id?'upload-modal':'disabled';?>">
             <i class="fa fa-file-image-o"></i> <b><?=$this->translate("Selecionar Imagem")?></b>
         </a>
     </div>

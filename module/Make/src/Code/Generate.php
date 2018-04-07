@@ -9,6 +9,8 @@
 namespace Make\Code;
 
 
+use Admin\Entity\MenuEntity;
+use DoctrineORMModule\Proxy\__CG__\Admin\Entity\GroupEntity;
 use Zend\Config\Config;
 use Zend\Config\Writer\PhpArray;
 use Zend\Debug\Debug;
@@ -30,7 +32,7 @@ class Generate
     {
         $this->Default = [
             "S_Name" => $this->filteredName($data['controller']),
-            "S_Demo" => $this->filteredName($data['alias']),
+            "S_Demo" => sprintf("%s",$this->filteredName($data['alias'])),
             "S_route" => $data['route'],
             "S_controller" => $data['controller'],
         ];
@@ -117,8 +119,6 @@ class Generate
         file_put_contents("./config/autoload/form.global.php", $writer->toString($configForm));
         file_put_contents("./config/autoload/table.global.php", $writer->toString($configTable));
         file_put_contents("./config/autoload/service.global.php", $writer->toString($configServices));
-
-
     }
 
 

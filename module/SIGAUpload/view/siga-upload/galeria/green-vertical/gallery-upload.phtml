@@ -1,0 +1,58 @@
+<div class="row container-fluid">
+    <div class="col-sm-12">
+        <div class="card m-b-20 card-body">
+            <p class="card-text">
+            <div class="row" id="images-to-upload"></div>
+            </p>
+            <div class="card-box ">
+                <h4 class="text-dark  header-title m-t-0">SIGA UPLOAD Selecione as imagens para montar a sua galeria</h4>
+                <p class="text-muted m-b-25 font-13">
+                    Apos selecionar as imagens você pode mandar uma ou mais imagens por vez!
+                </p>
+                <button id="apload-all" class="btn btn-primary waves-effect waves-light m-r-5 upload-all">
+                    <i class="fa fa-upload"></i> Enviar todas as <code class="apload-all-result">00</code> images
+                </button>
+                <div class="fileupload btn btn-secondary waves-effect">
+                    <span><i class="ion-image m-r-5"></i><?= $this->title ?></span>
+                    <input name="<?= $this->name ?>" type="file" <?= $this->multiple ?> class="upload"
+                           id="<?= $this->Selector ?>">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="<?=$this->basePath("assets-admin/js/zf-gallery.js")?>"></script>
+<script>
+    $(function () {
+        zfGalleryList({
+            url:'<?=$this->url("siga-galeria/siga-galeria-listar")?>',
+            data: {
+                assets: '<?=$this->controller?>',
+                parent: '<?=$this->id?>'
+            }
+        });
+        $('#<?= $this->Selector ?>').on('change', function (e) {
+            var files = e.target.files;
+            zfGallery(files,{
+                url:'<?=$this->url("siga-galeria/siga-galeria-preview")?>',
+                data: {
+                    assets: '<?=$this->controller?>',
+                    parent: '<?=$this->id?>'
+                }
+            })
+        });
+
+        $('.upload-all').click(function () {
+            //submit all form
+            $('.ajax-gallery-upload').submit();
+        });
+
+        $(document).on('submit', '.ajax-gallery-upload', function (e) {
+            e.preventDefault();
+            $form = $(this);
+            uploadImage($form);
+
+        });
+    })
+
+</script>

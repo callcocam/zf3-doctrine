@@ -1,5 +1,6 @@
-<?= $this->partial(sprintf("layout/%s/partial/top-navigation", LAYOUT),[
-    'a'=>"Admin",'b'=>$this->route,'c'=>$this->controller,'d'=>"NAme", "e"=>'editar']); ?>
-<?=$this->Tab()->setInfoTitle("Manutenção do Name")->tabPanel(
-    $this->html('div')->setClass('col-md-12')->setText($this->html('div'))->appendText($this->render(sprintf("%s/editar-form", LAYOUT)))
-)->nav("Geral")->render($this->html('section')->setClass('content'));
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url("adm-admin/default", [
+    'controller' => "gallery",
+    'action' => 'upload'
+]))->setAttribute('name', "AjaxGalleryForm-{$this->form->get('id')->getValue()}")->setAttribute('class', 'col-sm-4 col-lg-3 col-xs-12 ajax-gallry')); ?>
+<?=  $this->render(sprintf("%s/editar-form", LAYOUT)); ?>
+<?= $this->form()->closeTag(); ?>

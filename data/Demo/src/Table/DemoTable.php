@@ -52,6 +52,14 @@ class S_NameTable extends AbstractTable
 //            'action'=>'create',
 //            'vars' => 'id'
 //        ]);
+
+//        $this->getHeader('coluna')->getCell()->addDecorator('callable', array(
+//            'callable' => function ( $context, $record ) {
+//                return $context ou $record->getColuna();
+//            }
+//        ));
+
+
         $this->getHeader('id')->addDecorator('check');
         $this->getHeader('id')->getCell()->addDecorator('check');
         $this->getHeader('status')->getCell()->addDecorator('state', [

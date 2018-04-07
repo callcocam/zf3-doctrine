@@ -23,7 +23,7 @@ return [
                     ],
                 ],
             ],
-            "adm-S_route" => [
+            "siga-S_route" => [
                 "type" => Literal::class,
                 "options" => [
                     "route" => "/S_route",

@@ -18,15 +18,16 @@ class GalleryElement extends AbstractHelper
 {
 
     protected $html = [];
-    /**
-     * @var string $type
-     */
-    protected $type = "file";
 
     /**
      * @var string $title
      */
     protected $title = "Selecione imagens para a galeria!";
+
+    /**
+     * @var string $title
+     */
+    protected $fomName = "AjaxGalleryForm";
 
     /**
      * @var string $controller
@@ -51,40 +52,23 @@ class GalleryElement extends AbstractHelper
     /**
      * @var string $Selector
      */
-    protected $Selector = '#gallery';
+    protected $Selector = 'gallery';
     /**
      * @var string $id
      */
-    protected $id = "gallery";
+    protected $id;
 
     /**
      * @var $name
      */
     protected $name = 'file[]';
 
-
-    /**
-     * @var InlineScript $inlineScript
-     */
-    private $inlineScript;
-    /**
-     * @var HeadLink $headLink
-     */
-    private $headLink;
     /**
      * @var $multiple
      */
-    private $multiple = true;
+    private $multiple = 'multiple';
 
-    /**
-     * @param string $type
-     * @return GalleryElement
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
+
 
     /**
      * @param string $title
@@ -157,50 +141,34 @@ class GalleryElement extends AbstractHelper
     }
 
 
-
-    public function __construct(InlineScript $inlineScript,HeadLink $headLink)
-    {
-
-        $this->inlineScript   = $inlineScript;
-        $this->headLink=$headLink;
-
-    }
-
     /**
      * @param HtmlElement $element
      * @return string
      */
     public function render(HtmlElement $element)
     {
-        $element->setText(
-            $this->view->html('div')->setClass('col-md-12')->setText(
-                $this->view->html('label')->setAttributes([
-                    'for'=> $this->id
-                ])->setText($this->title)
-            )->appendText(
-                $this->view->html('div')->setClass('file-loading')->setText(
-                    $this->view->html('input')->setAttributes([
-                        'id'=>$this->id,
-                        'name'=> $this->name ,
-                        'type'=> $this->type,
-                        'multiple'=>$this->multiple,
-                    ])
-                )
-            )
-        )->appendText($this->preview());
+        $element->setText($this->view->partial(sprintf('layout/%s/partial/gallery/gallery-upload', LAYOUT),[
+            'title'=>$this->title,
+            'route'=>$this->route,
+            'controller'=>$this->controller,
+            'Selector'=>$this->Selector,
+            'id'=>$this->id,
+            'name'=> $this->name,
+            'fomName'=> $this->fomName,
+            'multiple'=>$this->multiple
+        ]))->appendText($this->preview());
         return $element->render();
     }
 
     public function preview()
     {
-
-        $this->inlineScript->captureStart();
-        echo $this->view->partial('layout/%s/partial/gallery-preview',[
+        $this->view->inlineScript()->captureStart();
+        echo $this->view->partial(sprintf('layout/%s/partial/gallery-preview', LAYOUT),[
             'route'=>$this->route,
             'controller'=>$this->controller,
             'Selector'=>$this->Selector
         ]);
-        $this->inlineScript->captureEnd();
+        $this->view->inlineScript()->captureEnd();
     }
 
 

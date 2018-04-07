@@ -111,6 +111,7 @@ abstract class AbstractController extends AbstractActionController
     protected $imageManager;
     protected $templateCreate = "";
     protected $terminal = false;
+    protected $templateUpload = "siga-upload/upload/create";
 
     /**
      * AbstractController constructor.
@@ -211,6 +212,68 @@ abstract class AbstractController extends AbstractActionController
         return $view;
     }
 
+    public function addAction()
+    {
+        if (!$this->identity()):
+            return $this->auth();
+        endif;
+        $query = $this->params()->fromQuery();
+        if (is_string($this->form)):
+            $this->getForm();
+        endif;
+        $view = new ViewModel($this->args);
+        if ($this->params()->fromPost()) {
+            if (is_string($this->service)):
+                $this->getService();
+            endif;
+            if (is_string($this->filter)):
+                $this->getFilter();
+            endif;
+            if (!$this->data):
+                $this->data = array_merge_recursive(
+                    $this->params()->fromPost(),
+                    $this->params()->fromFiles()
+                );
+            endif;
+            $this->data['empresa'] = $this->user->getEmpresa()->getId();
+            if (isset($this->data['author'])):
+                $this->data['author'] = $this->user->getId();
+            endif;
+            $this->form->setData($this->data)->setInputFilter($this->filter->getInputFilter());
+            if ($this->form->isValid()):
+                $this->args = array_merge($this->args, $this->service->save($this->data));
+                if ($this->args['result']):
+                    $this->addMessage($this->args['msg'], $this->args['type']);
+                    $data = $this->extracted($this->args['entity']->toArray());
+                    $this->form->setData($data);
+                else:
+                    $this->addMessage($this->args['msg'], $this->args['type']);
+                endif;
+            else:
+                $this->addMessage($this->getFormMessages($this->form->getMessages()), 'info');
+            endif;
+            $view->setTemplate(sprintf("controle-estoque/categoria/%s/add-form", LAYOUT));
+        }
+        $view->setTerminal(true);
+        $view->setVariable('query', $query);
+        $view->setVariable('form', $this->form);
+        $view->setVariable('route', $this->getRoute($this->route));
+        $view->setVariable('controller', $this->controller);
+        return $view;
+    }
+
+    protected function getFormMessages( $Msgs )
+    {
+        if ($Msgs):
+            $ArayMsg = [];
+            foreach ($Msgs as $msg) {
+                $ArayMsg[] = array_pop($msg);
+            }
+            return str_replace("'", "-", implode(PHP_EOL, $ArayMsg));
+        endif;
+        return "Nenhuma informação disponivel";
+    }
+
     public function saveAction()
     {
         if (!$this->identity()):
@@ -239,6 +302,13 @@ abstract class AbstractController extends AbstractActionController
 
                 if ($this->args['result']):
                     $this->addMessage($this->args['msg'], $this->args['type']);
+                    if (!$this->data['id']) {
+                        $this->addRedirect([sprintf("%s/default", $this->getRoute($this->route)), [
+                            'controller' => $this->controller,
+                            'action' => 'create',
+                            'id' =>$this->args['entity']->getId(),
+                        ]])->addTime(1000);
+                    }
                     if ($this->params()->fromPost('submit')):
                         $data = $this->extracted($this->args['entity']->toArray());
                     elseif ($this->params()->fromPost('save_copy')):
@@ -257,6 +327,8 @@ abstract class AbstractController extends AbstractActionController
                             'controller' => $this->controller,
                             'action' => 'index',
                         ]])->addTime(1000);
+                    else:
+                        $data = $this->extracted($this->args['entity']->toArray());
                     endif;
                     $this->form->setData($data);
 
@@ -264,16 +336,7 @@ abstract class AbstractController extends AbstractActionController
                     $this->addMessage($this->args['msg'], $this->args['type']);
                 endif;
             else:
-                $Msgs = $this->form->getMessages();
-                if ($Msgs):
-                    $ArayMsg = [];
-                    foreach ($Msgs as $msg) {
-                        $ArayMsg[] = array_pop($msg);
-                    }
-                    $this->args['msg'] = str_replace("'", "-", implode(PHP_EOL, $ArayMsg));
-                    //d($this->args['msg']);
-                endif;
-                $this->addMessage($this->args['msg'], 'info');
+                $this->addMessage($this->getFormMessages($this->form->getMessages()), 'info');
             endif;
         }
         $view = new ViewModel($this->args);
@@ -338,7 +401,6 @@ abstract class AbstractController extends AbstractActionController
 
     public function uploadAction()
     {
-        
         if ($this->params()->fromPost()):
             if (!$this->identity()):
                 return $this->restrict();
@@ -364,12 +426,12 @@ abstract class AbstractController extends AbstractActionController
             'route' => $this->getRoute($this->route),
             'controller' => $this->controller,
         ]);
-        $view->setTemplate("admin/upload/create");
+        $view->setTemplate($this->templateUpload);
         $view->setVariable('assets', $this->params()->fromQuery('assets'));
         $view->setVariable('parent', $this->params()->fromQuery('parent'));
         $view->setVariable('name', $this->params()->fromQuery('name'));
 
-        $Result = $this->UploadPlugin()
+        $this->args = array_merge($this->args, $this->UploadPlugin()
             ->setService($this->service)
             ->setForm($this->form)
             ->setImagesUpload($this->container->get(ImagesUpload::class))
@@ -378,14 +440,23 @@ abstract class AbstractController extends AbstractActionController
             ->setQuery($this->params()->fromQuery())
             ->setData($this->data)
             ->setFile($this->params()->fromFiles())
-            ->upload($this->getRequest()->getServer('DOCUMENT_ROOT'));
+            ->upload($this->getRequest()->getServer('DOCUMENT_ROOT')));
+
+
         $view->setTerminal(true);
         if ($this->params()->fromPost()):
-            return new JsonModel($Result);
+            $data = [];
+            if ($this->args['entity']) {
+                $data = $this->extracted($this->args['entity']->toArray());
+            }
+            return new JsonModel(array_merge($this->args, $data));
         endif;
         $view->setVariable('form', $this->UploadPlugin()->getForm());
         return $view;
     }
+
+
+
 
     public function uploadmceAction()
     {

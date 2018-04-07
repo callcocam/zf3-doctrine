@@ -1,6 +1,9 @@
 <?php
 $collums12[] = $this->El()->hidden('id')->hidden('empresa')
+    ->setClass('col-md-8')
     ->input('name')
+    ->setClass('col-md-4')
+    ->input('menu')
     ->render($this->html('div')->setClass('row'));
 
 $collums12[] = $this->El()->setClass('col-md-4')

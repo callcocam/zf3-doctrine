@@ -1,4 +1,5 @@
-var dataModal=null;
+var dataModal = null;
+
 //FUNCTIONS
 function preview_img($form) {
     $form.change(function () {
@@ -29,27 +30,35 @@ function preview_img($form) {
         }
     });
 }
-
 function form_upload($form) {
+
+    var bar = $('.progress-bar');
+    var percent = $('.percent');
     $form.ajaxForm({
-        beforeSubmit: function (formData, jqForm, options) {
-            return true;
-        }, // pre-submit callback
-        success: function(responseText, statusText, xhr, $form) {
-            if(responseText.result){
-                if(responseText.location){
+        beforeSend: function () {
+            var percentVal = '0%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        uploadProgress: function (event, posicao, total, completo) {
+            var porcento = completo + '%';
+            bar.width(porcento);
+            percent.html(completo);
+        },
+        success: function (responseText, statusText, xhr, $form) {
+            var percentVal = '100%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+            if (responseText.result) {
+                if (responseText.location) {
                     $('form[name="AjaxForm"]').find("#cover").val(responseText.location);
                     $('form[name="AjaxUploadForm"]').find("#id").val(responseText.id);
                 }
                 $('form[name="AjaxUploadForm"]').find("#id").val(responseText.id);
-                $(".progress").fadeOut(100, function () {
-                    dataModal.modal('hide');
-                });
             }
         }, // post-submit callback
-        uploadProgress:function(evento, posicao, total, completo) {
-            var porcento = completo + '%';
-            $('form[name="AjaxUploadForm"]').find("#upload-progress").css("width", + porcento +"%").find('span').text(porcento).fadeIn(100);
+        complete: function (xhr) {
+            dataModal.modal('hide');
         },
         type: 'post', // 'get' or 'post', override for form's 'method' attribute
         dataType: 'json' // 'xml', 'script', or 'json' (expected server response type)
@@ -58,10 +67,10 @@ function form_upload($form) {
 
 function uploadInit(url) {
     $.ajax({
-        url:url,
-        success:function (data) {
+        url: url,
+        success: function (data) {
             dataModal = $(data).modal({
-                backdrop:false
+                backdrop: false
             }).on('shown.bs.modal', function (e) {
                 preview_img($('form input[name="file"]'));
                 form_upload($('form[name="AjaxUploadForm"]'));

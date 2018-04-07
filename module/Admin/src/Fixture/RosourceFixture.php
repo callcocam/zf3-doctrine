@@ -38,6 +38,46 @@ class RosourceFixture extends AbstractFixture implements FixtureInterface, Order
             ->setUpdatedAt(new \DateTime());
         $manager->persist($resource);
         $this->addReference("resource-01", $resource);
+
+        $resource = new ResourceEntity();
+
+        $resource->setEmpresa($this->getReference("empresa-01"));
+        $resource->setName("Agenda")
+            ->setAlias("Agenda\Controller\Agenda")
+            ->setRoute("agenda")
+            ->setStatus(1)
+            ->setDescription("Modulo de agenda")
+            ->setCreatedAt(new \DateTime())
+            ->setUpdatedAt(new \DateTime());
+        $manager->persist($resource);
+        $this->addReference("resource-02", $resource);
+
+        $resource = new ResourceEntity();
+
+        $resource->setEmpresa($this->getReference("empresa-01"));
+        $resource->setName("Banners")
+            ->setAlias("Banner\Controller\Banner")
+            ->setRoute("banner")
+            ->setStatus(1)
+            ->setDescription("Modulo Banners")
+            ->setCreatedAt(new \DateTime())
+            ->setUpdatedAt(new \DateTime());
+        $manager->persist($resource);
+        $this->addReference("resource-03", $resource);
+
+        $resource = new ResourceEntity();
+
+        $resource->setEmpresa($this->getReference("empresa-01"));
+        $resource->setName("Blog")
+            ->setAlias("Blog\Controller\Blog")
+            ->setRoute("blog")
+            ->setStatus(1)
+            ->setDescription("Modulo Blog")
+            ->setCreatedAt(new \DateTime())
+            ->setUpdatedAt(new \DateTime());
+        $manager->persist($resource);
+        $this->addReference("resource-04", $resource);
+
         $manager->flush();
 
     }

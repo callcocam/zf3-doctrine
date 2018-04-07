@@ -15,7 +15,10 @@ use Admin\Form\UploadForm;
 use Admin\Service\UploadService;
 use Core\Entity\AbstractEntity;
 use Core\Entity\AbstractRepository;
+use Core\Filter\AbstractFilter;
+use Core\Form\AbstractForm;
 use Core\Image\ImagesUpload;
+use Core\Service\AbstractService;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 
 class UploadPlugin extends AbstractPlugin
@@ -56,27 +59,27 @@ class UploadPlugin extends AbstractPlugin
     private $Query;
 
     /**
-     * @return UploadService
+     * @return AbstractService
      */
-    public function getService(): UploadService
+    public function getService(): AbstractService
     {
         return $this->service;
     }
 
     /**
-     * @param UploadService $service
+     * @param AbstractService $service
      * @return UploadPlugin
      */
-    public function setService( UploadService $service ): UploadPlugin
+    public function setService( AbstractService $service ): UploadPlugin
     {
         $this->service = $service;
         return $this;
     }
 
     /**
-     * @return UploadForm
+     * @return AbstractForm
      */
-    public function getForm(): UploadForm
+    public function getForm(): AbstractForm
     {
         return $this->form;
     }
@@ -85,25 +88,25 @@ class UploadPlugin extends AbstractPlugin
      * @param UploadForm $form
      * @return UploadPlugin
      */
-    public function setForm( UploadForm $form ): UploadPlugin
+    public function setForm( AbstractForm $form ): UploadPlugin
     {
         $this->form = $form;
         return $this;
     }
 
     /**
-     * @return UploadFilter
+     * @return AbstractFilter
      */
-    public function getFilter(): UploadFilter
+    public function getFilter(): AbstractFilter
     {
         return $this->filter;
     }
 
     /**
-     * @param UploadFilter $filter
+     * @param AbstractFilter $filter
      * @return UploadPlugin
      */
-    public function setFilter( UploadFilter $filter ): UploadPlugin
+    public function setFilter( AbstractFilter $filter ): UploadPlugin
     {
         $this->filter = $filter;
         return $this;
@@ -202,7 +205,6 @@ class UploadPlugin extends AbstractPlugin
 
     public function upload( $BasePath )
     {
-
         $Result = [];
         if ($this->data):
             $this->data['path'] = $BasePath;
@@ -220,6 +222,12 @@ class UploadPlugin extends AbstractPlugin
                 endif;
                 //Salva ou atualiza os dados
                 $Result = array_merge($Result, $this->service->save($this->data));
+                else:
+                    $Result=[
+                        'type'=>'error',
+                        'msg'=>$this->getFormMessages($this->form->getMessages()),
+                        'result'=>false
+                    ];
             endif;
         else:
             if ($this->Query) {
@@ -228,10 +236,20 @@ class UploadPlugin extends AbstractPlugin
                  if ($File) {
                     $this->form->setData($this->extracted($File->toArray()));
                 }
-
             }
         endif;
         return $Result;
+    }
+    protected function getFormMessages( $Msgs )
+    {
+        if ($Msgs):
+            $ArayMsg = [];
+            foreach ($Msgs as $msg) {
+                $ArayMsg[] = array_pop($msg);
+            }
+            return str_replace("'", "-", implode(PHP_EOL, $ArayMsg));
+        endif;
+        return "Nenhuma informação disponivel";
     }
 
     public function uploadmce( $id, $controller, $BasePath )

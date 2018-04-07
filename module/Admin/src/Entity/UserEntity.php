@@ -2,6 +2,7 @@
 
 namespace Admin\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Core\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -121,18 +122,21 @@ class UserEntity extends AbstractEntity
     private $status = '1';
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+
      */
-    private $createdAt;
+    private $updatedAt;
 
     /**
      *

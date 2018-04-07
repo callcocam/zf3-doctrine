@@ -168,6 +168,22 @@ class InputElement extends AbstractHelper
         );
         return $this;
     }
+
+    /**
+     * @param $field
+     * @return $this
+     */
+    public function append($field, $rota){
+        $this->html[] =  $this->view->html('div')->setClass($this->class)->appendClass('col-xs-12')->setText(
+            $this->view->partial(sprintf('layout/%s/partial/form/input-%s-button-text', LAYOUT,$this->formLayouty),[
+                'field'=>$this->view->form->get($field),
+                'btn'=>$this->btn,
+                'rota'=>$rota,
+            ])
+        );
+        return $this;
+    }
+
     /**
      * @param $field
      * @return $this

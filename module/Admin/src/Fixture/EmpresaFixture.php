@@ -28,6 +28,7 @@ class EmpresaFixture extends AbstractFixture implements FixtureInterface, Ordere
     {
 
         $expressEntity = new EmpresaEntity();
+
         $expressEntity->setEmail("contato@sigasmart.com.br")
             ->setPhone("(48)3535-1603")
             ->setStreet("Oscar de oliveira lopes")

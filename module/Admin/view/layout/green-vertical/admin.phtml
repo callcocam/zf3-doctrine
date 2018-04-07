@@ -70,8 +70,8 @@ $acl = $this->Acl()->getAcl()
 
 
 </head>
-<body class="fixed-left">
-<div id="wrapper" class="wrapper">
+<body class="widescreen fixed-left-void">
+<div id="wrapper" class="wrapper enlarged forced">
     <?= $this->partial(sprintf("layout/%s/partial/header", LAYOUT)); ?>
     <!-- Left side column. contains the logo and sidebar -->
     <?= $this->navigation('Navigation')->menu()->setAcl($acl)->setRole((string)$this->identity()->getAccess()->getId())->setPartial(sprintf("layout/%s/partial/sidebar", LAYOUT)); ?>

@@ -1,0 +1,13 @@
+<?php $this->formElementErrors()
+    ->setMessageOpenFormat('<div class="help-inline">')
+    ->setMessageSeparatorString('</div><div class="help-inline">')
+    ->setMessageCloseString('</div>')
+    ->render($this->form);
+?>
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url("siga-upload/upload-up"))
+    ->setAttribute('name', 'AjaxUploadForm')->setAttribute('class', 'modal fade')->setAttribute('id', 'modal-default')); ?>
+<?= $this->html('div')->setClass('modal-dialog')->setText(
+    $this->render(sprintf("%s/editar-form", LAYOUT))
+); ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+<?= $this->form()->closeTag(); ?>

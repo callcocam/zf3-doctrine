@@ -94,10 +94,13 @@ class Cell extends AbstractElement
             if (method_exists($row, $methodName)) {
                 $value = $row->$methodName();
                 if ($value instanceof AbstractEntity) {
-                    $headerName = $this->getHeader()->getJoin();
+                    $headerName = $this->getHeader()->getName();
+                    $joinName = $this->getHeader()->getJoin();
                     $methodName = 'get' . ucfirst($headerName);
                     if (method_exists($row, $methodName)) {
-                        $value = $row->$methodName();
+
+                        $methodJoin= 'get' . ucfirst($joinName);
+                        $value = $row->$methodName()->$methodJoin();
                     }
                 }
 

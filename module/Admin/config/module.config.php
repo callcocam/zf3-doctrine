@@ -38,6 +38,7 @@ return [
                     ],
                 ],
             ],
+
             "adm-admin" => [
                 "type" => Literal::class,
                 "options" => [
@@ -63,17 +64,6 @@ return [
                         ],
                     ],
 
-                ],
-            ],
-            "adm-upload" => [
-                "type" => Literal::class,
-                "options" => [
-                    "route" => "/admin/upload",
-                    "defaults" => [
-                        "__NAMESPACE__" => "Admin\Controller",
-                        "controller" => "Upload",
-                        "action" => "upload",
-                    ],
                 ],
             ],
         ],
@@ -111,7 +101,7 @@ return [
             ]
         ],
         'fixtures' => [
-            __NAMESPACE__.'_fixture' => __DIR__ . '/../src/Fixture',
+            __NAMESPACE__ . '_fixture' => __DIR__ . '/../src/Fixture',
         ]
 
     ]

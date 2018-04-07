@@ -33,7 +33,7 @@ class S_NameEntity extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="Admin\Entity\EmpresaEntity")
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      */
-    private $empresa = 1;
+    private $empresa;
 
     //Outros campos
 
@@ -48,19 +48,17 @@ class S_NameEntity extends AbstractEntity
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="created_at", type="date", nullable=true)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
-
-    //Depois use generate get and set
-
-
+    private $updatedAt;
 
 }

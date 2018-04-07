@@ -10,11 +10,11 @@ namespace Core\Controller\Plugin\Factory;
 
 
 use Admin\Filter\UploadFilter;
-use Admin\Form\UploadForm;
-use Admin\Service\UploadService;
 use Core\Controller\Plugin\UploadPlugin;
 use Core\Image\ImagesUpload;
 use Interop\Container\ContainerInterface;
+use SIGAUpload\Form\UploadForm;
+use SIGAUpload\Service\UploadService;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 class UploadPluginFactory implements FactoryInterface

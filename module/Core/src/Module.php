@@ -167,6 +167,11 @@ class Module implements BootstrapListenerInterface, ViewHelperProviderInterface,
                 $Route = new RouteHelper($container);
                 return $Route;
             },
+            "Gall" => function (ContainerInterface $container) {
+                $ViewHelperManager = $container->get('ViewHelperManager');
+                $Gallery = new Helper\Service\GalleryElement($container);
+                return $Gallery;
+            },
             "Tiny" => function (ContainerInterface $container) {
                 $ViewHelperManager = $container->get('ViewHelperManager');
                 $TinyElement = new Helper\Service\TinyElement(

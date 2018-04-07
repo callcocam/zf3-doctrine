@@ -7,7 +7,7 @@ $.AdminLTE = {
  * Modify these options to suit your implementation
  */
 
-var dataModal=null;
+var dataModal = null;
 
 function formInit() {
     $('form[name="AjaxForm"]').ajaxForm({
@@ -16,13 +16,17 @@ function formInit() {
         type: 'post', // 'get' or 'post', override for form's 'method' attribute
         dataType: 'html' // 'xml', 'script', or 'json' (expected server response type)
     });
-    if ($(".upload").length) {
-        $('.upload').click(function(){
+    if ($(".upload-modal").length) {
+        $('.upload-modal').click(function () {
             uploadInit($(this).attr('href'));
             return false;
         });
     }
+    add();
+
+
 }
+
 // pre-submit callback
 function showRequest(formData, jqForm, options) {
     if (typeof tinymce !== 'undefined') {
@@ -31,6 +35,7 @@ function showRequest(formData, jqForm, options) {
     $(jqForm).append('<div class="processing" style="display: block"></div>').fadeIn(100);
     return true;
 }
+
 // post-submit callback
 function showResponse(responseText, statusText, xhr, $form) {
     $($form).parent().html(responseText);
@@ -42,11 +47,49 @@ function uploadProgress(evento, posicao, total, completo) {
     $('.processing p').text(porcento);
 }
 
+function add() {
+    if ($(".add").length) {
+        //
+        $('.add').click(function (e) {
+            var $this = $(this);
+            $.ajax({
+                url:  $(this).attr('href'),
+                success: function (data) {
+                    $(data).modal({
+                        backdrop: false
+                    }).on('shown.bs.modal', function (e) {
+                        $('form[name="AjaxAddForm"]').ajaxForm({
+                            beforeSubmit: function (formData, jqForm, options) {
+                                if (typeof tinymce !== 'undefined') {
+                                    tinymce.triggerSave();
+                                }
+                                $(jqForm).find('.loading').fadeIn(100);
+                                return true;
+                            }, // pre-submit callback
+                            success: function (responseText, statusText, xhr, $form) {
+                                $($form).find('.modal-dialog').html(responseText);
+                                $($form).find('.loading').fadeOut(100);
+                                $('form[name="AjaxForm"]').find($this.attr('data-id'))
+                                    .append('<option selected value="'+$($form)
+                                        .find('input[name="id"]').val()+'">'+$($form).find('input[name="name"]').val()+'</option>');
+                            }, // post-submit callback
+                            type: 'post', // 'get' or 'post', override for form's 'method' attribute
+                            dataType: 'html' // 'xml', 'script', or 'json' (expected server response type)
+                        });
+                    }).on('hidden.bs.modal', function (e) {
+                        e.target.remove();
+                    })
+                }
+            })
+            return false;
+        });
+    }
+}
 
 function plugins() {
     if ($(".real").length) {
         $(".real").formatCurrency();
-        $(".real").blur(function() {
+        $(".real").blur(function () {
             $(".real").formatCurrency();
         });
     }
@@ -102,17 +145,19 @@ function plugins() {
             "mask": "99999-999"
         });
     }
+
     if ($(".datetimemask").length) {
         //Datemask dd/mm/yyyy
         $('.datetimemask').inputmask({
             "mask": "99/99/9999 99:99"
         });
     }
+
     if ($("#ducument").length) {
-        $("#ducument").keypress(function() {
+        $("#ducument").keypress(function () {
             mascaraMutuario(this, cpfCnpj)
         })
-        $("#ducument").blur(function() {
+        $("#ducument").blur(function () {
             clearTimeout();
         })
     }

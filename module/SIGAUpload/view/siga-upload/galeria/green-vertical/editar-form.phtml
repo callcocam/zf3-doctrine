@@ -1,0 +1,48 @@
+<?php
+$collums12[] = $this->El()->hidden('id')->hidden('empresa')->hidden('created_at')
+    ->hidden('updated_at')
+    ->hidden('path')
+    ->hidden('assets')
+    ->hidden('cover')
+    ->hidden('status')
+    ->hidden('parent')
+    ->input('name')
+    ->render($this->html('div')->setClass('row'));
+$collums12[] = $this->El()->input('description')->render($this->html('div')->setClass('row'));
+
+$actions[] = $this->Actions()
+    ->save_gallery()
+    ->render($this->html('div')->setClass('col-md-6 col-xs-12'));
+
+
+$actions[] = $this->Actions()
+    ->delete_gallery($this->url("siga-galeria/galeria-remove",[
+        'id'=>$this->form->get('id')->getValue()
+    ],[
+        'query'=>[
+            'assets'=>$this->form->get('assets')->getValue(),
+            'parent'=>$this->form->get('parent')->getValue(),
+        ]
+    ]))
+    ->render($this->html('div')->setClass('col-md-6 col-xs-12'));
+
+echo $this->html('div')->setClass('card m-b-0')->setText(
+    $this->html('img')->setAttributes([
+        'class' => 'card-img-top img-fluid',
+        'src' => $this->basePath($this->form->get('cover')->getValue()),
+        'alt' => $this->form->get('name')->getValue()
+    ])
+)->appendText(
+    $this->html('div')->setClass('card-body')->setText(
+        implode("", $collums12)
+    )
+)->appendText(
+//ADD PANEL FOOTER
+    $this->html('div')->setClass('card-body')->setText(
+
+        $this->html('div')->setClass('row')->setText(
+            implode("", $actions)
+        )
+    )
+); ?>
+<?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>

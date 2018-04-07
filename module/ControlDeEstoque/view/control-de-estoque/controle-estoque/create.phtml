@@ -1,0 +1,6 @@
+<?= $this->Tab()
+    ->setInfoTitle("Manutenção dos ControleEstoque")->tabPanel(
+        $this->render(sprintf("%s/editar-form", LAYOUT))
+    )
+    ->nav("Conteudo Principal")
+    ->render();

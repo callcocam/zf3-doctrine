@@ -102,11 +102,13 @@ var agendaForm = function ($form) {
 var eventForm = function ($form) {
     $form.ajaxForm({
         beforeSubmit: function (formData, jqForm, options) {
+            $(jqForm).find('.loading').fadeIn(100);
             return true;
         }, // pre-submit callback
         success: function (responseText, statusText, xhr, $form) {
             listEvent();
             $($form).find('.modal-dialog').html(responseText);
+            $($form).find('.loading').fadeOut(100);
         }, // post-submit callback
         type: 'post', // 'get' or 'post', override for form's 'method' attribute
         dataType: 'html' // 'xml', 'script', or 'json' (expected server response type)

@@ -18,7 +18,6 @@ class LayoutErrorListener extends Event
     public function __construct($e)
     {
         $error = $e->getError();
-
         if (!$error) {
             return;
         }

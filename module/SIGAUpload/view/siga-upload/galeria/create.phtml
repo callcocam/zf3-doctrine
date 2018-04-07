@@ -1,0 +1,3 @@
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url("siga-galeria/galeria-save"))->setAttribute('name', "AjaxGalleryForm-{$this->form->get('id')->getValue()}")->setAttribute('class', 'col-sm-4 col-lg-3 col-xs-12 ajax-gallry')); ?>
+<?=  $this->render(sprintf("%s/editar-form", LAYOUT)); ?>
+<?= $this->form()->closeTag(); ?>

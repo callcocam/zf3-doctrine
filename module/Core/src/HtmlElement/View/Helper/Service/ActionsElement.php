@@ -22,6 +22,46 @@ class ActionsElement extends AbstractHelper
      * @param string $icone
      * @return $this
      */
+    public function delete($url,$label='Remover', $icone="fa fa-trash"){
+        $this->html[] = $this->view->partial(sprintf('layout/%s/partial/delete', LAYOUT), [
+            'label' =>  $label,
+            'icone' =>  $icone,
+            'url' =>  $url,
+        ]);
+        return $this;
+    }
+
+    /**
+     * @param string $label
+     * @param string $icone
+     * @return $this
+     */
+    public function delete_gallery($url,$label='Remover', $icone="fa fa-trash"){
+        $this->html[] = $this->view->partial(sprintf('layout/%s/partial/delete-galeria', LAYOUT), [
+            'label' =>  $label,
+            'icone' =>  $icone,
+            'url' =>  $url,
+        ]);
+        return $this;
+    }
+
+    /**
+     * @param string $label
+     * @param string $icone
+     * @return $this
+     */
+    public function save_gallery($label='Enviar', $icone="fa fa-upload"){
+        $this->html[] = $this->view->partial(sprintf('layout/%s/partial/save-gallery', LAYOUT), [
+            'label' =>  $label,
+            'icone' =>  $icone
+        ]);
+        return $this;
+    }
+    /**
+     * @param string $label
+     * @param string $icone
+     * @return $this
+     */
     public function save($label='Salvar', $icone="fa fa-save"){
         $this->html[] = $this->view->partial(sprintf('layout/%s/partial/modal-save', LAYOUT), [
             'label' =>  $label,
@@ -42,7 +82,7 @@ class ActionsElement extends AbstractHelper
         $this->html[] = $this->view->html('div')->setClass(sprintf("col-md-%s", $class))->appendClass('col-xs-12')->setText(
             $this->view->partial(sprintf('layout/%s/partial/form/submit', LAYOUT), [
                 'element' =>  $this->view->form->get('submit')->setValue('Iniciar Sessão'),
-                'ico' => 'fa  fa-unlock',
+                'ico' => 'fa fa-unlock',
                 'title' => 'Iniciar Sessão',
             ])
         );
@@ -51,7 +91,7 @@ class ActionsElement extends AbstractHelper
 
     public function upload($class='3'){
         $this->html[] = $this->view->html('div')->setClass(sprintf("col-md-%s", $class))->appendClass('col-xs-12')->setText(
-            $this->view->partial(sprintf('layout/%s/partial/form/submit', LAYOUT), [
+            $this->view->partial(sprintf('layout/%s/partial/form/upload', LAYOUT), [
                 'element' =>  $this->view->form->get('submit')->setValue('Enviar Imagem'),
                 'ico' => 'fa fa-upload',
                 'title' => 'Enviar Imagem ou arquivo',
@@ -153,6 +193,7 @@ class ActionsElement extends AbstractHelper
         //ADD COLUNA A LINHA 02
             implode(PHP_EOL, $this->html)
         )->appendText($this->view->html('div')->setClass('clear'));
+        $this->html=[];
         return $element->render();
     }
 

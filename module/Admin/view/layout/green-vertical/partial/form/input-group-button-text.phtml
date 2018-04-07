@@ -1,0 +1,10 @@
+<div class="form-group ">
+    <label for="<?= $this->field->getAttribute('id') ?>"><?= $this->translate($this->field->getLabel()) ?></label>
+    <div class="input-group input-group-lg">
+        <div class="input-group-append">
+            <a href="<?= $this->rota ?>" class="btn btn-outline-secondary add" data-id="#<?= $this->field->getAttribute('id') ?>"><i class="fa fa-plus"></i> Add</a>
+        </div>
+        <?= $this->formRow($this->field->setLabel("")); ?>
+
+    </div>
+</div>

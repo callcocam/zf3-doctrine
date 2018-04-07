@@ -1,0 +1,28 @@
+<?php
+$collums12[] =  $this->El()->hidden('id')->hidden('empresa')->hidden('alias')->hidden('updated_at')->hidden('created_at')
+    //->input('name')
+    ->render($this->html('div')->setClass('row'));
+
+$collums12[] = $this->El()->input('preview')->render($this->html('div')->setClass('row'));
+
+$collums12[] = $this->El()->setClass('col-md-12')
+    ->input('status')
+    ->render($this->html('div')->setClass('row'));
+
+$html[] = $this->html('div')->setClass('row')->setText(
+    $this->html('div')->setClass('col-md-12 col-xs-12')->setText( implode("", $collums12))
+);
+
+$actions[] = $this->Actions()
+    ->dismiss()
+    ->save()
+    ->render($this->html('div')->setClass('row'));
+?>
+<?= $this->partial(sprintf("/layout/%s/partial/modal-default", LAYOUT), [
+    'body' => implode("", $html),
+    'actions' => implode("", $actions),
+    'form' => $this->form,
+    'title' => "Criar Banner",
+    'route' => $this->route,
+    'controller' => $this->controller,
+]); ?>

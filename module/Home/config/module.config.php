@@ -15,7 +15,7 @@ return [
             "home" => [
                 "type" => Literal::class,
                 "options" => [
-                    "route" => "/",
+                    "route" => "/home",
                     "defaults" => [
                         "__NAMESPACE__" => "Home\Controller",
                         "controller" => "Start",

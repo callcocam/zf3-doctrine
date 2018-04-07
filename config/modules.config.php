@@ -28,6 +28,7 @@ return [
     'Zend\Validator',
     'DoctrineModule',
     'DoctrineORMModule',
+    'ZfrCors',
     'DoctrineDataFixtureModule',
     'Core',
     'Admin',
@@ -35,7 +36,11 @@ return [
     'Make',
     'Agenda',
     'Home',
-    'ControleEstoque',
-    //'Api',
+    'ControlDeEstoque',
+    'VodkaEverest',
+    'Blog',
+    'Banner',
+    'SIGAUpload',
+    'Api',
     //'Register'
 ];

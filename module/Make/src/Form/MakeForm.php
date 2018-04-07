@@ -38,6 +38,12 @@ class MakeForm extends AbstractForm
         ]);
 
         //######################## route #######################
+        $this->addSelect("menu","Menu Ou Sub-Menu",[
+            'menu'=>"Menu Principal",
+            'submenu'=>"Sub Menu"
+        ]);
+
+        //######################## route #######################
         $this->add([
             'type' => Text::class,
             'name' => 'route',

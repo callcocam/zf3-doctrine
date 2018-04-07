@@ -1,0 +1,62 @@
+<?php
+$collums12[] =  $this->El()->hidden('id')->hidden('empresa')
+    ->input('name')
+    ->render($this->html('div')->setClass('row'));
+$collums12[] =  $this->El()
+    ->input('preview')
+    ->render($this->html('div')->setClass('row'));
+$collums12[] = $this->El()->setClass('col-md-4')
+    ->timepicker('created_at')
+    ->timepicker('updated_at')
+    ->input('status')
+    ->render($this->html('div')->setClass('row'));
+
+//$collums12[] = $this->El()->input('description')->render($this->html('div')->setClass('row'));
+
+//Ou
+
+
+//$this->El()
+//    ->editor('description',$this->route,$this->controller,$this->form->get("id")->getValue())
+//    ->render($this->html('div')->setClass('row'));
+
+$html[] = $this->html('div')->setClass('row')->setText(
+    $this->html('div')->setClass('col-md-12 col-xs-12')->setText( implode("", $collums12))
+);
+
+
+//$collums04[] = $this->El()
+//    ->timepicker('created_at')
+//    ->timepicker('updated_at')
+//    ->input('status')
+//    ->render($this->html('div')->setClass('row'));
+
+
+
+//para usar duas colunas com imagem
+//$collums04[] =   $this->html('div')->setClass('row')->setText(
+//    $this->El()->file()->render($this->html('div')->setClass('col-xs-12'))
+//);
+
+//$html[] = $this->html('div')->setClass('row')->setText(
+//    $this->html('div')->setClass('col-md-8 col-xs-12')->setText( implode("", $collums08))
+//)->appendText(
+//    $this->html('div')->setClass('col-md-4 col-xs-12')->setText( implode("", $collums04))
+//);
+
+
+$actions[] =   $this->Actions()
+    ->submit()
+    ->save_copy()
+    ->save_close()
+    ->back()
+    ->render($this->html('div')->setClass('row'));
+?>
+
+<?= $this->partial(sprintf("/layout/%s/partial/create", LAYOUT), [
+    'body' => implode("", $html),
+    'actions' => implode("", $actions),
+    'form' => $this->form,
+    'route' => $this->route,
+    'controller' => $this->controller,
+]); ?>

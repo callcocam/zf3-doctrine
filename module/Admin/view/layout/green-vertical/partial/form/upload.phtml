@@ -1,0 +1,5 @@
+<?=$this->formButton()->openTag($this->element->setAttribute('title',$this->title));?>
+    <span class="<?=$this->ico?>"></span>
+<?=$this->translate($this->element->getValue());?>
+    <span style="display:none;" class="loading fa fa-spin fa-refresh"></span>
+<?=$this->formButton()->closeTag();?>

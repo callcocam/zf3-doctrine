@@ -23,6 +23,7 @@ class UserFixture extends AbstractFixture implements FixtureInterface, OrderedFi
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
     public function load( ObjectManager $manager )
     {
@@ -37,6 +38,7 @@ class UserFixture extends AbstractFixture implements FixtureInterface, OrderedFi
             ->setCreatedAt(new \DateTime())
             ->setUpdatedAt(new \DateTime());
         $manager->persist($user);
+        $this->addReference("user-01",$user);
         $manager->flush();
 
     }

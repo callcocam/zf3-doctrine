@@ -1,3 +1,0 @@
-<?php
-namespace Api;
-return [];

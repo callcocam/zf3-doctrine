@@ -19,7 +19,7 @@ class S_NameController extends AbstractController
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->route = "adm-S_route";
+        $this->route = "S_route";
         $this->controller = "S_controller";
         $this->template = sprintf("S_route/S_controller/%s/editar-form", LAYOUT);
         $this->container = $container;

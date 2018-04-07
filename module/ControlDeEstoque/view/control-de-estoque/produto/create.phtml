@@ -1,0 +1,16 @@
+<?php $html = $this->Tab()
+    ->setInfoTitle("Manutenção dos Produto")->tabPanel(
+        $this->render(sprintf("%s/editar-form", LAYOUT))
+    )
+    ->nav("Conteudo Principal");
+if($this->Route()->getId()):
+    $html->tabPanel(
+        "Estoque"
+    )->nav("Cadastrar Estoque");
+    $html->tabPanel(
+        $this->GallHelper()->setId($this->Route()->getId())->setRoute($this->route)->setController($this->controller)->render($this->html('div')->setClass('row'))
+    )
+        ->nav("Galeria")
+        ->render();
+endif;
+echo $html->render();

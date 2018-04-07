@@ -1,0 +1,93 @@
+<?php
+$this->form->get('parent')->setValue($this->parent);
+$this->form->get('assets')->setValue($this->assets);
+$this->form->get('cover')->setValue($this->name);
+$this->form->get('tipo')->setValue('upload');
+
+$html1[] = $this->html('img')->setAttributes([
+    'id' => 'file',
+    'data-cover' => $this->basePath($this->form->get('cover')->getValue()),
+    'class' => 'attachment rounded-circle img-thumbnail',
+    'alt' => 'ser profile picture',
+    'src' => $this->basePath($this->form->get('cover')->getValue()),
+]);
+
+$html1[] = $this->html('div')->setClass('input-group mb-3')->setText(
+    $this->html('div')->setClass('custom-file')->setText(
+        $this->html('input')->setAttributes([
+            'id' => 'inputGroupFile02',
+            'name' => 'file',
+            'type' => 'file',
+        ])
+    )->appendText(
+        $this->html('label')->setAttributes([
+            'class' => 'custom-file-label btn btn-success',
+            'for' => 'inputGroupFile02',
+        ])->setText($this->html('i')->setClass('fa fa-paperclip'))->appendText("Selecione Um Imagem"))
+);
+
+$html2[] = $this->html('div')->setClass('text-left m-t-0')->setText(
+    $this->El()->hidden('id')->hidden('empresa')
+        ->hidden('tipo')
+        ->hidden('assets')
+        ->input('status')
+        ->hidden('parent')
+        ->setClass('col-md-12')
+        ->input('name')
+        ->render($this->html('div')->setClass('row'))
+);
+$html2[] = $this->html('div')->setClass('text-left m-t-0')->setText(
+    $this->El()
+        ->setClass('col-md-4')
+        ->input('cover_width')
+        ->input('cover_height')
+        ->input('cover_quality')
+        ->render($this->html('div')->setClass('row'))
+);
+
+$html2[] = $this->html('div')->setClass('text-left m-t-0')->setText(
+    $this->El()
+        ->setClass('col-md-12')
+        ->input('description')
+        ->render($this->html('div')->setClass('row'))
+);
+
+
+$html1[] = $this->html('div')->setAttributes([
+    'class' => 'progress',
+])->setText(
+    $this->html('div')->setAttributes([
+        'id' => 'upload-progress',
+        'class' => 'progress-bar progress-bar-primary progress-bar-striped',
+        'role' => 'progressbar',
+        'aria-valuenow' => '40',
+        'aria-valuemin' => '0',
+        'aria-valuemax' => '100',
+    ])->setText($this->html('span')->setAttributes([
+        'class' => 'percent',
+        'style' => "min-width: 2em;"
+    ])->setText(''))
+);
+
+$actions[] = $this->Actions()
+    ->dismiss()
+    ->save("Upload","fa fa-upload")
+    ->render($this->html('div'));
+
+$html3[] = $this->html('div')->setClass('member-card')->setText(implode('', $html1));
+$html4[] = $this->html('div')->setClass('member-card')->setText(implode('', $html2));
+$html[] = $this->Tab()->setNumber(125)
+    ->setInfoTitle("Manutenção dos menus")->tabPanel(implode('', $html1))->tabPanel(implode('', $html2))
+    ->nav("Geral")
+    ->nav("Setings")
+    ->render();
+?>
+
+<?php echo $this->partial(sprintf("/layout/%s/partial/modal-default", LAYOUT), [
+    'body' => implode("", $html),
+    'actions' => implode("", $actions),
+    'form' => $this->form,
+    'title' => "Upload De Imagens",
+    'route' => $this->route,
+    'controller' => $this->controller,
+]); ?>

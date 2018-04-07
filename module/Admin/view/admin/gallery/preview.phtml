@@ -1,0 +1,6 @@
+<?= $this->form()->openTag($this->form->setAttribute('action', $this->url("adm-admin/default", [
+    'controller' => "gallery",
+    'action' => 'upload'
+]))->setAttribute('name', "AjaxGalleryForm-{$this->form->get('id')->getValue()}")->setAttribute('enctype', "multipart/form-data")->setAttribute('class', 'col-sm-4 col-lg-3 col-xs-12 ajax-gallry-upload')); ?>
+<?=  $this->render(sprintf("%s/preview-form", LAYOUT)); ?>
+<?= $this->form()->closeTag(); ?>

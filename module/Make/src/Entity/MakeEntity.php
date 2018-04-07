@@ -9,6 +9,7 @@
 namespace Make\Entity;
 
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Admin\Entity\EmpresaEntity;
 use Core\Entity\AbstractEntity;
 
@@ -48,6 +49,12 @@ class MakeEntity extends AbstractEntity
     /**
      * @var string
      *
+     * @ORM\Column(name="menu", type="string", length=10, nullable=false, options={"default"="menu"})
+     */
+    private $menu;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="route", type="string", length=50, nullable=false)
      */
     private $route;
@@ -81,17 +88,19 @@ class MakeEntity extends AbstractEntity
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="created_at", type="date", nullable=true)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private $created_at;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
 
+     */
+    private $updated_at;
     /**
      * @return int
      */
@@ -134,6 +143,24 @@ class MakeEntity extends AbstractEntity
     public function setName(string $name): MakeEntity
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMenu(): string
+    {
+        return $this->menu;
+    }
+
+    /**
+     * @param string $menu
+     * @return MakeEntity
+     */
+    public function setMenu( string $menu ): MakeEntity
+    {
+        $this->menu = $menu;
         return $this;
     }
 

@@ -1,4 +1,10 @@
 <?= $this->html('button')->setAttributes([
     'class' => 'btn btn-primary waves-effect waves-light',
     'type' => 'submit'
-])->setText($this->html('i')->setClass($this->icone))->appendText(" ")->appendText($this->label);
+])->setText($this->html('i')->setClass($this->icone))->appendText(" ")
+    ->appendText($this->label)
+    ->appendText(" ")
+    ->appendText($this->html('span')->setAttributes([
+        'class' => 'loading fa fa-spin fa-refresh',
+        'style' => 'display:none'
+    ]));

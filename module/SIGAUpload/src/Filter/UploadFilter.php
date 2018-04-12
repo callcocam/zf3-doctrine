@@ -25,31 +25,6 @@ class UploadFilter extends AbstractFilter
     public function getInputFilter()
     {
         $this->inputFilter = new InputFilter();
-
-
-        ########################### name ####################
-//        $this->inputFilter->add([
-//            'name'=>'name',
-//            'required'=>true,
-//            'filters'=>$this->filters(),
-//            'validators'=>[
-//                $this->NotEmpty('name'),
-//                $this->StringLength('name')
-//            ]
-//        ]);
-
-        ########################### controller ####################
-//        $this->inputFilter->add([
-//            'name'=>'controller',
-//            'required'=>true,
-//            'filters'=>$this->filters(),
-//            'validators'=>[
-//                $this->StringLength('controller'),
-//                $this->NotEmpty('controller'),
-//                $this->getInputFilterSpecification(Make::class,['id','controller'],"Controlador")
-//            ]
-//        ]);
-
         return parent::getInputFilter();
     }
 

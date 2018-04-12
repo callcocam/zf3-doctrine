@@ -61,6 +61,31 @@ return [
                         'isAuthorizationRequired' => true,
                     ],
                 ],
+            ],'api-user' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/api/user[/:id]',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'isAuthorizationRequired' => true,
+                    ],
+                ],
+            ],
+            'api-upload' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/api/upload[/:id]',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\UploadController::class,
+                        'isAuthorizationRequired' => false,
+                    ],
+                ],
             ],
 
         ],
@@ -70,6 +95,8 @@ return [
             Controller\AuthController::class => Controller\Factory\FactoryController::class,
             Controller\EmpresaController::class => Controller\Factory\FactoryController::class,
             Controller\PostController::class => Controller\Factory\FactoryController::class,
+            Controller\UploadController::class => Controller\Factory\FactoryController::class,
+            Controller\UserController::class => Controller\Factory\FactoryController::class,
         ],
     ],
     'view_manager' => [

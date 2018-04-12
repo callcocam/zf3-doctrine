@@ -98,7 +98,7 @@ class Module implements BootstrapListenerInterface, ViewHelperProviderInterface,
 //            define('LAYOUT',getenv('THEME'));
 //        }
 //        else{
-//            define('LAYOUT',getenv('THEME'));
+//            define('LAYOUT','green-vertical');
 //        }
 
 
@@ -188,9 +188,6 @@ class Module implements BootstrapListenerInterface, ViewHelperProviderInterface,
             }
         ],
             'invokables' => [
-                //'phpthumb' => PHPThumb::class,
-                //'Date' => DateHelper::class,
-               // 'chartjs' => ChartJs::class,
                 'html' => Helper\HtmlElement::class,
                 'RenderHtml' => Helper\RenderHtml::class,
                 'date'=>DateHelper::class,

@@ -10,7 +10,7 @@ return [
          /**
           * Set the list of allowed origins domain with protocol.
           */
-          'allowed_origins' => ['http://localhost:8080'],
+          'allowed_origins' => ['http://localhost:4200','http://localhost:8080','https://lojas.gerencia.pet','https://vodkaeverest.ind.br','http://sistema.vodkaeverest.ind.br','https://sistema.vodkaeverest.ind.br'],
 
          /**
           * Set the list of HTTP verbs.
@@ -21,7 +21,7 @@ return [
           * Set the list of headers. This is returned in the preflight request to indicate
           * which HTTP headers can be used when making the actual request
           */
-        'allowed_headers' => ['Authorization',"Content-Type",'Accept','Access-Control-Allow-Origin'],
+        'allowed_headers' => ['Authorization',"Content-Type",'Access-Control-Allow-Origin'],
 
          /**
           * Set the max age of the preflight request in seconds. A non-zero max age means

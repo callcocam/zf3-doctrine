@@ -1,9 +1,8 @@
 <?php
 
 namespace Core\Dotenv;
-
-use Core\Dotenv\Exception\InvalidFileException;
 use Core\Dotenv\Exception\InvalidPathException;
+
 
 /**
  * This is the loaded class.
@@ -88,7 +87,7 @@ class Loader
     /**
      * Ensures the given filePath is readable.
      *
-     * @throws \Dotenv\Exception\InvalidPathException
+     * @throws InvalidPathException
      *
      * @return void
      */
@@ -112,6 +111,7 @@ class Loader
      * @param string $value
      *
      * @return array
+     * @throws InvalidFileException
      */
     protected function normaliseEnvironmentVariable($name, $value)
     {
@@ -131,6 +131,7 @@ class Loader
      * @param string $value
      *
      * @return array
+     * @throws InvalidFileException
      */
     public function processFilters($name, $value)
     {
@@ -211,7 +212,7 @@ class Loader
      * @param string $name
      * @param string $value
      *
-     * @throws \Dotenv\Exception\InvalidFileException
+     * @throws InvalidFileException
      *
      * @return array
      */

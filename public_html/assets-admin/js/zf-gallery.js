@@ -114,6 +114,7 @@ function uploadImage($form) {
     });
     var index = $form.index();
     formdata.append('file', fileCollection[index]);
+
     //progress completed load event
     request.addEventListener('load', function (e) {
         var _response = e.target.response;

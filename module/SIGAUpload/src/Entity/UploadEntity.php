@@ -348,16 +348,16 @@ class UploadEntity extends AbstractEntity
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
-     * @param \DateTime|null $createdAt
+     * @param \DateTime|null $created_at
      * @return UploadEntity
      */
-    public function setCreatedAt( ?\DateTime $createdAt )
+    public function setCreatedAt( ?\DateTime $created_at )
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
         return $this;
     }
 
@@ -366,16 +366,16 @@ class UploadEntity extends AbstractEntity
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param \DateTime $updated_at
      * @return UploadEntity
      */
-    public function setUpdatedAt( \DateTime $updatedAt )
+    public function setUpdatedAt( \DateTime $updated_at )
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updated_at;
         return $this;
     }
 

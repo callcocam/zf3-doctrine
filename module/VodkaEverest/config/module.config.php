@@ -10,6 +10,8 @@ namespace VodkaEverest;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use VodkaEverest\Controller\Factory\FactoryController;
 use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
+
 return [
     'router' => [
         'routes' => [
@@ -38,6 +40,94 @@ return [
                         ],
                     ],
 
+                ],
+            ],
+            "imprensa" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/imprensa",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "imprensa",
+                    ],
+                ],
+            ],
+            "drinks" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/drinks",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "drinks",
+                    ],
+                ],
+            ],
+            "novidades-eventos" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/novidades-eventos",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "novidades-eventos",
+                    ],
+                ],
+            ],
+            "contato" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/contato",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "contato",
+                    ],
+                ],
+            ],
+            "politica-de-privacidade" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/politica-de-privacidade",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "politica-de-privacidade",
+                    ],
+                ],
+            ],
+            "termos-de-uso" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/termos-de-uso",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "termos-de-uso",
+                    ],
+                ],
+            ],
+            "declaracao-de-responsabilidade" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/declaracao-de-responsabilidade",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "declaracao-de-responsabilidade",
+                    ],
+                ],
+            ],
+            "sobre-nos" => [
+                "type" => Literal::class,
+                "options" => [
+                    "route" => "/sobre-nos",
+                    "defaults" => [
+                        "__NAMESPACE__" => "VodkaEverest\Controller",
+                        "controller" => "Start",
+                        "action" => "sobre-nos",
+                    ],
                 ],
             ],
         ],

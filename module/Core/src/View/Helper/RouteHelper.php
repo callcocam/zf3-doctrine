@@ -121,11 +121,12 @@ class RouteHelper extends AbstractHelper
         $this->parans = $parans;
     }
 
-    public function getParan( $param )
+    public function getParan( $param, $default = null )
     {
         if (isset($this->parans[$param])):
             return $this->parans[$param];
         endif;
+        return $default;
     }
 
     /**
@@ -150,6 +151,9 @@ class RouteHelper extends AbstractHelper
 
             if (isset($controller['type'])) {
                 $result['type'] = $controller['type'];
+            }
+            if (isset($controller['slug'])) {
+                $result['slug'] = $controller['slug'];
             }
             $this->setRotaAndContrllerAction($result);
             if (isset($controller['__CONTROLLER__'])) {
@@ -181,8 +185,18 @@ class RouteHelper extends AbstractHelper
     {
         if ($name):
             return $this->queryParams[$name];
-        else:
-            return $this->queryParams;
         endif;
+        return $this->queryParams;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQueryParam( $name, $default = null )
+    {
+        if ($name):
+            return $this->queryParams[$name];
+        endif;
+        return $default;
     }
 }

@@ -48,6 +48,8 @@ abstract class ApiController extends AbstractRestfulController
     protected $factoryTable = "Core\\Table\\Factory\\FactoryTable";
 
     protected $factoryFilter = "Core\\Filter\\Factory\\FactoryFilter";
+
+    protected $factoryForm = "Core\\Form\\Factory\\FactoryForm";
     /**
      * @var Integer $httpStatusCode Define Api Response code.
      */
@@ -96,6 +98,7 @@ abstract class ApiController extends AbstractRestfulController
      * @var EntityManager
      */
     protected $entityManager;
+    protected $form;
 
     /**
      * ApiController constructor.
@@ -110,9 +113,14 @@ abstract class ApiController extends AbstractRestfulController
      */
     public function create( $data )
     {
-
-        // Action used for POST requests
-        return new JsonModel(['data' => $data]);
+        $this->apiResponse=[];
+        if(!$data):
+            $this->httpStatusCode = 401;
+            return $this->createResponse();
+        endif;
+        $this->save($data);
+        $this->apiResponse = array_merge($this->args,$this->apiResponse);
+        return $this->createResponse();
     }
 
     /**
@@ -162,13 +170,52 @@ abstract class ApiController extends AbstractRestfulController
      * @param $id
      * @param $data
      * @return JsonModel
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function update( $id, $data )
     {
-        // Action used for PUT requests
-        return new JsonModel(['data' => ['id' => 3, 'name' => 'Updated Album', 'band' => 'Updated Band']]);
+        $this->apiResponse=[];
+        if(!$data):
+            $this->httpStatusCode = 401;
+            return $this->createResponse();
+        endif;
+        if (is_string($this->service)):
+            $this->getService();
+        endif;
+        if (is_string($this->filter)):
+            $this->getFilter();
+        endif;
+        $action = $this->params()->fromQuery("action");
+        $data['id'] = $id;
+        switch ($action):
+            case "status":
+                $this->state($id, $data);
+                break;
+            default:
+            $this->save($data);
+        endswitch;
+        $this->apiResponse = array_merge($this->args,$this->apiResponse);
+        return $this->createResponse();
     }
 
+    protected function save($data){
+        /**
+         * Pega o inputFilter Validate
+         */
+        $validate = $this->filter->getInputFilter();
+        if(is_array($data['status'])):
+            $data['status'] = $data['status']['value'];
+        endif;
+        // generate token if valid user
+        $validate->setData($data);
+        if($validate->isValid()):
+            //$this->args = array_merge($this->args,['msg'=>'Formulario Validado com success']);
+            $this->args = array_merge($this->args,$this->service->save($data));
+        else:
+            $this->getMessages($validate->getMessages());
+        endif;
+    }
     protected function setParameters( $params )
     {
         return new Parameters($params);
@@ -251,6 +298,20 @@ abstract class ApiController extends AbstractRestfulController
         endif;
         $this->filter = $this->serviceManager->get($this->filter);
         return $this->filter;
+    }
+
+    /**
+     * @return AbstractController
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function getForm()
+    {
+        if (!$this->container->has($this->form)):
+            $this->setServiceManager($this->form, $this->factoryForm);
+        endif;
+        $this->form = $this->serviceManager->get($this->form);
+        return $this->form;
     }
 
     /**
@@ -376,7 +437,7 @@ abstract class ApiController extends AbstractRestfulController
             $sendResponse[$statusKey] = $config['ApiRequest']['responseFormat']['statusNokText'];
         }
         if (isset($this->apiResponse['link'])) {
-            $sendResponse['link'] = sprintf("%s%s", Module::BASE, $this->apiResponse['link']);
+            $sendResponse['link'] = sprintf("%s%s", getenv('BASE'), $this->apiResponse['link']);
         }
         $sendResponse = $this->apiResponse;
         return new JsonModel($sendResponse);

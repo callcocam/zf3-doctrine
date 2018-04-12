@@ -83,8 +83,12 @@
                 <li class="menu-title">Configurações</li>
                 <li><a href="<?= $this->url("adm-make") ?>"  class="waves-effect waves-primary"><i class="fa fa-magic"></i>
                         <span><?= $this->translate('Makes') ?></span></a></li>
+
                 <li><a href="<?= $this->url("adm-config") ?>" class="waves-effect waves-primary"><i class="fa fa-gear"></i>
-                        <span><?= $this->translate('Configuração') ?></span></a></li>
+                        <span><?= $this->translate('Configuração') ?></span></a>
+
+                </li>
+
                 <li><a href="<?= $this->url("adm-admin/default", [
                         'controller' => 'user',
                         'action' => 'profile'

@@ -9,7 +9,6 @@
 namespace Core\Dotenv;
 
 
-use Dotenv\Exception\InvalidPathException;
 
 /**
  * This is the dotenv class.
@@ -29,7 +28,7 @@ class Dotenv
     /**
      * The loader instance.
      *
-     * @var \Dotenv\Loader|null
+     * @var Loader|null
      */
     protected $loader;
 
@@ -67,7 +66,7 @@ class Dotenv
     {
         try {
             return $this->loadData();
-        } catch (InvalidPathException $e) {
+        } catch (\Core\Dotenv\Exception\InvalidPathException $e) {
             // suppressing exception
             return array();
         }

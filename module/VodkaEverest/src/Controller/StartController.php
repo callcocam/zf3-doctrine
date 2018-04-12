@@ -23,4 +23,37 @@ class StartController extends AbstractController
     {
         $this->container = $container;
     }
+
+    public function drinksAction(){
+
+    }
+
+    public function imprensaAction(){
+
+    }
+
+    public function novidadeseventosAction(){
+
+    }
+
+
+    public function contatoAction(){
+
+    }
+
+    public function politicadeprivacidadeAction(){
+
+    }
+
+    public function termosdeusoAction(){
+
+    }
+
+    public function declaracaoderesponsabilidadeAction(){
+
+    }
+
+    public function sobrenosAction(){
+
+    }
 }

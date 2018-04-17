@@ -71,7 +71,7 @@ class CategorieBlogEntity extends AbstractEntity
     /**
      * @var \DateTime|null
      *
-     * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;

@@ -9,7 +9,6 @@
 namespace Core\Table\Params;
 
 use Core\Table\Table\Exception;
-use Zend\Debug\Debug;
 use Zend\Stdlib\ArrayObject;
 use Zend\Stdlib\InitializableInterface;
 

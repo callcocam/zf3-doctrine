@@ -63,7 +63,8 @@ class Render extends AbstractCommon
         $res['sEcho'] = $render;
         $res['iTotalDisplayRecords'] = $this->getTable()->getSource()->getPaginator()->getTotalItemCount();
         $res['aaData'] = $render;
-
+        $res['draw'] = $render;
+        $res['data'] = $render;
         return $res;
     }
 

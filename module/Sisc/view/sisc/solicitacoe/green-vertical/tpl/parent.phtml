@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box m-t-20">
+            <div class="card-header">
+                <h5 class="card-title">{instancy} {description}</h5>
+            </div>
+            <?php if(!empty($reply)):?>
+                <div class="card-body">
+                    <h4 class="card-title">Resposta:</h4>
+                    <p class="card-text">{reply}</p>
+                        <h4 class="font-16"> <i class="ti ti-clip m-r-10 m-b-10"></i> Axexo(s) </h4>
+                        <hr>
+                        <div class="row m-3">
+                            {anexos}
+                        </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="row">
+                        <div class="col-4">
+                            <small class="text-muted pull-left">Contato: {reply_email}</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <small class="text-muted media-meta">Data:{reply_date}</small>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted pull-right">Secretaria:{reply_first_name} {reply_last_name}</small>
+                        </div>
+                    </div>
+                </div>
+
+            <?php else:?>
+                <div class="card-body">
+                    Nemhuma resposta para essa solicitação foi encontrada!
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <small class="text-muted media-meta">Previsão de resposta:{prevision_reply_date}</small>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a href="<?=$this->url('adm-sisc/default',[
+                                'controller'=>'solicitacoe',
+                                'action'=>'create',
+                                'id'=>$this->id
+                            ])?>" class="btn btn-warning">Responder solicitação</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endif;?>
+        </div>
+    </div>
+</div>

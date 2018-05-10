@@ -1,0 +1,52 @@
+<div class="wrapper-page">
+    <div class="text-center">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="title zoomIn animated wow" data-wow-delay=".1s">Logar no Sistema</h2>
+                <p class="sub-title zoomIn animated wow" data-wow-delay=".2s">Preencha Com CPF/CNPJ e senha para acessar o Sistema de Informações. </p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <?= $this->partial(sprintf('layout/%s/partial/form-error', LAYOUT), ['form' => $this->form]); ?>
+        <?= $this->form()->openTag($this->form->setAttribute('action', $this->url('home-auth'))
+            ->setAttribute('name', 'AjaxForm')->setAttribute('class', 'form-horizontal m-t-20')); ?>
+        <?= $this->html('div')->setClass('row')->setText(
+            $this->html('div')->setClass('col-md-12')->setText(
+                $this->El()
+                    ->input('identity')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->El()
+                    ->input('credential')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->Actions()
+                    ->logar(12)
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->html('div')->setClass('form-group row m-t-30')->setText(
+                    $this->html('div')->setClass('col-sm-5')->setText(
+                        $this->html('a')->setAttributes([
+                            'class' => 'text-muted',
+                            'href' => $this->url('home-register'),
+                        ])->setText(
+                            $this->translate('Criar uma conta')
+                        )
+                    )
+                )->appendText(
+                    $this->html('div')->setClass('col-sm-7')->setText(
+                        $this->html('a')->setAttributes([
+                            'class' => 'text-muted',
+                            'href' => $this->url('home-recover')
+                        ])->setText(
+                            $this->translate('Esqueceu sua senha?')
+                        )
+                    )
+                )
+            )
+        ); ?>
+        <?= $this->form()->closeTag(); ?>
+        <?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+    </div>
+</div>

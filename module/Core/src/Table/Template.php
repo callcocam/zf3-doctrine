@@ -28,6 +28,7 @@ class Template
         $viewModel->setTemplate("{$this->getFolderTemplate()}/{$mailTemplate}.phtml");
         $viewModel->setOption('has_parent', true);
         $viewModel->setVariables($data);
+        $viewModel->setTerminal(true);
 
         return $this->view->render($viewModel);
     }

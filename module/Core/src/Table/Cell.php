@@ -98,7 +98,6 @@ class Cell extends AbstractElement
                     $joinName = $this->getHeader()->getJoin();
                     $methodName = 'get' . ucfirst($headerName);
                     if (method_exists($row, $methodName)) {
-
                         $methodJoin= 'get' . ucfirst($joinName);
                         $value = $row->$methodName()->$methodJoin();
                     }

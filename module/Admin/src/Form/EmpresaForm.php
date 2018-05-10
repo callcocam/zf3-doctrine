@@ -23,6 +23,7 @@ class EmpresaForm extends AbstractForm
         $this->util = new Utils();
         $this->addText("social","Razão social");
         $this->addText("tipo","Tipo");
+        $this->addText("assets","Base");
         $this->addText("cnpj","Cnpj");
         $this->addText("ie","EI");
         $this->addText("email","E-Mail");

@@ -1,0 +1,49 @@
+<div class="wrapper-page">
+
+    <div class="text-center">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="title zoomIn animated wow" data-wow-delay=".1s">Recuperar Senha</h2>
+                <p class="sub-title zoomIn animated wow" data-wow-delay=".2s">Por favor informe o email cadastrado na sua conta. </p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <?= $this->partial(sprintf('layout/%s/partial/form-error', LAYOUT), ['form' => $this->form]); ?>
+        <?= $this->form()->openTag($this->form->setAttribute('action', $this->url('home-recover'))
+            ->setAttribute('name', 'AjaxForm')->setAttribute('class', 'form-horizontal m-t-20')); ?>
+        <?= $this->html('div')->setClass('row')->setText(
+            $this->html('div')->setClass('col-md-12')->setText(
+                $this->El()
+                     ->input('email')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->Actions()
+                    ->logar(12,'Solicitar Senha')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->html('div')->setClass('form-group row m-t-30')->setText(
+                    $this->html('div')->setClass('col-sm-5')->setText(
+                        $this->html('a')->setAttributes([
+                            'class' => 'text-muted',
+                            'href' => $this->url('home-register'),
+                        ])->setText(
+                            $this->translate('Cadastrar-se no sistema')
+                        )
+                    )
+                )->appendText(
+                    $this->html('div')->setClass('col-sm-7')->setText(
+                        $this->html('a')->setAttributes([
+                            'class' => 'text-muted',
+                            'href' => $this->url('home-auth')
+                        ])->setText(
+                            $this->translate('Voltar para tela de acesso?')
+                        )
+                    )
+                )
+            )
+        ); ?>
+        <?= $this->form()->closeTag(); ?>
+        <?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+    </div>
+</div>

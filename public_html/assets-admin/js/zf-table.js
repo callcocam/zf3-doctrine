@@ -42,6 +42,7 @@
 
         var options = $.extend(defaults, options);
 
+
         function strip(html){
             var tmp = document.createElement("DIV");
             tmp.innerHTML = html;
@@ -51,6 +52,47 @@
         function init($obj) {
             options.onInit();
             ajax($obj);
+            $('a.open-modal').click(function (e) {
+                e.preventDefault();
+                var dataModal =null;
+                jQuery.ajax({
+                    url: $(this).attr('href'),
+                    beforeSend: options.beforeSend($obj),
+                    success: function (data) {
+                        dataModal= $(data).modal({
+                            backdrop: false
+                        }).on('shown.bs.modal', function (e) {
+                            var bar = $('.progress-bar');
+                            var percent = $('.percent');
+                            $("form[name='AjaxAddForm']").ajaxForm({
+                                beforeSend: function () {
+                                    var percentVal = '0%';
+                                    bar.width(percentVal);
+                                    percent.html(percentVal);
+                                },
+                                uploadProgress: function (event, posicao, total, completo) {
+                                    var porcento = completo + '%';
+                                    bar.width(porcento);
+                                    percent.html(completo);
+                                },
+                                success: function (responseText, statusText, xhr, $form) {
+                                    var percentVal = '100%';
+                                    bar.width(percentVal);
+                                    percent.html(percentVal);
+                                    $("form[name='AjaxAddForm']").find('.modal-dialog').html(responseText)
+                                },
+                                type: 'post', // 'get' or 'post', override for form's 'method' attribute
+                                dataType: 'html' // 'xml', 'script', or 'json' (expected server response type)
+                            });
+                        }).on('hidden.bs.modal', function (e) {
+                            e.target.remove();
+                            ajax($obj);
+                        })
+
+                    },
+                    dataType: 'html'
+                });
+            });
         }
         function ajax($obj) {
 
@@ -144,6 +186,9 @@
                     ajax($obj);
                 }
             });
+
+
+
 
             $obj.find('a.actions').on('click', function (e) {
                 e.preventDefault();

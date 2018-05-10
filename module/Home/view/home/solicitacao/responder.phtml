@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="text-center m-t-20">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="title zoomIn animated wow" data-wow-delay=".1s">Responder Solicitação</h2>
+                <p class="sub-title zoomIn animated wow" data-wow-delay=".2s"><?=$this->data->getDescription()?></p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <?php
+        $this->form->get('client')->setValue($this->data->getClient()->getId());
+        $this->form->get('parent')->setValue($this->data->getId());
+        $this->form->get('empresa')->setValue($this->data->getEmpresa()->getId());
+        $this->form->get('status')->setValue(1);
+        $instancy = $this->data->getInstancy();
+        $instancy++;
+        $this->form->get('instancy')->setValue($instancy);
+        $this->form->get('reception_by')->setValue($this->data->getReceptionBy()->getId());
+        $this->form->get('return_form')->setValue($this->data->getReturnForm());
+        ?>
+        <?= $this->partial(sprintf('layout/%s/partial/form-error', LAYOUT), ['form' => $this->form]); ?>
+        <?= $this->form()->openTag($this->form->setAttribute('action', $this->url('home-solicitacoes/default',[
+            'controller'=>'solicitacao',
+            'action'=>'responder',
+            'id'=>$this->data->getId()
+        ]))
+            ->setAttribute('name', 'AjaxForm')->setAttribute('class', 'form-horizontal m-t-20 zoomIn animated wow')); ?>
+        <?= $this->html('div')->setClass('row')->setText(
+            $this->html('div')->setClass('col-md-12')->setText(
+                $this->El()->hidden('client')
+                    ->hidden('status')
+                    ->hidden('reception_by')
+                    ->hidden('return_form')
+                    ->hidden('empresa')
+                    ->hidden('parent')
+                    ->input('description')
+                    ->render($this->html('div')->setClass('row'))
+            )->appendText(
+                $this->Actions()
+                    ->logar(12, 'Confirmar o envio da solicitação')
+                    ->render($this->html('div')->setClass('row'))
+            )
+        ); ?>
+        <?= $this->form()->closeTag(); ?>
+        <?= $this->partial(sprintf('layout/%s/partial/messages', LAYOUT)); ?>
+        <hr>
+        <div class="m-3">
+            <a href="<?=$this->url('home-client')?>" class="btn btn-success btn-rounded w-lg animated fadeInDown wow" data-wow-delay=".4s">Voltar para minha conta</a>
+         </div>
+    </div>
+</div>

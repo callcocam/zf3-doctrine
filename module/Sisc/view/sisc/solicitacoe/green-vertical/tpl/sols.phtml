@@ -1,0 +1,10 @@
+<div class=" p-t-10">
+    <h6 class="text-primary m-b-5"><a href="<?=$this->url('home-solicitacoes/default',[
+            'controller'=>'solicitacao',
+            'action'=>'visualize',
+            'id'=>$this->id])?>">{description}</a></h6>
+    <p class="">Resposta: {reply_first_name} {reply_last_name}</p>
+    <p><b>Em: {instancy} no dia {reply_date}</b></p>
+    <p class="text-muted font-13 m-b-0">{reply}</p>
+</div>
+<hr>

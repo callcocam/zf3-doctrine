@@ -6,6 +6,9 @@
 
 namespace Auth\Adapter;
 
+use Admin\Entity\UserEntity;
+use Doctrine\ORM\EntityManager;
+use DoctrineModule\Authentication\Adapter\ObjectRepository;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
 
@@ -16,6 +19,7 @@ class Authentication
      */
     protected $authenticate;
     protected $result;
+    protected $storage;
     protected $type = FlashMessenger::NAMESPACE_ERROR;
     const SUCCESS = 1;
     const FAILURE = 0;
@@ -25,85 +29,33 @@ class Authentication
     const FAILURE_UNCATEGORIZED = -4;
 
     /**
-     * Authentication constructor.
-     *
-     * @param AuthenticationService $authenticate
+     * @var EntityManager
      */
-    public function __construct(AuthenticationService $authenticate)
+    private $entityManager;
+    protected $adapter;
+
+    public function __construct(EntityManager $entityManager)
     {
-        // The status field value of an account is not equal to "compromised"
-        $this->authenticate = $authenticate;
+        $this->storage = new AuthStorage(__NAMESPACE__);
+        $this->entityManager = $entityManager;
     }
 
-    public function login(string $login, string $password)
+    public function login(string $identity, string $credential)
     {
-        // Set the input credential values (e.g., from a login form):
-        $this->getAdapter()->setIdentity($login)
-            ->setCredential($password);
-        // Perform the authentication query, saving the result
-        $this->result = $this->getAdapter()->authenticate();
-        if ($this->result->isValid()):
-            $identity = $this->result->getIdentity();
-            $this->getStorage()->write($identity);
-        endif;
+        $this->adapter = new ObjectRepository([
+                'object_manager' => $this->entityManager,
+                'identity_class' => 'Admin\Entity\UserEntity',
+                'identity_property' => 'document',
+                'credential_property' => 'password'
+            ]
+
+        );
+        $this->adapter->setIdentity($identity);
+        $this->adapter->setCredential($credential);
+        $this->result = $this->adapter->authenticate();
         return $this->result;
     }
 
-    /**
-     * Returns the authentication adapter
-     *
-     * The adapter does not have a default if the storage adapter has not been set.
-     *
-     * @return AdapterInterface|null
-     */
-    public function getAdapter()
-    {
-        return $this->authenticate->getAdapter();
-    }
-
-    /**
-     * Returns the persistent storage handler
-     *
-     * Session storage is used by default unless a different storage adapter has been set.
-     *
-     * @return \Zend\Authentication\Storage\StorageInterface
-     */
-    public function getStorage()
-    {
-        return $this->authenticate->getStorage();
-    }
-
-    /**
-     * Returns true if and only if an identity is available from storage
-     *
-     * @return bool
-     */
-    public function hasIdentity()
-    {
-        return $this->authenticate->hasIdentity();
-    }
-
-    /**
-     * Returns the identity from storage or null if no identity is available
-     *
-     * @return mixed|null
-     */
-    public function getIdentity()
-    {
-        return $this->authenticate->getIdentity();
-    }
-
-    /**
-     * Clears the identity from persistent storage
-     *
-     * @return void
-     * @throws \Zend\Authentication\Exception\ExceptionInterface
-     */
-    public function clearIdentity()
-    {
-        $this->getStorage()->clear();
-        $this->authenticate->clearIdentity();
-    }
 
 
     public function getResult()
@@ -139,5 +91,56 @@ class Authentication
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return AuthStorage
+     */
+    public function setStorage(): Authentication
+    {
+        /**
+         * @var  $identity UserEntity
+         */
+        $identity = $this->result->getIdentity();
+        if($identity):
+            $this->getStorage()->write([
+                'id' => $identity->getId(),
+                'name' => sprintf("%s %s",$identity->getFirstName(),$identity->getLastName()),
+                'first_name' => $identity->getFirstName(),
+                'last_name' => $identity->getLastName(),
+                'empresa' => $identity->getEmpresa(),
+                'email' => $identity->getEmail(),
+                'document' => $identity->getDocument(),
+                'phone' => $identity->getPhone(),
+                'street' => $identity->getStreet(),
+                'number' => $identity->getNumber(),
+                'complement' => $identity->getComplement(),
+                'district' => $identity->getDistrict(),
+                'zip' => $identity->getZip(),
+                'city' => $identity->getCity(),
+                'state' => $identity->getState(),
+                'cover' => $identity->getCover(),
+                'access' => $identity->getAccess(),
+            ]);
+        endif;
+        return $this;
+    }
+
+    /**
+     * @return AuthStorage
+     */
+    public function getStorage(): AuthStorage
+    {
+        return $this->storage;
+
+    }
+
+    public function read(){
+        return $this->storage->read();
+    }
+
+    public function logout(){
+        $this->storage->forgetMe();
+        $this->storage->clear();
     }
 }

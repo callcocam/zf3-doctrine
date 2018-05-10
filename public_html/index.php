@@ -18,6 +18,8 @@ if (php_sapi_name() === 'cli-server') {
     }
     unset($path);
 }
+
+define('SIS','admin');
 define('LAYOUT','green-vertical');
 //define('LAYOUT','admin-lte');
 // Composer autoloading

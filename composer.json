@@ -44,18 +44,14 @@
   },
   "autoload": {
     "psr-4": {
-      "DoctrineDataFixtureModule\\": "module/DoctrineDataFixtureModule/src/",
+      "DoctrineFixture\\": "module/DoctrineFixture/src/",
       "Core\\": "module/Core/src/",
-      "SIGAUpload\\": "module/SIGAUpload/src/",
-      "VodkaEverest\\": "module/VodkaEverest/src/",
       "Api\\": "module/Api/src/",
-      "Blog\\": "module/Blog/src/",
-      "Banner\\": "module/Banner/src/",
-      "ControlDeEstoque\\": "module/ControlDeEstoque/src/",
+      "Sisc\\": "module/Sisc/src/",
+      "SIGAUpload\\": "module/SIGAUpload/src/",
       "Admin\\": "module/Admin/src/",
       "Auth\\": "module/Auth/src/",
       "Make\\": "module/Make/src/",
-      "Agenda\\": "module/Agenda/src/",
       "Home\\": "module/Home/src/"
     }
   },

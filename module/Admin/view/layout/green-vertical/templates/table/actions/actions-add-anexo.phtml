@@ -1,0 +1,9 @@
+
+    <a href="<?= $this->url($this->Route()->getRoute(), [
+        'controller' => $this->Route()->getController(),
+        'action' => "add",
+        'id' => $this->Route()->getId()
+    ]); ?>" class="btn btn-primary waves-light btn-block open-modal" id="add-anexo">
+        <i class="fa fa-c"></i>
+        <h4 class="font-16"> <i class="fa fa-paperclip m-r-10 m-b-10"></i> Attachments <span></span> </h4>
+    </a>

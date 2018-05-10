@@ -9,6 +9,8 @@
 namespace Core\Form;
 
 
+use Admin\Entity\EmpresaEntity;
+use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
@@ -51,6 +53,7 @@ class AbstractForm extends Form
             'name' => 'empresa',
             "attributes" => [
                 'id' => "empresa",
+                'value'=>$this->getEmpresa()
             ],
 
         ]);
@@ -74,6 +77,8 @@ class AbstractForm extends Form
                 'value' => '1',
             ],
         ]);
+
+
 
         //######################## created_at #######################
         $this->add([
@@ -204,6 +209,17 @@ class AbstractForm extends Form
         ],$flags);
         return parent::add($elementOrFieldset);
     }
+
+    public function getDetail($entity,$id,$name="name"){
+        $Result = $this->container->get(EntityManager::class)
+            ->getRepository($entity)->find($id);
+        if($Result){
+            $Data = $Result->toArray();
+
+            return $Data[$name];
+        }
+        return "NAda encontrado";
+    }
     public function addObjectSelect($name,$Entity,$property="name",$params=['status' => 1], array $flags = []){
         //######################## Hidden #######################
         $elementOrFieldset = array_merge([
@@ -303,6 +319,9 @@ class AbstractForm extends Form
         endif;
 
         return $resources;
+    }
 
+    public function getEmpresa(){
+        return $this->container->get(EntityManager::class)->getRepository(EmpresaEntity::class)->getById();
     }
 }

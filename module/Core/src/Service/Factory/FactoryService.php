@@ -28,6 +28,6 @@ class FactoryService implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $entityManager = $container->get("Doctrine\ORM\EntityManager");
-        return new $requestedName($entityManager);
+        return new $requestedName($entityManager,$container);
     }
 }

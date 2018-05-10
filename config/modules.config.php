@@ -11,6 +11,9 @@
  * This should be an array of module namespaces used in the application.
  */
 return [
+    'Zend\InputFilter',
+    'Zend\Filter',
+    'Zend\Hydrator',
     'Zend\Paginator',
     'Zend\Mail',
     'Zend\Navigation',
@@ -29,18 +32,13 @@ return [
     'DoctrineModule',
     'DoctrineORMModule',
     'ZfrCors',
-    'DoctrineDataFixtureModule',
+    'DoctrineFixture',
     'Core',
     'Admin',
     'Auth',
     'Make',
-    'Agenda',
     'Home',
-    'ControlDeEstoque',
-    'VodkaEverest',
-    'Blog',
-    'Banner',
     'SIGAUpload',
-    'Api',
-    //'Register'
+    'Sisc',
+    'Api'
 ];

@@ -1,0 +1,24 @@
+<h4 class="m-t-0 font-18"><b>{instancy}{description}</b></h4>
+<hr>
+<?php if(!empty($reply)):?>
+<div class="media m-b-30">
+<!--    <img class="d-flex mr-3 rounded-circle thumb-sm" src="{reply_cover}" alt="Generic placeholder image">-->
+    <div class="media-body">
+        <span class="media-meta pull-right"><b>Resposta:</b></span><br>
+        <span class="media-meta pull-right">{reply_date}</span>
+        <h4 class="text-primary font-16 m-0">{reply_first_name} {reply_last_name}</h4>
+        <small class="text-muted">Contato: {reply_email}</small>
+    </div>
+</div>
+{reply}
+    <div class="card-box m-t-20">
+        <h4 class="font-16"> <i class="ti ti-clip m-r-10 m-b-10"></i> Axexo(s) </h4>
+        <hr>
+        <div class="row m-3">
+           {anexos}
+        </div>
+    </div>
+<?php else:?>
+Nemhuma resposta para essa solicitação foi encontrada!
+<?php endif;?>
+<hr>

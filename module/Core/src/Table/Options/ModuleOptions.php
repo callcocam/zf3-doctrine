@@ -55,6 +55,18 @@ class ModuleOptions extends AbstractOptions implements
     protected $itemCountPerPage = 10;
 
     /**
+     * Show or hide item per company view
+     * @var boolean
+     */
+    protected $showItemPerCompany = true;
+    /**
+     * @todo item and default company
+     * Default value for company
+     * @var int
+     */
+    protected $itemPerCompany = 0;
+
+    /**
      * Flag to show row with filters (for each column)
      * @var boolean
      */
@@ -109,6 +121,7 @@ class ModuleOptions extends AbstractOptions implements
      * @var array
      */
     protected $templateMap = array();
+    protected $valueButtonsActions;
 
 
     /**
@@ -125,6 +138,7 @@ class ModuleOptions extends AbstractOptions implements
                 'data-table-init' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/data-table-init.phtml',__DIR__, LAYOUT),
                 'custom-b2' =>sprintf(  '%s/../../../../Admin/view/layout/%s/templates/custom-b2.phtml',__DIR__, LAYOUT),
                 'custom-b3' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/custom-b3.phtml',__DIR__, LAYOUT),
+                'anexo' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/anexo.phtml',__DIR__, LAYOUT),
                 'search' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/search.phtml',__DIR__, LAYOUT),
                 'option' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/option.phtml',__DIR__, LAYOUT),
                 'select-status' => sprintf(  '%s/../../../../Admin/view/layout/%s/templates/table/select-status.phtml',__DIR__, LAYOUT),
@@ -420,4 +434,42 @@ class ModuleOptions extends AbstractOptions implements
         $this->rowAction = $rowAction;
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isShowItemPerCompany(): bool
+    {
+        return $this->showItemPerCompany;
+    }
+
+    /**
+     * @param bool $showItemPerCompany
+     * @return ModuleOptions
+     */
+    public function setShowItemPerCompany(bool $showItemPerCompany): ModuleOptions
+    {
+        $this->showItemPerCompany = $showItemPerCompany;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemPerCompany(): int
+    {
+        return $this->itemPerCompany;
+    }
+
+    /**
+     * @param int $itemPerCompany
+     * @return ModuleOptions
+     */
+    public function setItemPerCompany(int $itemPerCompany): ModuleOptions
+    {
+        $this->itemPerCompany = $itemPerCompany;
+        return $this;
+    }
+
+
 }

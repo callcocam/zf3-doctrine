@@ -20,6 +20,7 @@ class Config
         'showQuickSearch' => true,
         'showItemPerPage' => true,
         'showDateFilters' => true,
+        'showStatusFilters' => true,
     ];
     public function add($name,$config){
         $this->config[$name] = $config;

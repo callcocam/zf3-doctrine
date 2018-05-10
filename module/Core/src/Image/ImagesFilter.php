@@ -43,8 +43,9 @@ class ImagesFilter extends AbstractOptions
     }
 
     // This method creates input filter (used for form filtering/validation).
-    public function addInputFilter($Type, $controller, $Id)
+    public function addInputFilter($Type, $controller)
     {
+        $this->setBasePath($Type, $controller);
         $inputFilter = new InputFilter();
         $this->input = new FileInput(self::FILE);
         $this->input->getValidatorChain()->attach(new Size(
@@ -70,7 +71,7 @@ class ImagesFilter extends AbstractOptions
             'use_upload_name' => $this->isUseUploadName(),
             'use_upload_extension' => $this->isUseUploadExtension(),
             'randomize' => $this->isRandomize(),
-            'target' => $this->getBasePath($Type, $controller, $Id)
+            'target' => $this->getBasePath()
         ]);
         $this->input->getFilterChain()->attach($renameUpload);
         // Add validation rules for the "file" field.
@@ -78,18 +79,20 @@ class ImagesFilter extends AbstractOptions
         return $inputFilter;
     }
 
-    protected function getMimiType($Types = 'ext-image-thumb')
-    {
+    protected function getMimiType($Types =null){
         $MimiType = [];
         $Config = $this->container->get("Config");
         $mime_types_custom = $Config['mime_types_custom'];
         $mime_types = $Config['mime_types'];
+        if(!$Types){
+            return $mime_types;
+        }
         if (isset($mime_types_custom[$Types])):
             foreach ($mime_types_custom[$Types] as $type):
                 $MimiType[] = $mime_types[$type];
             endforeach;
         endif;
-        return $MimiType;
+        return $mime_types;
     }
 
     /**
@@ -171,9 +174,8 @@ class ImagesFilter extends AbstractOptions
     /**
      * @return mixed
      */
-    public function getBasePath($Type, $controller, $Id)
+    public function getBasePath()
     {
-        $this->CheckFolder($Type, $controller, $Id);
         return $this->basePath;
     }
 
@@ -182,9 +184,10 @@ class ImagesFilter extends AbstractOptions
      *
      * @return ImagesFilter
      */
-    public function setBasePath($basePath)
+    public function setBasePath($Type, $controller)
     {
-        $this->basePath = $basePath;
+        $this->basePath = $this->container->get('request')->getServer('DOCUMENT_ROOT');
+        $this->basePath = $this->CheckFolder($Type, $controller);
         return $this;
     }
 
@@ -197,30 +200,31 @@ class ImagesFilter extends AbstractOptions
     }
 
     //Verifica e cria os diretórios com base em tipo de arquivo, ano e mês!
-    public function CheckFolder($Type, $Folder, $Id)
+    public function CheckFolder($Type, $Folder)
     {
         list($y, $m) = explode('/', date('Y/m'));
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist");
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist{$this->ds}uploads");
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}");
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}");
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}{$this->ds}{$y}");
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}{$this->ds}{$y}{$this->ds}{$m}{$this->ds}");
-        $this->CreateFolder("{$this->basePath}{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}{$this->ds}{$y}{$this->ds}{$m}{$this->ds}{$Id}{$this->ds}");
-        $this->basePath = "{$this->basePath}{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}{$this->ds}{$y}{$this->ds}{$m}{$this->ds}{$Id}{$this->ds}";
-        $this->send = "{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}{$this->ds}{$y}{$this->ds}{$m}{$this->ds}{$Id}{$this->ds}";
+        $this->basePath = $this->CreateFolder("dist");
+        $this->basePath = $this->CreateFolder("uploads");
+        $this->basePath = $this->CreateFolder($Type);
+        $this->basePath = $this->CreateFolder($Folder);
+        $this->basePath = $this->CreateFolder($y);
+        $this->basePath = $this->CreateFolder($m);
+        $this->send = "{$this->ds}dist{$this->ds}uploads{$this->ds}{$Type}{$this->ds}{$Folder}{$this->ds}{$y}{$this->ds}{$m}{$this->ds}";
+        return $this->basePath;
     }
 
 
     /**
      * Verifica e cria o diretório base!
      * @param $Folder
+     * @return string
      */
     public function CreateFolder($Folder)
     {
-        if (!file_exists($Folder) && !is_dir($Folder)):
-            mkdir($Folder, 0777);
+        if (!file_exists("{$this->basePath}{$this->ds}{$Folder}") && !is_dir("{$this->basePath}{$this->ds}{$Folder}")):
+            mkdir("{$this->basePath}{$this->ds}{$Folder}", 0777);
         endif;
+        return "{$this->basePath}{$this->ds}{$Folder}";
     }
 
     //Verifica e monta o nome dos arquivos tratando a string!

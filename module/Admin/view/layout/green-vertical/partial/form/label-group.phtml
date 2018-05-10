@@ -1,0 +1,5 @@
+<div class="form-group  col-form-label">
+    <?php $this->field->setAttribute('readonly',true)->setAttribute('class','form-control-plaintext')?>
+    <label for="<?= $this->field->getAttribute('id') ?>"><?=$this->translate($this->field->getLabel()) ?></label>
+    <?=$this->formRow($this->field->setLabel(""));?>
+</div>

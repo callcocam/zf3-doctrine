@@ -88,3 +88,8 @@ php -S localhost:8585 ou outra port de sua preferencia
 ``
 
 Abra o navegador e acesso o host localhost:8585
+
+``
+bin/doctrine-module orm:convert-mapping --filter="Moviment" --from-database --namespace="Sisc\\Entity\\"  annotation module/Sisc/src/
+``
+

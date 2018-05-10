@@ -17,7 +17,6 @@ use Core\Entity\AbstractEntity;
  *
  * @ORM\Table(name="menu")
  * @ORM\Entity(repositoryClass="Admin\Repository\MenuRepository")
- * @ORM\Entity
  */
 class MenuEntity extends AbstractEntity
 {
